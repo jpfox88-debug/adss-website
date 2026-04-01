@@ -333,7 +333,7 @@
       <span class="events-empty-icon">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
       <div class="events-empty-title">Events Coming Soon</div>
       <div class="events-empty-text">We're planning an exciting calendar for the year ahead — Burns Suppers, Ceilidh nights, the Chieftain's Ball, and more. Check back soon or follow us on social media to be the first to know.</div>
-      <a href="/cdn-cgi/l/email-protection#05646770616d64676c76666a71716c766d766a666c60717c456268646c692b666a68" class="events-empty-cta">Get Notified →</a>
+      <a href="/cdn-cgi/l/email-protection#e2838097868a83808b91818d96968b918a918d818b87969ba2858f838b8ecc818d8f" class="events-empty-cta">Get Notified →</a>
     </div></div>
   </div>
 </section>
@@ -385,41 +385,30 @@
 </div>
 
 
-<!-- PREVIOUS EVENTS SECTION -->
+<!-- PREVIOUS EVENTS -->
 <section id="previous-events" style="background:var(--navy-mid);border-top:1px solid rgba(201,162,39,.08)">
   <div class="section-inner">
     <div class="section-label reveal">Previous Events</div>
     <h2 class="section-title reveal">Event <em>Albums</em></h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;" class="reveal" id="albumsGrid">
-      <div style="grid-column:1/-1;border:1px dashed rgba(201,162,39,.2);border-radius:4px;padding:60px 40px;text-align:center;background:var(--navy);color:var(--muted);font-size:15px">No event albums yet — check back after our first event!</div>
+    <div id="albumsGrid" class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px">
+      <div style="grid-column:1/-1;border:1px dashed rgba(201,162,39,.2);border-radius:4px;padding:60px 40px;text-align:center;color:var(--muted);font-size:15px">No event albums yet — check back after our first event!</div>
     </div>
   </div>
 </section>
-
-<!-- ALBUM LIGHTBOX -->
 <div id="albumLightbox" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(6,12,22,.97);flex-direction:column">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid rgba(201,162,39,.12);flex-shrink:0">
-    <div>
-      <div id="albumLbTitle" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700"></div>
-      <div id="albumLbSubtitle" style="font-size:13px;color:var(--muted);margin-top:2px"></div>
-    </div>
-    <button id="albumLbClose" style="background:none;border:none;color:var(--muted);font-size:28px;cursor:pointer;line-height:1">✕</button>
+    <div><div id="albumLbTitle" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700"></div><div id="albumLbSubtitle" style="font-size:13px;color:var(--muted);margin-top:2px"></div></div>
+    <button id="albumLbClose" style="background:none;border:none;color:var(--muted);font-size:28px;cursor:pointer;line-height:1">&#x2715;</button>
   </div>
-  <div style="flex:1;overflow-y:auto;padding:32px">
-    <div id="albumLbGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div>
-  </div>
+  <div style="flex:1;overflow-y:auto;padding:32px"><div id="albumLbGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div></div>
 </div>
-
-<!-- MEDIA VIEWER -->
 <div id="mediaViewer" style="display:none;position:fixed;inset:0;z-index:1100;background:rgba(4,8,15,.98);flex-direction:column;align-items:center;justify-content:center">
-  <button id="mediaViewerClose" style="position:absolute;top:20px;right:28px;background:none;border:none;color:var(--muted);font-size:32px;cursor:pointer">✕</button>
-  <button id="mediaViewerPrev" style="position:absolute;top:50%;transform:translateY(-50%);left:20px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:20px">‹</button>
-  <button id="mediaViewerNext" style="position:absolute;top:50%;transform:translateY(-50%);right:20px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:20px">›</button>
-  <img id="mediaViewerImg" src="" alt="" style="display:none;max-width:92vw;max-height:82vh;object-fit:contain;border-radius:3px">
-  <video id="mediaViewerVid" controls style="display:none;max-width:92vw;max-height:82vh"></video>
-  <div style="margin-top:16px">
-    <a id="mediaViewerDownload" style="background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:9px 18px;border-radius:2px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:6px" download>↓ Download</a>
-  </div>
+  <button id="mvClose" style="position:absolute;top:20px;right:28px;background:none;border:none;color:var(--muted);font-size:32px;cursor:pointer">&#x2715;</button>
+  <button id="mvPrev" style="position:absolute;top:50%;transform:translateY(-50%);left:20px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:20px">&#8249;</button>
+  <button id="mvNext" style="position:absolute;top:50%;transform:translateY(-50%);right:20px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:20px">&#8250;</button>
+  <img id="mvImg" src="" alt="" style="display:none;max-width:92vw;max-height:82vh;object-fit:contain;border-radius:3px">
+  <video id="mvVid" controls style="display:none;max-width:92vw;max-height:82vh"></video>
+  <div style="margin-top:16px"><a id="mvDl" href="#" style="background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:9px 18px;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:6px" download>&#8595; Download</a></div>
 </div>
 
 <!-- MEMBERSHIP -->
@@ -436,7 +425,7 @@
           <div class="mem-open-text">You don't need to be Scottish to join. Whether you're a Scot far from home, a spouse, a friend, or simply someone who loves a good ceilidh — the Abu Dhabi Scottish Society welcomes you with open arms.</div>
           <div style="margin-top:16px;display:flex;align-items:center;gap:8px">
             <span style="font-size:13px;color:var(--gold)">📧</span>
-            <a href="/cdn-cgi/l/email-protection#c2a1adafafabb6b6a7a782a3a6b1a1adb6b6abb1aab1ada1aba7b6bbeca1adaf" style="font-size:14px;color:var(--gold);text-decoration:none"><span class="__cf_email__" data-cfemail="8eede1e3e3e7fafaebebceefeafdede1fafae7fde6fde1ede7ebfaf7a0ede1e3">[email&#160;protected]</span></a>
+            <a href="/cdn-cgi/l/email-protection#1d7e72707074696978785d7c796e7e726969746e756e727e74786964337e7270" style="font-size:14px;color:var(--gold);text-decoration:none"><span class="__cf_email__" data-cfemail="96f5f9fbfbffe2e2f3f3d6f7f2e5f5f9e2e2ffe5fee5f9f5fff3e2efb8f5f9fb">[email&#160;protected]</span></a>
           </div>
         </div>
       </div>
@@ -456,7 +445,7 @@
             <li>Golf society membership</li>
             <li>Access to a warm, welcoming community</li>
           </ul>
-          <a href="/cdn-cgi/l/email-protection#25464a48484c5151404065444156464a51514c564d564a464c40515c0b464a48" class="mem-btn">Apply for Membership</a>
+          <a href="/cdn-cgi/l/email-protection#bfdcd0d2d2d6cbcbdadaffdedbccdcd0cbcbd6ccd7ccd0dcd6dacbc691dcd0d2" class="mem-btn">Apply for Membership</a>
         </div>
       </div>
     </div>
@@ -525,11 +514,11 @@
         <div class="benefit-category">Partner TBC</div>
         <div class="benefit-name">Your Brand Here?</div>
         <div class="benefit-detail">Interested in offering a discount to our growing membership? Get in touch to become a Society partner.</div>
-        <a href="/cdn-cgi/l/email-protection#86e5e9ebebeff2f2e3e3c6e7e2f5e5e9f2f2eff5eef5e9e5efe3f2ffa8e5e9eb" style="font-size:12px;color:var(--gold);text-decoration:none;display:inline-block;margin-top:4px">Partner with us →</a>
+        <a href="/cdn-cgi/l/email-protection#096a666464607d7d6c6c49686d7a6a667d7d607a617a666a606c7d70276a6664" style="font-size:12px;color:var(--gold);text-decoration:none;display:inline-block;margin-top:4px">Partner with us →</a>
       </div>
     </div>
     <div class="benefits-cta-note reveal">
-      <strong>Benefits are growing.</strong> We're actively onboarding new partners across Abu Dhabi. Members will be notified of new discounts via the Society newsletter. <a href="/cdn-cgi/l/email-protection#85e6eae8e8ecf1f1e0e0c5e4e1f6e6eaf1f1ecf6edf6eae6ece0f1fcabe6eae8" style="color:var(--gold);text-decoration:none">Contact us</a> if you'd like to offer a benefit to our members.
+      <strong>Benefits are growing.</strong> We're actively onboarding new partners across Abu Dhabi. Members will be notified of new discounts via the Society newsletter. <a href="/cdn-cgi/l/email-protection#4b28242626223f3f2e2e0b2a2f3828243f3f223823382428222e3f3265282426" style="color:var(--gold);text-decoration:none">Contact us</a> if you'd like to offer a benefit to our members.
     </div>
   </div>
 </section>
@@ -549,7 +538,7 @@
       <div class="committee-card"><div class="committee-avatar">MO</div><div class="committee-name">Membership Officer</div><div class="committee-role">Membership &amp; Welcome</div></div>
       <div class="committee-card"><div class="committee-avatar">+</div><div class="committee-name">Get Involved</div><div class="committee-role">Volunteer Committee</div></div>
     </div>
-    <p style="margin-top:32px;font-size:13px;color:var(--muted);text-align:center">The Society is run by a volunteer committee. Interested in getting involved? <a href="/cdn-cgi/l/email-protection#c0a3afadada9b4b4a5a580a1a4b3a3afb4b4a9b3a8b3afa3a9a5b4b9eea3afad" style="color:var(--gold);text-decoration:none">Get in touch →</a></p>
+    <p style="margin-top:32px;font-size:13px;color:var(--muted);text-align:center">The Society is run by a volunteer committee. Interested in getting involved? <a href="/cdn-cgi/l/email-protection#bdded2d0d0d4c9c9d8d8fddcd9ceded2c9c9d4ced5ced2ded4d8c9c493ded2d0" style="color:var(--gold);text-decoration:none">Get in touch →</a></p>
   </div>
 </section>
 
@@ -567,14 +556,14 @@
             <div class="contact-icon">📧</div>
             <div>
               <div class="contact-item-label">General Enquiries</div>
-              <div class="contact-item-val"><a href="/cdn-cgi/l/email-protection#9cfdfee9f8f4fdfef5effff3e8e8f5eff4eff3fff5f9e8e5dcfbf1fdf5f0b2fff3f1"><span class="__cf_email__" data-cfemail="98f9faedfcf0f9faf1ebfbf7ececf1ebf0ebf7fbf1fdece1d8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span></a></div>
+              <div class="contact-item-val"><a id="contactEmailGeneral" href="mailto:abudhabiscottishsociety@gmail.com">abudhabiscottishsociety@gmail.com</a></div>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-icon">🎟️</div>
             <div>
               <div class="contact-item-label">Tickets &amp; Events</div>
-              <div class="contact-item-val"><a href="/cdn-cgi/l/email-protection#1f7c707272766b6b7a7a5f7e7b6c7c706b6b766c776c707c767a6b66317c7072"><span class="__cf_email__" data-cfemail="99faf6f4f4f0ededfcfcd9f8fdeafaf6ededf0eaf1eaf6faf0fcede0b7faf6f4">[email&#160;protected]</span></a></div>
+              <div class="contact-item-val"><a id="contactEmailEvents" href="mailto:committee@adscottishsociety.com">committee@adscottishsociety.com</a></div>
             </div>
           </div>
           <div class="contact-item">
@@ -630,65 +619,170 @@
   <div class="footer-copy">© 2025 Abu Dhabi Scottish Society</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
+<script>
+
+const GITHUB_USER = 'jpfox88-debug';
+const GITHUB_REPO = 'adss-website';
+const RAW = 'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/data.json';
+
+const _obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-reveals.forEach(el => observer.observe(el));
+}, { threshold: 0.05 });
 
-document.querySelectorAll('.benefits-grid.reveal, .committee-grid.reveal').forEach(parent => {
-  parent.querySelectorAll('.benefit-card, .committee-card').forEach((child, i) => {
-    child.style.transitionDelay = (i * 0.06) + 's';
-  });
-});
+function observeAll() {
+  document.querySelectorAll('.reveal').forEach(el => _obs.observe(el));
+}
+observeAll();
 
-window.addEventListener('scroll', () => {
-  document.querySelector('nav').style.background = window.scrollY > 60 ? 'rgba(8,15,26,0.97)' : 'rgba(13,26,43,0.85)';
-});
+async function applyData() {
+  let d;
+  try { const r = await fetch(RAW + '?cb=' + Date.now()); d = await r.json(); }
+  catch(e) { return; }
 
-// LIGHTBOX
-const items = document.querySelectorAll('.gallery-item');
-const lightbox = document.getElementById('lightbox');
-const lbImg = document.getElementById('lightboxImg');
-const lbVid = document.getElementById('lightboxVid');
-const lbCaption = document.getElementById('lightboxCaption');
-const lbDownload = document.getElementById('lightboxDownload');
-let currentIdx = 0;
-
-function openLightbox(idx) {
-  const item = items[idx];
-  const src = item.dataset.src;
-  const type = item.dataset.type;
-  const caption = item.dataset.caption || '';
-  currentIdx = idx;
-  lbImg.style.display = 'none';
-  lbVid.style.display = 'none';
-  if (lbVid.pause) lbVid.pause();
-  if (!src) return;
-  if (type === 'video') {
-    lbVid.src = src; lbVid.style.display = 'block';
-    lbDownload.href = src; lbDownload.download = caption || 'video';
-  } else {
-    lbImg.src = src; lbImg.alt = caption; lbImg.style.display = 'block';
-    lbDownload.href = src; lbDownload.download = caption || 'photo';
+  if (d.hero) {
+    const sub = document.querySelector('.hero-subtitle');
+    if (sub && d.hero.subtitle) sub.textContent = d.hero.subtitle;
+    const btns = document.querySelectorAll('.hero-btns a');
+    if (btns[0] && d.hero.btn_primary_text) btns[0].textContent = d.hero.btn_primary_text;
+    if (btns[1] && d.hero.btn_secondary_text) btns[1].textContent = d.hero.btn_secondary_text;
   }
-  lbCaption.textContent = caption;
-  lightbox.classList.add('open');
+  if (d.about) {
+    const a = d.about;
+    const bodies = document.querySelectorAll('#about .section-body');
+    if (bodies[0] && a.body1) bodies[0].textContent = a.body1;
+    if (bodies[1] && a.body2) bodies[1].textContent = a.body2;
+    const nums = document.querySelectorAll('#about .stat-num');
+    const labels = document.querySelectorAll('#about .stat-label');
+    if (nums[0]) nums[0].textContent = a.stat1_num || nums[0].textContent;
+    if (labels[0]) labels[0].textContent = a.stat1_label || labels[0].textContent;
+    if (nums[1]) nums[1].textContent = a.stat2_num || nums[1].textContent;
+    if (labels[1]) labels[1].textContent = a.stat2_label || labels[1].textContent;
+    if (nums[2]) nums[2].textContent = a.stat3_num || nums[2].textContent;
+    if (labels[2]) labels[2].textContent = a.stat3_label || labels[2].textContent;
+  }
+  if (d.events && d.events.items && d.events.items.length > 0) {
+    const ec = document.getElementById('eventsContainer');
+    if (ec) {
+      const icons = ['ICON1','ICON2','ICON3','ICON4'];
+      ec.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:24px';
+      ec.innerHTML = d.events.items.map((e,i) => '<div style="border:1px solid rgba(201,162,39,.15);border-radius:4px;overflow:hidden;background:var(--navy-mid)">'
+        + '<div style="height:' + (i===0?260:200) + 'px;background:var(--navy-light);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">'
+        + '<div style="position:absolute;inset:0;opacity:.08;background:repeating-linear-gradient(45deg,rgba(155,28,46,.15) 0px,rgba(155,28,46,.15) 4px,transparent 4px,transparent 20px)"></div>'
+        + (e.cover_url ? '<img src="' + e.cover_url + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.75">' : '')
+        + '<div style="position:absolute;top:16px;left:16px;background:var(--gold);color:var(--navy);padding:6px 12px;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border-radius:2px">' + (e.date||'') + '</div>'
+        + '</div><div style="padding:24px">'
+        + '<div style="font-family:'Playfair Display',serif;font-size:' + (i===0?26:20) + 'px;font-weight:700;margin-bottom:8px">' + (e.title||'') + '</div>'
+        + '<div style="font-size:13px;color:var(--muted);margin-bottom:10px">' + (e.venue||'') + (e.dress_code?' | '+e.dress_code:'') + '</div>'
+        + '<div style="font-size:14px;line-height:1.65;color:var(--muted)">' + (e.description||'') + '</div>'
+        + (e.price ? '<div style="display:inline-block;margin-top:14px;font-size:13px;font-weight:500;color:var(--gold)">' + e.price + '</div>' : '')
+        + '</div></div>').join('');
+    }
+  }
+  if (d.previous_events) {
+    window._albums = d.previous_events.albums || [];
+    const ag = document.getElementById('albumsGrid');
+    if (ag && window._albums.length > 0) {
+      ag.innerHTML = window._albums.map((al,i) => '<div onclick="openAlbum(' + i + ')" style="border:1px solid rgba(201,162,39,.15);border-radius:4px;overflow:hidden;background:var(--navy);cursor:pointer">'
+        + '<div style="height:200px;background:var(--navy-light);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">'
+        + (al.cover_url ? '<img src="' + al.cover_url + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.8">' : '<span style="font-size:52px;opacity:.25">photo</span>')
+        + '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(13,26,43,.7) 0%,transparent 60%)"></div>'
+        + '<div style="position:absolute;top:12px;right:12px;background:rgba(13,26,43,.75);border:1px solid rgba(201,162,39,.35);color:var(--gold);font-size:11px;letter-spacing:.1em;padding:4px 10px;border-radius:2px">' + (al.media||[]).length + ' items</div>'
+        + '</div><div style="padding:20px 22px">'
+        + '<div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:4px">' + al.title + '</div>'
+        + '<div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">' + (al.date||'') + '</div>'
+        + '</div></div>').join('');
+    }
+  }
+  if (d.membership) {
+    const m = d.membership;
+    const memBody = document.querySelector('#membership .section-body');
+    if (memBody && m.body) memBody.textContent = m.body;
+    if (document.querySelector('.mem-tier') && m.card_tier) document.querySelector('.mem-tier').textContent = m.card_tier;
+    if (document.querySelector('.mem-sub') && m.card_sub) document.querySelector('.mem-sub').textContent = m.card_sub;
+    if (document.querySelector('.mem-price') && m.card_price) document.querySelector('.mem-price').textContent = m.card_price;
+    if (document.querySelector('.mem-price-period') && m.card_price_note) document.querySelector('.mem-price-period').textContent = m.card_price_note;
+    const fl = document.querySelector('.mem-features');
+    if (fl && m.card_features) fl.innerHTML = m.card_features.map(function(f){return '<li>'+f+'</li>';}).join('');
+    if (document.querySelector('.mem-open-title') && m.open_title) document.querySelector('.mem-open-title').textContent = m.open_title;
+    if (document.querySelector('.mem-open-text') && m.open_body) document.querySelector('.mem-open-text').textContent = m.open_body;
+  }
+  if (d.benefits && d.benefits.items) {
+    const bg = document.getElementById('benefitsGrid');
+    if (bg) bg.innerHTML = d.benefits.items.map(function(bi) {
+      return '<div class="benefit-card"><div class="benefit-category">'+bi.category+'</div><div class="benefit-name">'+bi.name+'</div><div class="benefit-detail">'+bi.detail+'</div>'+(bi.tbc?'<span class="benefit-tbc">'+bi.badge+'</span>':'<span class="benefit-discount">'+bi.badge+'</span>')+'</div>';
+    }).join('');
+  }
+  if (d.committee && d.committee.members) {
+    const cg = document.getElementById('committeeGrid');
+    if (cg) cg.innerHTML = d.committee.members.map(function(m) {
+      return '<div class="committee-card"><div class="committee-avatar">'+m.initials+'</div><div class="committee-name">'+m.name+'</div><div class="committee-role">'+m.role+'</div></div>';
+    }).join('');
+  }
+  if (d.contact) {
+    const ct = d.contact;
+    var eg = document.getElementById('contactEmailGeneral');
+    if (eg && ct.email_general) { eg.textContent = ct.email_general; eg.href = 'mailto:'+ct.email_general; }
+    var ee = document.getElementById('contactEmailEvents');
+    if (ee && ct.email_events) { ee.textContent = ct.email_events; ee.href = 'mailto:'+ct.email_events; }
+    var loc = document.getElementById('contactLocation');
+    if (loc && ct.location) loc.textContent = ct.location;
+    var fb = document.getElementById('socialFacebook');
+    if (fb && ct.facebook_url && ct.facebook_url !== '#') fb.href = ct.facebook_url;
+    var ig = document.getElementById('socialInstagram');
+    if (ig && ct.instagram_url && ct.instagram_url !== '#') ig.href = ct.instagram_url;
+  }
+  observeAll();
+  setTimeout(function() { document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');}); }, 1500);
+}
+
+window._albums = [];
+var _curAlbum = 0, _curMedia = 0;
+
+window.openAlbum = function(idx) {
+  var al = window._albums[idx]; if (!al) return;
+  _curAlbum = idx;
+  document.getElementById('albumLbTitle').textContent = al.title;
+  document.getElementById('albumLbSubtitle').textContent = (al.date||'') + ' - ' + (al.media||[]).length + ' items';
+  document.getElementById('albumLbGrid').innerHTML = (al.media||[]).map(function(m,i) {
+    return '<div onclick="openMedia(' + idx + ',' + i + ')" style="border-radius:3px;overflow:hidden;position:relative;background:var(--navy-light);cursor:pointer;aspect-ratio:4/3">'
+      + (m.type==='video'
+        ? '<video src="'+m.url+'" preload="metadata" style="width:100%;height:100%;object-fit:cover"></video><div style="position:absolute;top:8px;left:8px;background:rgba(13,26,43,.8);border:1px solid rgba(201,162,39,.4);color:var(--gold);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px">VIDEO</div>'
+        : '<img src="'+m.url+'" loading="lazy" style="width:100%;height:100%;object-fit:cover">')
+      + '</div>';
+  }).join('');
+  document.getElementById('albumLightbox').style.display = 'flex';
   document.body.style.overflow = 'hidden';
-}
+};
 
-function closeLightbox() {
-  lightbox.classList.remove('open');
-  if (lbVid.pause) lbVid.pause();
-  document.body.style.overflow = '';
-}
+window.openMedia = function(albumIdx, mediaIdx) {
+  var al = window._albums[albumIdx]; if (!al) return;
+  var media = (al.media||[])[mediaIdx]; if (!media) return;
+  _curAlbum = albumIdx; _curMedia = mediaIdx;
+  var img = document.getElementById('mvImg'); var vid = document.getElementById('mvVid');
+  img.style.display = 'none'; vid.style.display = 'none'; if (vid.pause) vid.pause();
+  if (media.type === 'video') { vid.src = media.url; vid.style.display = 'block'; }
+  else { img.src = media.url; img.style.display = 'block'; }
+  document.getElementById('mvDl').href = media.url;
+  document.getElementById('mvDl').download = media.caption || 'media';
+  document.getElementById('mediaViewer').style.display = 'flex';
+};
 
-items.forEach((item, idx) => item.addEventListener('click', () => openLightbox(idx)));
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-document.getElementById('lightboxPrev').addEventListener('click', e => { e.stopPropagation(); openLightbox((currentIdx - 1 + items.length) % items.length); });
-document.getElementById('lightboxNext').addEventListener('click', e => { e.stopPropagation(); openLightbox((currentIdx + 1) % items.length); });
-document.addEventListener('keydown', e => {
-  if (!lightbox.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLightbox();
+document.getElementById('albumLbClose').onclick = function() { document.getElementById('albumLightbox').style.display='none'; document.body.style.overflow=''; };
+document.getElementById('mvClose').onclick = function() { document.getElementById('mediaViewer').style.display='none'; var v=document.getElementById('mvVid'); if(v.pause)v.pause(); };
+document.getElementById('mvPrev').onclick = function() { var al=window._albums[_curAlbum]; if(al&&al.media) openMedia(_curAlbum,(_curMedia-1+al.media.length)%al.media.length); };
+document.getElementById('mvNext').onclick = function() { var al=window._albums[_curAlbum]; if(al&&al.media) openMedia(_curAlbum,(_curMedia+1)%al.media.length); };
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('mediaViewer').style.display==='flex') {
+    if(e.key==='Escape') document.getElementById('mvClose').onclick();
+    if(e.key==='ArrowLeft') document.getElementById('mvPrev').onclick();
+    if(e.key==='ArrowRight') document.getElementById('mvNext').onclick();
+  } else if (document.getElementById('albumLightbox').style.display==='flex') {
+    if(e.key==='Escape') document.getElementById('albumLbClose').onclick();
+  }
+});
+
+applyData();
+
+</script>
+</body>
+</html>
