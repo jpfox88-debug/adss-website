@@ -204,8 +204,8 @@
 
   /* ANIMATIONS */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal { opacity: 1; transform: none; }
+  .reveal.visible { opacity: 1; transform: none; }
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
@@ -391,13 +391,13 @@
     <div class="section-label reveal">Previous Events</div>
     <h2 class="section-title reveal">Event <em>Albums</em></h2>
     <div id="albumsGrid" class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px">
-      <div style="grid-column:1/-1;border:1px dashed rgba(201,162,39,.2);border-radius:4px;padding:60px 40px;text-align:center;color:var(--muted);font-size:15px">No event albums yet — check back after our first event!</div>
+      <div style="grid-column:1/-1;border:1px dashed rgba(201,162,39,.2);border-radius:4px;padding:60px 40px;text-align:center;color:var(--muted);font-size:15px">No event albums yet.</div>
     </div>
   </div>
 </section>
 <div id="albumLightbox" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(6,12,22,.97);flex-direction:column">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid rgba(201,162,39,.12);flex-shrink:0">
-    <div><div id="albumLbTitle" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700"></div><div id="albumLbSubtitle" style="font-size:13px;color:var(--muted);margin-top:2px"></div></div>
+    <div><div id="albumLbTitle" style="font-family:Playfair Display,serif;font-size:20px;font-weight:700"></div><div id="albumLbSubtitle" style="font-size:13px;color:var(--muted);margin-top:2px"></div></div>
     <button id="albumLbClose" style="background:none;border:none;color:var(--muted);font-size:28px;cursor:pointer;line-height:1">&#x2715;</button>
   </div>
   <div style="flex:1;overflow-y:auto;padding:32px"><div id="albumLbGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div></div>
@@ -408,7 +408,7 @@
   <button id="mvNext" style="position:absolute;top:50%;transform:translateY(-50%);right:20px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:20px">&#8250;</button>
   <img id="mvImg" src="" alt="" style="display:none;max-width:92vw;max-height:82vh;object-fit:contain;border-radius:3px">
   <video id="mvVid" controls style="display:none;max-width:92vw;max-height:82vh"></video>
-  <div style="margin-top:16px"><a id="mvDl" href="#" style="background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:9px 18px;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:6px" download>&#8595; Download</a></div>
+  <div style="margin-top:16px"><a id="mvDl" href="#" style="background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:9px 18px;border-radius:2px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:6px" download>&#8595; Download</a></div>
 </div>
 
 <!-- MEMBERSHIP -->
@@ -671,7 +671,7 @@ async function applyData() {
         + (e.cover_url ? '<img src="' + e.cover_url + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.75">' : '')
         + '<div style="position:absolute;top:16px;left:16px;background:var(--gold);color:var(--navy);padding:6px 12px;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border-radius:2px">' + (e.date||'') + '</div>'
         + '</div><div style="padding:24px">'
-        + '<div style="font-family:'Playfair Display',serif;font-size:' + (i===0?26:20) + 'px;font-weight:700;margin-bottom:8px">' + (e.title||'') + '</div>'
+        + '<div style="font-family:Playfair Display,serif;font-size:' + (i===0?26:20) + 'px;font-weight:700;margin-bottom:8px">' + (e.title||'') + '</div>'
         + '<div style="font-size:13px;color:var(--muted);margin-bottom:10px">' + (e.venue||'') + (e.dress_code?' | '+e.dress_code:'') + '</div>'
         + '<div style="font-size:14px;line-height:1.65;color:var(--muted)">' + (e.description||'') + '</div>'
         + (e.price ? '<div style="display:inline-block;margin-top:14px;font-size:13px;font-weight:500;color:var(--gold)">' + e.price + '</div>' : '')
@@ -688,7 +688,7 @@ async function applyData() {
         + '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(13,26,43,.7) 0%,transparent 60%)"></div>'
         + '<div style="position:absolute;top:12px;right:12px;background:rgba(13,26,43,.75);border:1px solid rgba(201,162,39,.35);color:var(--gold);font-size:11px;letter-spacing:.1em;padding:4px 10px;border-radius:2px">' + (al.media||[]).length + ' items</div>'
         + '</div><div style="padding:20px 22px">'
-        + '<div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:4px">' + al.title + '</div>'
+        + '<div style="font-family:Playfair Display,serif;font-size:18px;font-weight:700;margin-bottom:4px">' + al.title + '</div>'
         + '<div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">' + (al.date||'') + '</div>'
         + '</div></div>').join('');
     }
