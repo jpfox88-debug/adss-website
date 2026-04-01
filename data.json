@@ -1,0 +1,107 @@
+{
+  "hero": {
+    "badge": "Abu Dhabi · UAE",
+    "headline_line1": "Scotland's",
+    "headline_line2": "Heart in the",
+    "headline_line3": "Desert",
+    "subtitle": "Bringing together Scots, their families, and all who love Scotland — the Abu Dhabi Scottish Society is back, with a new committee and fresh energy for 2025 and beyond.",
+    "btn_primary_text": "Become a Member",
+    "btn_secondary_text": "Upcoming Events"
+  },
+  "about": {
+    "label": "Our Story",
+    "title_plain": "Scotland's Spirit,",
+    "title_italic": "Renewed",
+    "body1": "The Abu Dhabi Scottish Society has a proud history in the UAE — and in 2025, a passionate new committee breathed fresh life back into it. We're rebuilding a home away from home for Scots, their families, and all friends of Scotland in Abu Dhabi.",
+    "body2": "Our mission is simple: foster Scottish culture, build genuine friendships, and celebrate everything that makes Scotland great — right here in the heart of the Gulf. Whether you've roots in Inverness or just a love of a good ceilidh, you belong here.",
+    "stat1_num": "2025",
+    "stat1_label": "Relaunched",
+    "stat2_num": "3",
+    "stat2_label": "Annual Balls",
+    "stat3_num": "2",
+    "stat3_label": "Charities/Year"
+  },
+  "events": {
+    "label": "What's On",
+    "title_plain": "Upcoming",
+    "title_italic": "Events",
+    "empty_title": "Events Coming Soon",
+    "empty_text": "We're planning an exciting calendar for the year ahead — Burns Suppers, Ceilidh nights, the Chieftain's Ball, and more. Check back soon or follow us on social media to be the first to know.",
+    "items": []
+  },
+  "previous_events": {
+    "label": "Previous Events",
+    "title_plain": "Event",
+    "title_italic": "Albums",
+    "albums": []
+  },
+  "membership": {
+    "label": "Join Us",
+    "title_plain": "Become a",
+    "title_italic": "Member",
+    "body": "Open to Scottish people, their families, and anyone with an interest in Scotland and Scottish culture. Membership gives you access to discounted event tickets, exclusive member benefits across Abu Dhabi, and a warm community that feels like home.",
+    "open_title": "Open to All Friends of Scotland",
+    "open_body": "You don't need to be Scottish to join. Whether you're a Scot far from home, a spouse, a friend, or simply someone who loves a good ceilidh — the Abu Dhabi Scottish Society welcomes you with open arms.",
+    "card_tier": "Society Membership",
+    "card_sub": "Individual & Family",
+    "card_price": "AED",
+    "card_price_note": "Contact us for current membership rates",
+    "card_features": [
+      "Discounted tickets to all Society events",
+      "Burns Supper, Chieftain's Ball & St Andrews Ball access",
+      "Exclusive member discounts across Abu Dhabi",
+      "Monthly sundowner invitations",
+      "Society newsletter & updates",
+      "Ceilidh dancing sessions",
+      "Golf society membership",
+      "Access to a warm, welcoming community"
+    ],
+    "card_btn_text": "Apply for Membership"
+  },
+  "benefits": {
+    "label": "Perks of Membership",
+    "title_plain": "Member",
+    "title_italic": "Discounts",
+    "intro": "Your membership card unlocks exclusive discounts at some of Abu Dhabi's best restaurants, bars, hotels and leisure venues. More partners being added all the time — this is just the beginning.",
+    "items": [
+      { "category": "Food & Drink", "name": "The Club Abu Dhabi", "detail": "Member discount on food and beverage across the venue, including Sunday Roast and dining events.", "badge": "Member Rate", "tbc": false },
+      { "category": "Food & Drink", "name": "Ma Buckley's", "detail": "Sunday roast for two — exclusive member voucher available at Souk Qaryat Al Beri.", "badge": "Voucher Available", "tbc": false },
+      { "category": "Food & Drink", "name": "Partner Restaurant TBC", "detail": "More dining partners coming soon. We're building relationships with the best spots across the capital.", "badge": "Coming Soon", "tbc": true },
+      { "category": "Leisure", "name": "The Club — Day Pass", "detail": "Family day pass to The Club Abu Dhabi — pool, beach and leisure facilities included.", "badge": "Member Rate", "tbc": false },
+      { "category": "Leisure", "name": "Golf Partner TBC", "detail": "Preferred green fee rates at selected Abu Dhabi golf courses for Society members.", "badge": "Coming Soon", "tbc": true },
+      { "category": "Leisure", "name": "Leisure Partner TBC", "detail": "We're in conversations with leisure and wellness venues across Abu Dhabi to bring you even more perks.", "badge": "Coming Soon", "tbc": true },
+      { "category": "Events", "name": "Society Event Tickets", "detail": "Members always pay the reduced rate at Burns Suppers, Ceilidh nights, Chieftain's Ball and St Andrews Ball.", "badge": "Up to AED 75 off", "tbc": false },
+      { "category": "Events", "name": "Priority Booking", "detail": "Members get first access to tickets for sold-out events before they open to the general public.", "badge": "Early Access", "tbc": false }
+    ],
+    "cta_note": "Benefits are growing. We're actively onboarding new partners across Abu Dhabi. Members will be notified of new discounts via the Society newsletter."
+  },
+  "committee": {
+    "label": "The Team",
+    "title_plain": "Our",
+    "title_italic": "Committee",
+    "members": [
+      { "initials": "CH", "name": "The Chieftain", "role": "President" },
+      { "initials": "VC", "name": "Vice-Chieftain", "role": "Vice President" },
+      { "initials": "SE", "name": "Secretary", "role": "Administration" },
+      { "initials": "TR", "name": "Treasurer", "role": "Finance" },
+      { "initials": "EO", "name": "Events Officer", "role": "Events & Programming" },
+      { "initials": "CO", "name": "Charity Officer", "role": "Charitable Giving" },
+      { "initials": "MO", "name": "Membership Officer", "role": "Membership & Welcome" },
+      { "initials": "+", "name": "Get Involved", "role": "Volunteer Committee" }
+    ]
+  },
+  "contact": {
+    "label": "Get in Touch",
+    "title_plain": "Contact",
+    "title_italic": "Us",
+    "body": "Whether you're interested in membership, have questions about upcoming events, or want to become a partner venue, we'd love to hear from you.",
+    "email_general": "abudhabiscottishsociety@gmail.com",
+    "email_events": "committee@adscottishsociety.com",
+    "location": "Abu Dhabi, UAE",
+    "facebook_url": "#",
+    "instagram_url": "#"
+  },
+  "footer": {
+    "copy": "© 2025 Abu Dhabi Scottish Society"
+  }
+}

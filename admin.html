@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADSS Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1117;--surface:#161b27;--surface2:#1d2436;--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+  --gold:#c9a227;--gold-light:#e4bc55;--white:#f0ede6;--muted:rgba(240,237,230,0.5);
+  --danger:#e24b4a;--success:#1d9e75;--navy:#0d1a2b;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;font-weight:300;background:var(--bg);color:var(--white);font-size:14px}
+
+/* ── LOGIN ── */
+#loginScreen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:32px}
+.login-box{background:var(--surface);border:1px solid rgba(201,162,39,.2);border-radius:8px;padding:48px 40px;width:360px;text-align:center}
+.login-logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--white);margin-bottom:6px}
+.login-logo span{color:var(--gold)}
+.login-sub{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
+.login-field{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border2);border-radius:4px;padding:12px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;margin-bottom:12px;transition:border-color .2s}
+.login-field:focus{border-color:rgba(201,162,39,.5)}
+.login-btn{width:100%;padding:13px;background:var(--gold);border:none;border-radius:4px;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:4px}
+.login-btn:hover{background:var(--gold-light)}
+.login-error{color:var(--danger);font-size:13px;margin-top:10px;display:none}
+
+/* ── LAYOUT ── */
+#app{display:flex;height:100vh;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{width:230px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-logo{padding:22px 20px 18px;border-bottom:1px solid var(--border)}
+.sidebar-logo-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--white)}
+.sidebar-logo-sub{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-top:2px}
+.sidebar-nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-section{padding:10px 16px 4px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:13px;color:var(--muted);cursor:pointer;border-radius:0;transition:all .15s;border-left:2px solid transparent;user-select:none}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,.04)}
+.nav-item.active{color:var(--gold);background:rgba(201,162,39,.07);border-left-color:var(--gold)}
+.nav-item svg{width:15px;height:15px;flex-shrink:0;opacity:.7}
+.sidebar-footer{padding:16px;border-top:1px solid var(--border)}
+.sidebar-footer-btn{width:100%;padding:9px;background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.sidebar-footer-btn:hover{border-color:rgba(201,162,39,.4);color:var(--gold)}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:56px;flex-shrink:0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.topbar-title{font-size:15px;font-weight:500;color:var(--white)}
+.topbar-actions{display:flex;gap:10px;align-items:center}
+.save-btn{display:flex;align-items:center;gap:8px;padding:9px 20px;background:var(--gold);border:none;border-radius:4px;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.save-btn:hover{background:var(--gold-light)}
+.save-btn:disabled{opacity:.5;cursor:not-allowed}
+.preview-btn{display:flex;align-items:center;gap:6px;padding:9px 16px;background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none}
+.preview-btn:hover{border-color:rgba(201,162,39,.4);color:var(--gold)}
+.save-status{font-size:12px;padding:6px 12px;border-radius:4px;display:none}
+.save-status.saving{display:block;background:rgba(201,162,39,.12);color:var(--gold);border:1px solid rgba(201,162,39,.2)}
+.save-status.saved{display:block;background:rgba(29,158,117,.12);color:#4ecba0;border:1px solid rgba(29,158,117,.2)}
+.save-status.error{display:block;background:rgba(226,75,74,.12);color:#f07877;border:1px solid rgba(226,75,74,.2)}
+
+/* ── CONTENT AREA ── */
+.content{flex:1;overflow-y:auto;padding:32px 28px}
+.panel{display:none}
+.panel.active{display:block}
+
+/* ── FORM ELEMENTS ── */
+.field-group{margin-bottom:22px}
+.field-label{display:block;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:8px}
+.field-input,.field-textarea,.field-select{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;outline:none;transition:border-color .2s}
+.field-input:focus,.field-textarea:focus,.field-select:focus{border-color:rgba(201,162,39,.5);background:rgba(255,255,255,.07)}
+.field-input::placeholder,.field-textarea::placeholder{color:rgba(240,237,230,.3)}
+.field-textarea{resize:vertical;min-height:90px;line-height:1.6}
+.field-select{cursor:pointer}
+.field-select option{background:var(--surface2);color:var(--white)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+
+/* ── CARDS ── */
+.section-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:20px;overflow:hidden}
+.section-card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.section-card-title{font-size:13px;font-weight:500;color:var(--white);display:flex;align-items:center;gap:8px}
+.section-card-toggle{color:var(--muted);font-size:18px;transition:transform .2s}
+.section-card.collapsed .section-card-toggle{transform:rotate(-90deg)}
+.section-card-body{padding:20px}
+.section-card.collapsed .section-card-body{display:none}
+
+/* ── LIST ITEMS (events, benefits etc) ── */
+.list-item{background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:16px;margin-bottom:10px;position:relative}
+.list-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.list-item-title{font-size:13px;font-weight:500;color:var(--white)}
+.list-item-actions{display:flex;gap:6px}
+.icon-btn{background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);padding:4px 8px;font-size:12px;cursor:pointer;transition:all .15s}
+.icon-btn:hover{border-color:var(--border2);color:var(--white)}
+.icon-btn.danger:hover{border-color:var(--danger);color:var(--danger)}
+.add-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;background:transparent;border:1px dashed rgba(201,162,39,.3);border-radius:4px;color:var(--gold);font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;width:100%;justify-content:center;margin-top:4px}
+.add-btn:hover{border-color:var(--gold);background:rgba(201,162,39,.05)}
+
+/* ── UPLOAD ── */
+.upload-zone{border:1px dashed rgba(201,162,39,.3);border-radius:4px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:rgba(255,255,255,.02)}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--gold);background:rgba(201,162,39,.05)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-zone-icon{font-size:28px;margin-bottom:8px;opacity:.5}
+.upload-zone-text{font-size:13px;color:var(--muted)}
+.upload-zone-sub{font-size:11px;color:var(--muted);opacity:.6;margin-top:4px}
+.upload-progress{background:rgba(255,255,255,.06);border-radius:3px;height:4px;margin-top:12px;overflow:hidden;display:none}
+.upload-progress-bar{height:100%;background:var(--gold);width:0;transition:width .3s;border-radius:3px}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.media-thumb{position:relative;aspect-ratio:4/3;border-radius:3px;overflow:hidden;background:var(--surface2);border:1px solid var(--border)}
+.media-thumb img,.media-thumb video{width:100%;height:100%;object-fit:cover}
+.media-thumb-del{position:absolute;top:4px;right:4px;background:rgba(226,75,74,.85);border:none;border-radius:2px;color:white;width:22px;height:22px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s}
+.media-thumb:hover .media-thumb-del{opacity:1}
+.media-thumb-type{position:absolute;bottom:4px;left:4px;background:rgba(13,26,43,.8);color:var(--gold);font-size:9px;letter-spacing:.08em;padding:2px 5px;border-radius:2px;text-transform:uppercase}
+
+/* ── COVER PICKER ── */
+.cover-preview{width:100%;height:140px;border-radius:4px;overflow:hidden;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:10px;position:relative}
+.cover-preview img{width:100%;height:100%;object-fit:cover}
+.cover-preview-placeholder{font-size:32px;opacity:.3}
+
+/* ── ALBUM LIST ── */
+.album-list-item{background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:14px}
+.album-list-cover{width:60px;height:44px;border-radius:3px;overflow:hidden;background:var(--surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;opacity:.5}
+.album-list-cover img{width:100%;height:100%;object-fit:cover;opacity:1}
+.album-list-info{flex:1;min-width:0}
+.album-list-title{font-size:13px;font-weight:500;color:var(--white);margin-bottom:2px}
+.album-list-meta{font-size:11px;color:var(--muted)}
+.album-list-actions{display:flex;gap:6px;flex-shrink:0}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.18)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border2);border-radius:5px;padding:12px 20px;font-size:13px;color:var(--white);z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.toast.success{border-color:rgba(29,158,117,.4);color:#4ecba0}
+.toast.error{border-color:rgba(226,75,74,.4);color:#f07877}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Abu Dhabi <span>Scottish Society</span></div>
+    <div class="login-sub">Site Admin</div>
+    <input type="password" class="login-field" id="loginPass" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect password</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-name">ADSS Admin</div>
+      <div class="sidebar-logo-sub">Site Manager</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">Content</div>
+      <div class="nav-item active" onclick="showPanel('hero')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M4 9l2-2 2 2 2-3 2 3"/></svg>
+        Hero
+      </div>
+      <div class="nav-item" onclick="showPanel('about')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 7v5M8 5v.5"/></svg>
+        About
+      </div>
+      <div class="nav-item" onclick="showPanel('events')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v3M11 1v3M2 7h12"/></svg>
+        Events
+      </div>
+      <div class="nav-item" onclick="showPanel('albums')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="9" height="7" rx="1"/><rect x="6" y="6" width="9" height="7" rx="1"/></svg>
+        Event Albums
+      </div>
+      <div class="nav-item" onclick="showPanel('membership')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 8a3 3 0 100-6 3 3 0 000 6zM2 14s1-4 6-4 6 4 6 4"/></svg>
+        Membership
+      </div>
+      <div class="nav-item" onclick="showPanel('benefits')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.8 3.6L14 5.3l-3 2.9.7 4.1L8 10.3l-3.7 1.9.7-4.1-3-2.9 4.2-.7z"/></svg>
+        Benefits
+      </div>
+      <div class="nav-item" onclick="showPanel('committee')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5.5" r="2.5"/><circle cx="11" cy="5.5" r="2.5"/><path d="M1 13s.5-3 4-3M15 13s-.5-3-4-3M8 13s-.5-2.5-3-2.5S2 11 2 13"/></svg>
+        Committee
+      </div>
+      <div class="nav-item" onclick="showPanel('contact')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v9H2z" rx="1"/><path d="M2 4l6 5 6-5"/></svg>
+        Contact & Social
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="sidebar-footer-btn" onclick="window.open('https://lucent-strudel-b8c6cf.netlify.app','_blank')">↗ View Live Site</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Hero</div>
+      <div class="topbar-actions">
+        <span class="save-status" id="saveStatus"></span>
+        <a class="preview-btn" href="https://lucent-strudel-b8c6cf.netlify.app" target="_blank">Preview ↗</a>
+        <button class="save-btn" id="saveBtn" onclick="saveAll()">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H5L2 5v9h12V2zM6 2v4h5V2M5 14v-5h6v5"/></svg>
+          Save & Publish
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- HERO PANEL -->
+      <div class="panel active" id="panel-hero">
+        <div class="section-card">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <div class="section-card-title">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Hero Section</div>
+            <span class="section-card-toggle">▾</span>
+          </div>
+          <div class="section-card-body">
+            <div class="field-row-3">
+              <div class="field-group">
+                <label class="field-label">Headline Line 1</label>
+                <input class="field-input" id="hero_headline_line1">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Headline Line 2</label>
+                <input class="field-input" id="hero_headline_line2">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Headline Line 3 (gold italic)</label>
+                <input class="field-input" id="hero_headline_line3">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Subtitle Text</label>
+              <textarea class="field-textarea" id="hero_subtitle" style="min-height:70px"></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Primary Button Text</label>
+                <input class="field-input" id="hero_btn_primary_text">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Secondary Button Text</label>
+                <input class="field-input" id="hero_btn_secondary_text">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT PANEL -->
+      <div class="panel" id="panel-about">
+        <div class="section-card">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <div class="section-card-title">📖 About Section</div>
+            <span class="section-card-toggle">▾</span>
+          </div>
+          <div class="section-card-body">
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Title (plain)</label>
+                <input class="field-input" id="about_title_plain">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Title (gold italic)</label>
+                <input class="field-input" id="about_title_italic">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Body Paragraph 1</label>
+              <textarea class="field-textarea" id="about_body1"></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Body Paragraph 2</label>
+              <textarea class="field-textarea" id="about_body2"></textarea>
+            </div>
+            <div class="field-row-3">
+              <div class="field-group">
+                <label class="field-label">Stat 1 Number</label>
+                <input class="field-input" id="about_stat1_num">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Stat 1 Label</label>
+                <input class="field-input" id="about_stat1_label">
+              </div>
+              <div></div>
+            </div>
+            <div class="field-row-3">
+              <div class="field-group">
+                <label class="field-label">Stat 2 Number</label>
+                <input class="field-input" id="about_stat2_num">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Stat 2 Label</label>
+                <input class="field-input" id="about_stat2_label">
+              </div>
+              <div></div>
+            </div>
+            <div class="field-row-3">
+              <div class="field-group">
+                <label class="field-label">Stat 3 Number</label>
+                <input class="field-input" id="about_stat3_num">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Stat 3 Label</label>
+                <input class="field-input" id="about_stat3_label">
+              </div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENTS PANEL -->
+      <div class="panel" id="panel-events">
+        <div class="section-card">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <div class="section-card-title">📅 Upcoming Events</div>
+            <span class="section-card-toggle">▾</span>
+          </div>
+          <div class="section-card-body">
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Empty State Title</label>
+                <input class="field-input" id="events_empty_title">
+              </div>
+              <div class="field-group" style="grid-column:1/-1">
+                <label class="field-label">Empty State Text</label>
+                <textarea class="field-textarea" id="events_empty_text" style="min-height:60px"></textarea>
+              </div>
+            </div>
+            <div style="margin-top:8px;padding-top:16px;border-top:1px solid var(--border)">
+              <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Event Cards</div>
+              <div id="eventsList"></div>
+              <button class="add-btn" onclick="addEvent()">+ Add Event</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALBUMS PANEL -->
+      <div class="panel" id="panel-albums">
+        <div class="section-card">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <div class="section-card-title">📸 Previous Event Albums</div>
+            <span class="section-card-toggle">▾</span>
+          </div>
+          <div class="section-card-body">
+            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6">Each album is a previous event. Visitors click an album to see all its photos and videos. Photos are uploaded directly to Cloudinary.</p>
+            <div id="albumsList"></div>
+            <button class="add-btn" onclick="addAlbum()">+ Create New Event Album</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEMBERSHIP PANEL -->
+      <div class="panel" id="panel-membership">
+        <div class="section-card">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <div class="section-card-title">👤 Membership</div>
+            <span class="section-card-toggle">▾</span>
+          </div>
+          <div class="section-card-body">
+            <div class="field-group">
+              <label class="field-label">Section Body Text</label>
+              <textarea class="field-textarea" id="membership_body"></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Card Title</label>
+                <input class="field-input" id="membership_card_tier">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Card Subtitle</label>
+                <input class="field-input" id="membership_card_sub">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Price Display</label>
+                <input class="field-input" id="membership_card_price">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Price Note</label>
+                <input class="field-input" id="membership_card_price_note">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Membership Features (one per line)</label>
+              <textarea class="field-textarea" id="membership_features" style="min-height:160px"></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">"Open To All" Box Title</label>
+                <input class="field-input" id="membership_open_title">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">"Open To All" Box Body</label>
+              <textarea class="field-textarea" id="membership_open_body"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BENEFITS PANEL -->
+      <div class="panel" id="panel-benefits">
+        <div class="section-card">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <div class="section-card-title">⭐ Member Benefits / Discounts</div>
+            <span class="section-card-toggle">▾</span>
+          </div>
+          <div class="section-card-body">
+            <div class="field-group">
+              <label class="field-label">Section Intro Text</label>
+              <textarea class="field-textarea" id="benefits_intro" style="min-height:60px"></textarea>
+            </div>
+            <div style="padding-top:12px;border-top:1px solid var(--border)">
+              <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Benefit Cards</div>
+              <div id="benefitsList"></div>
+              <button class="add-btn" onclick="addBenefit()">+ Add Benefit</button>
+            </div>
+            <div class="field-group" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+              <label class="field-label">Footer Note</label>
+              <textarea class="field-textarea" id="benefits_cta_note" style="min-height:60px"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMMITTEE PANEL -->
+      <div class="panel" id="panel-committee">
+        <div class="section-card">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <div class="section-card-title">👥 Committee Members</div>
+            <span class="section-card-toggle">▾</span>
+          </div>
+          <div class="section-card-body">
+            <div id="committeeList"></div>
+            <button class="add-btn" onclick="addCommitteeMember()">+ Add Member</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT PANEL -->
+      <div class="panel" id="panel-contact">
+        <div class="section-card">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <div class="section-card-title">✉️ Contact & Social</div>
+            <span class="section-card-toggle">▾</span>
+          </div>
+          <div class="section-card-body">
+            <div class="field-group">
+              <label class="field-label">Section Body Text</label>
+              <textarea class="field-textarea" id="contact_body" style="min-height:60px"></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">General Enquiries Email</label>
+                <input class="field-input" id="contact_email_general" type="email">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Events / Tickets Email</label>
+                <input class="field-input" id="contact_email_events" type="email">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Location Text</label>
+              <input class="field-input" id="contact_location">
+            </div>
+            <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 12px;padding-top:16px;border-top:1px solid var(--border)">Social Media Links</div>
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Facebook URL</label>
+                <input class="field-input" id="contact_facebook_url" placeholder="https://facebook.com/...">
+              </div>
+              <div class="field-group">
+                <label class="field-label">Instagram URL</label>
+                <input class="field-input" id="contact_instagram_url" placeholder="https://instagram.com/...">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Config ──────────────────────────────────────────────────────────────
+const GITHUB_USER  = 'jpfox88-debug';
+const GITHUB_REPO  = 'adss-website';
+const GITHUB_TOKEN = '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';
+const NETLIFY_HOOK = 'https://api.netlify.com/build_hooks/69cbc662b9235700c4dc56d9';
+const CL_CLOUD     = 'dd1zf2kse';
+const CL_API_KEY   = '383554378583134';
+const CL_API_SECRET= 'eUDS6TaFqJkVT1MJ3W8vuVg1mTs';
+const ADMIN_PASS   = 'ADSS2025!';
+const RAW_BASE     = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/`;
+
+let siteData = {};
+let _githubSha = {};
+
+// ── Login ───────────────────────────────────────────────────────────────
+function doLogin() {
+  const pass = document.getElementById('loginPass').value;
+  if(pass === ADMIN_PASS) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    loadData();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+// ── Load data from GitHub ───────────────────────────────────────────────
+async function loadData() {
+  try {
+    const r = await fetch(`${RAW_BASE}data.json?cb=${Date.now()}`);
+    siteData = await r.json();
+    // get SHA for update
+    const meta = await ghApi(`contents/data.json`);
+    _githubSha['data.json'] = meta.sha;
+    populateForms();
+    toast('Data loaded', 'success');
+  } catch(e) {
+    toast('Could not load data — check connection', 'error');
+  }
+}
+
+// ── Populate all form fields ─────────────────────────────────────────────
+function populateForms() {
+  const d = siteData;
+  // Hero
+  setVal('hero_headline_line1', d.hero?.headline_line1);
+  setVal('hero_headline_line2', d.hero?.headline_line2);
+  setVal('hero_headline_line3', d.hero?.headline_line3);
+  setVal('hero_subtitle', d.hero?.subtitle);
+  setVal('hero_btn_primary_text', d.hero?.btn_primary_text);
+  setVal('hero_btn_secondary_text', d.hero?.btn_secondary_text);
+  // About
+  setVal('about_title_plain', d.about?.title_plain);
+  setVal('about_title_italic', d.about?.title_italic);
+  setVal('about_body1', d.about?.body1);
+  setVal('about_body2', d.about?.body2);
+  setVal('about_stat1_num', d.about?.stat1_num);
+  setVal('about_stat1_label', d.about?.stat1_label);
+  setVal('about_stat2_num', d.about?.stat2_num);
+  setVal('about_stat2_label', d.about?.stat2_label);
+  setVal('about_stat3_num', d.about?.stat3_num);
+  setVal('about_stat3_label', d.about?.stat3_label);
+  // Events
+  setVal('events_empty_title', d.events?.empty_title);
+  setVal('events_empty_text', d.events?.empty_text);
+  renderEventsList();
+  // Albums
+  renderAlbumsList();
+  // Membership
+  setVal('membership_body', d.membership?.body);
+  setVal('membership_card_tier', d.membership?.card_tier);
+  setVal('membership_card_sub', d.membership?.card_sub);
+  setVal('membership_card_price', d.membership?.card_price);
+  setVal('membership_card_price_note', d.membership?.card_price_note);
+  setVal('membership_features', (d.membership?.card_features||[]).join('\n'));
+  setVal('membership_open_title', d.membership?.open_title);
+  setVal('membership_open_body', d.membership?.open_body);
+  // Benefits
+  setVal('benefits_intro', d.benefits?.intro);
+  setVal('benefits_cta_note', d.benefits?.cta_note);
+  renderBenefitsList();
+  // Committee
+  renderCommitteeList();
+  // Contact
+  setVal('contact_body', d.contact?.body);
+  setVal('contact_email_general', d.contact?.email_general);
+  setVal('contact_email_events', d.contact?.email_events);
+  setVal('contact_location', d.contact?.location);
+  setVal('contact_facebook_url', d.contact?.facebook_url);
+  setVal('contact_instagram_url', d.contact?.instagram_url);
+}
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if(el && val !== undefined && val !== null) el.value = val;
+}
+
+// ── Collect all form values into siteData ────────────────────────────────
+function collectData() {
+  const d = siteData;
+  d.hero.headline_line1 = v('hero_headline_line1');
+  d.hero.headline_line2 = v('hero_headline_line2');
+  d.hero.headline_line3 = v('hero_headline_line3');
+  d.hero.subtitle = v('hero_subtitle');
+  d.hero.btn_primary_text = v('hero_btn_primary_text');
+  d.hero.btn_secondary_text = v('hero_btn_secondary_text');
+  d.about.title_plain = v('about_title_plain');
+  d.about.title_italic = v('about_title_italic');
+  d.about.body1 = v('about_body1');
+  d.about.body2 = v('about_body2');
+  d.about.stat1_num = v('about_stat1_num');
+  d.about.stat1_label = v('about_stat1_label');
+  d.about.stat2_num = v('about_stat2_num');
+  d.about.stat2_label = v('about_stat2_label');
+  d.about.stat3_num = v('about_stat3_num');
+  d.about.stat3_label = v('about_stat3_label');
+  d.events.empty_title = v('events_empty_title');
+  d.events.empty_text = v('events_empty_text');
+  d.membership.body = v('membership_body');
+  d.membership.card_tier = v('membership_card_tier');
+  d.membership.card_sub = v('membership_card_sub');
+  d.membership.card_price = v('membership_card_price');
+  d.membership.card_price_note = v('membership_card_price_note');
+  d.membership.card_features = v('membership_features').split('\n').map(s=>s.trim()).filter(Boolean);
+  d.membership.open_title = v('membership_open_title');
+  d.membership.open_body = v('membership_open_body');
+  d.benefits.intro = v('benefits_intro');
+  d.benefits.cta_note = v('benefits_cta_note');
+  d.contact.body = v('contact_body');
+  d.contact.email_general = v('contact_email_general');
+  d.contact.email_events = v('contact_email_events');
+  d.contact.location = v('contact_location');
+  d.contact.facebook_url = v('contact_facebook_url');
+  d.contact.instagram_url = v('contact_instagram_url');
+}
+const v = id => { const el=document.getElementById(id); return el ? el.value : ''; };
+
+// ── Save ──────────────────────────────────────────────────────────────────
+async function saveAll() {
+  collectData();
+  const btn = document.getElementById('saveBtn');
+  const status = document.getElementById('saveStatus');
+  btn.disabled = true;
+  status.className = 'save-status saving';
+  status.textContent = 'Saving...';
+  try {
+    await ghPut('data.json', JSON.stringify(siteData, null, 2), 'Update site content');
+    // trigger Netlify redeploy
+    await fetch(NETLIFY_HOOK, { method: 'POST' });
+    status.className = 'save-status saved';
+    status.textContent = '✓ Published — live in ~30s';
+    toast('Saved & published! Site will update in ~30 seconds.', 'success');
+    setTimeout(() => { status.style.display='none'; }, 5000);
+  } catch(e) {
+    status.className = 'save-status error';
+    status.textContent = '✗ Save failed';
+    toast('Save failed: ' + e.message, 'error');
+  }
+  btn.disabled = false;
+}
+
+// ── GitHub API ────────────────────────────────────────────────────────────
+async function ghApi(path, opts={}) {
+  const r = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/${path}`, {
+    headers: { Authorization: `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github.v3+json' },
+    ...opts
+  });
+  if(!r.ok) throw new Error(`GitHub API error: ${r.status}`);
+  return r.json();
+}
+
+async function ghPut(filename, content, message) {
+  const encoded = btoa(unescape(encodeURIComponent(content)));
+  const body = { message, content: encoded };
+  if(_githubSha[filename]) body.sha = _githubSha[filename];
+  const res = await ghApi(`contents/${filename}`, { method: 'PUT', body: JSON.stringify(body) });
+  _githubSha[filename] = res.content.sha;
+  return res;
+}
+
+// ── Cloudinary Upload ─────────────────────────────────────────────────────
+async function uploadToCloudinary(file, onProgress) {
+  const timestamp = Math.round(Date.now()/1000);
+  const folder = 'adss';
+  const sigStr = `folder=${folder}&timestamp=${timestamp}${CL_API_SECRET}`;
+  // sha1 in browser
+  const msgBuffer = new TextEncoder().encode(sigStr);
+  const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const signature = hashArray.map(b=>b.toString(16).padStart(2,'0')).join('');
+
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('api_key', CL_API_KEY);
+  fd.append('timestamp', timestamp);
+  fd.append('signature', signature);
+  fd.append('folder', folder);
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `https://api.cloudinary.com/v1_1/${CL_CLOUD}/auto/upload`);
+    if(onProgress) xhr.upload.onprogress = e => { if(e.lengthComputable) onProgress(e.loaded/e.total); };
+    xhr.onload = () => {
+      if(xhr.status === 200) resolve(JSON.parse(xhr.responseText));
+      else reject(new Error('Upload failed: ' + xhr.responseText));
+    };
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.send(fd);
+  });
+}
+
+// ── Events List ────────────────────────────────────────────────────────────
+function renderEventsList() {
+  const list = document.getElementById('eventsList');
+  const items = siteData.events?.items || [];
+  list.innerHTML = items.map((e,i) => `
+    <div class="list-item" id="event_${i}">
+      <div class="list-item-header">
+        <div class="list-item-title">${e.title || 'New Event'}</div>
+        <div class="list-item-actions">
+          <button class="icon-btn danger" onclick="removeEvent(${i})">✕ Remove</button>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Event Title</label><input class="field-input" value="${e.title||''}" onchange="siteData.events.items[${i}].title=this.value;document.querySelector('#event_${i} .list-item-title').textContent=this.value"></div>
+        <div class="field-group"><label class="field-label">Date</label><input class="field-input" value="${e.date||''}" onchange="siteData.events.items[${i}].date=this.value"></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Venue</label><input class="field-input" value="${e.venue||''}" onchange="siteData.events.items[${i}].venue=this.value"></div>
+        <div class="field-group"><label class="field-label">Type Tag</label><input class="field-input" value="${e.type||''}" placeholder="e.g. Annual" onchange="siteData.events.items[${i}].type=this.value"></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Dress Code</label><input class="field-input" value="${e.dress_code||''}" onchange="siteData.events.items[${i}].dress_code=this.value"></div>
+        <div class="field-group"><label class="field-label">Price</label><input class="field-input" value="${e.price||''}" placeholder="AED 325 Members..." onchange="siteData.events.items[${i}].price=this.value"></div>
+      </div>
+      <div class="field-group"><label class="field-label">Description</label><textarea class="field-textarea" style="min-height:60px" onchange="siteData.events.items[${i}].description=this.value">${e.description||''}</textarea></div>
+    </div>`).join('');
+}
+function addEvent() {
+  if(!siteData.events.items) siteData.events.items = [];
+  siteData.events.items.push({ title:'New Event', date:'', venue:'', description:'', price:'', type:'', dress_code:'' });
+  renderEventsList();
+}
+function removeEvent(i) {
+  siteData.events.items.splice(i,1);
+  renderEventsList();
+}
+
+// ── Albums List ─────────────────────────────────────────────────────────────
+function renderAlbumsList() {
+  const list = document.getElementById('albumsList');
+  const albums = siteData.previous_events?.albums || [];
+  if(albums.length === 0) {
+    list.innerHTML = '<p style="color:var(--muted);font-size:13px;margin-bottom:12px">No albums yet. Create one below.</p>';
+    return;
+  }
+  list.innerHTML = albums.map((al,i) => `
+    <div class="album-list-item">
+      <div class="album-list-cover">
+        ${al.cover_url ? `<img src="${al.cover_url}">` : '📸'}
+      </div>
+      <div class="album-list-info">
+        <div class="album-list-title">${al.title}</div>
+        <div class="album-list-meta">${al.date||'No date'} · ${(al.media||[]).length} items</div>
+      </div>
+      <div class="album-list-actions">
+        <button class="icon-btn" onclick="editAlbum(${i})">✎ Edit</button>
+        <button class="icon-btn danger" onclick="removeAlbum(${i})">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+function addAlbum() {
+  if(!siteData.previous_events.albums) siteData.previous_events.albums = [];
+  const newAlbum = { title: 'New Event', date: '', cover_url: '', media: [] };
+  siteData.previous_events.albums.push(newAlbum);
+  const idx = siteData.previous_events.albums.length - 1;
+  editAlbum(idx);
+}
+
+function removeAlbum(i) {
+  if(!confirm('Delete this album?')) return;
+  siteData.previous_events.albums.splice(i,1);
+  renderAlbumsList();
+}
+
+function editAlbum(idx) {
+  const al = siteData.previous_events.albums[idx];
+  const list = document.getElementById('albumsList');
+  // Render inline editor
+  renderAlbumsList();
+  const items = list.querySelectorAll('.album-list-item');
+  // Insert editor after this item
+  const editor = document.createElement('div');
+  editor.id = `albumEditor_${idx}`;
+  editor.style.cssText = 'background:var(--surface2);border:1px solid rgba(201,162,39,.2);border-radius:5px;padding:20px;margin-bottom:8px';
+  editor.innerHTML = `
+    <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
+      Edit Album
+      <button class="icon-btn" onclick="renderAlbumsList()">✕ Close</button>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Album Title</label>
+        <input class="field-input" value="${al.title||''}" onchange="siteData.previous_events.albums[${idx}].title=this.value">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Event Date</label>
+        <input class="field-input" value="${al.date||''}" placeholder="e.g. November 2025" onchange="siteData.previous_events.albums[${idx}].date=this.value">
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Cover Photo</label>
+      <div class="cover-preview" id="coverPreview_${idx}">
+        ${al.cover_url ? `<img src="${al.cover_url}">` : '<span class="cover-preview-placeholder">🖼️</span>'}
+      </div>
+      <div class="upload-zone" id="coverUploadZone_${idx}">
+        <input type="file" accept="image/*" onchange="uploadCover(${idx}, this.files[0])">
+        <div class="upload-zone-icon">📤</div>
+        <div class="upload-zone-text">Click to upload cover photo</div>
+        <div class="upload-zone-sub">JPG, PNG or WebP</div>
+        <div class="upload-progress" id="coverProgress_${idx}"><div class="upload-progress-bar" id="coverProgressBar_${idx}"></div></div>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Photos & Videos</label>
+      <div class="upload-zone" id="mediaUploadZone_${idx}">
+        <input type="file" accept="image/*,video/*" multiple onchange="uploadMedia(${idx}, this.files)">
+        <div class="upload-zone-icon">📁</div>
+        <div class="upload-zone-text">Drop photos & videos here or click to browse</div>
+        <div class="upload-zone-sub">JPG, PNG, WebP, MP4, MOV — multiple files OK</div>
+        <div class="upload-progress" id="mediaProgress_${idx}"><div class="upload-progress-bar" id="mediaProgressBar_${idx}"></div></div>
+      </div>
+      <div class="media-grid" id="mediaGrid_${idx}"></div>
+    </div>`;
+  if(items[idx]) {
+    items[idx].after(editor);
+  } else {
+    list.appendChild(editor);
+  }
+  renderMediaGrid(idx);
+}
+
+async function uploadCover(idx, file) {
+  if(!file) return;
+  const zone = document.getElementById(`coverUploadZone_${idx}`);
+  const prog = document.getElementById(`coverProgress_${idx}`);
+  const bar = document.getElementById(`coverProgressBar_${idx}`);
+  prog.style.display = 'block';
+  try {
+    const res = await uploadToCloudinary(file, p => { bar.style.width = (p*100)+'%'; });
+    siteData.previous_events.albums[idx].cover_url = res.secure_url;
+    const preview = document.getElementById(`coverPreview_${idx}`);
+    preview.innerHTML = `<img src="${res.secure_url}">`;
+    toast('Cover uploaded!', 'success');
+  } catch(e) {
+    toast('Upload failed: ' + e.message, 'error');
+  }
+  prog.style.display = 'none';
+}
+
+async function uploadMedia(idx, files) {
+  if(!files || files.length === 0) return;
+  const prog = document.getElementById(`mediaProgress_${idx}`);
+  const bar = document.getElementById(`mediaProgressBar_${idx}`);
+  prog.style.display = 'block';
+  if(!siteData.previous_events.albums[idx].media) siteData.previous_events.albums[idx].media = [];
+  let done = 0;
+  for(const file of files) {
+    try {
+      const res = await uploadToCloudinary(file, p => {
+        bar.style.width = ((done + p) / files.length * 100) + '%';
+      });
+      const isVideo = file.type.startsWith('video/');
+      siteData.previous_events.albums[idx].media.push({
+        url: res.secure_url,
+        type: isVideo ? 'video' : 'image',
+        caption: file.name.replace(/\.[^.]+$/, '')
+      });
+    } catch(e) {
+      toast('Failed to upload ' + file.name, 'error');
+    }
+    done++;
+    bar.style.width = (done/files.length*100) + '%';
+  }
+  prog.style.display = 'none';
+  renderMediaGrid(idx);
+  renderAlbumsList();
+  // Re-open editor
+  setTimeout(() => editAlbum(idx), 100);
+  toast(`${done} file${done>1?'s':''} uploaded!`, 'success');
+}
+
+function renderMediaGrid(idx) {
+  const grid = document.getElementById(`mediaGrid_${idx}`);
+  if(!grid) return;
+  const media = siteData.previous_events.albums[idx]?.media || [];
+  grid.innerHTML = media.map((m,mi) => `
+    <div class="media-thumb">
+      ${m.type==='video'
+        ? `<video src="${m.url}" preload="metadata"></video><div class="media-thumb-type">video</div>`
+        : `<img src="${m.url}" loading="lazy">`}
+      <button class="media-thumb-del" onclick="removeMedia(${idx},${mi})" title="Remove">✕</button>
+    </div>`).join('');
+}
+
+function removeMedia(albumIdx, mediaIdx) {
+  siteData.previous_events.albums[albumIdx].media.splice(mediaIdx, 1);
+  renderMediaGrid(albumIdx);
+  renderAlbumsList();
+}
+
+// ── Benefits List ────────────────────────────────────────────────────────────
+function renderBenefitsList() {
+  const list = document.getElementById('benefitsList');
+  const items = siteData.benefits?.items || [];
+  list.innerHTML = items.map((b,i) => `
+    <div class="list-item">
+      <div class="list-item-header">
+        <div class="list-item-title">${b.name||'New Benefit'}</div>
+        <div class="list-item-actions">
+          <button class="icon-btn danger" onclick="removeBenefit(${i})">✕ Remove</button>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Category</label><input class="field-input" value="${b.category||''}" placeholder="Food & Drink" onchange="siteData.benefits.items[${i}].category=this.value"></div>
+        <div class="field-group"><label class="field-label">Name</label><input class="field-input" value="${b.name||''}" onchange="siteData.benefits.items[${i}].name=this.value"></div>
+      </div>
+      <div class="field-group"><label class="field-label">Detail</label><textarea class="field-textarea" style="min-height:50px" onchange="siteData.benefits.items[${i}].detail=this.value">${b.detail||''}</textarea></div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Badge Text</label><input class="field-input" value="${b.badge||''}" placeholder="10% Discount" onchange="siteData.benefits.items[${i}].badge=this.value"></div>
+        <div class="field-group"><label class="field-label">Coming Soon?</label>
+          <select class="field-select" onchange="siteData.benefits.items[${i}].tbc=this.value==='true'">
+            <option value="false" ${!b.tbc?'selected':''}>No — show as active</option>
+            <option value="true" ${b.tbc?'selected':''}>Yes — show as coming soon</option>
+          </select>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function addBenefit() {
+  if(!siteData.benefits.items) siteData.benefits.items = [];
+  siteData.benefits.items.push({ category:'', name:'New Partner', detail:'', badge:'Coming Soon', tbc:true });
+  renderBenefitsList();
+}
+function removeBenefit(i) {
+  siteData.benefits.items.splice(i,1);
+  renderBenefitsList();
+}
+
+// ── Committee List ────────────────────────────────────────────────────────────
+function renderCommitteeList() {
+  const list = document.getElementById('committeeList');
+  const members = siteData.committee?.members || [];
+  list.innerHTML = members.map((m,i) => `
+    <div class="list-item">
+      <div class="list-item-header">
+        <div class="list-item-title">${m.name||'Member'} — ${m.role||''}</div>
+        <div class="list-item-actions">
+          <button class="icon-btn danger" onclick="removeCommitteeMember(${i})">✕</button>
+        </div>
+      </div>
+      <div class="field-row-3">
+        <div class="field-group"><label class="field-label">Initials</label><input class="field-input" value="${m.initials||''}" maxlength="3" onchange="siteData.committee.members[${i}].initials=this.value"></div>
+        <div class="field-group"><label class="field-label">Name / Title</label><input class="field-input" value="${m.name||''}" onchange="siteData.committee.members[${i}].name=this.value"></div>
+        <div class="field-group"><label class="field-label">Role</label><input class="field-input" value="${m.role||''}" onchange="siteData.committee.members[${i}].role=this.value"></div>
+      </div>
+    </div>`).join('');
+}
+function addCommitteeMember() {
+  if(!siteData.committee.members) siteData.committee.members = [];
+  siteData.committee.members.push({ initials:'', name:'New Member', role:'' });
+  renderCommitteeList();
+}
+function removeCommitteeMember(i) {
+  siteData.committee.members.splice(i,1);
+  renderCommitteeList();
+}
+
+// ── UI helpers ────────────────────────────────────────────────────────────
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  const titles = { hero:'Hero', about:'About', events:'Events', albums:'Event Albums', membership:'Membership', benefits:'Member Benefits', committee:'Committee', contact:'Contact & Social' };
+  document.getElementById('topbarTitle').textContent = titles[name] || name;
+}
+
+function toggleCard(header) {
+  header.closest('.section-card').classList.toggle('collapsed');
+  const toggle = header.querySelector('.section-card-toggle');
+  toggle.textContent = header.closest('.section-card').classList.contains('collapsed') ? '▸' : '▾';
+}
+
+function toast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' '+type : '');
+  setTimeout(() => { t.className = 'toast'; }, 3500);
+}
+
+// Focus password on load
+window.onload = () => document.getElementById('loginPass').focus();
+</script>
+</body>
+</html>

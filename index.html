@@ -6,1408 +6,689 @@
 <title>Abu Dhabi Scottish Society</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ===================== SHARED ===================== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --navy: #0d1a2b; --navy-mid: #132238; --navy-light: #1e3355;
-  --gold: #c9a227; --gold-light: #e4bc55; --gold-pale: #f5e8c0;
-  --white: #faf8f3; --cream: #f2edd8; --muted: rgba(250,248,243,0.6);
-  --tartan-red: #9b1c2e;
-  /* CMS */
-  --cms-bg: #0f1117; --cms-surface: #161b27; --cms-border: rgba(255,255,255,0.08);
-  --cms-accent: #c9a227; --cms-text: #e8e6df; --cms-muted: rgba(232,230,223,0.5);
-  --cms-danger: #e24b4a; --cms-success: #1d9e75;
-}
-html { scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; font-weight: 300; background: var(--navy); color: var(--white); overflow-x: hidden; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ===================== VIEWS ===================== */
-#view-site { display: block; }
-#view-cms  { display: none; }
-body.cms-mode #view-site { display: none; }
-body.cms-mode #view-cms  { display: flex; height: 100vh; overflow: hidden; background: var(--cms-bg); }
+  :root {
+    --navy: #0d1a2b;
+    --navy-mid: #132238;
+    --navy-light: #1e3355;
+    --gold: #c9a227;
+    --gold-light: #e4bc55;
+    --gold-pale: #f5e8c0;
+    --white: #faf8f3;
+    --muted: rgba(250,248,243,0.6);
+    --tartan-red: #9b1c2e;
+  }
 
-/* ===================== CMS FLOATING BUTTON ===================== */
-#cms-toggle-btn {
-  position: fixed; bottom: 28px; right: 28px; z-index: 9999;
-  background: var(--gold); color: var(--navy); border: none; cursor: pointer;
-  padding: 12px 22px; border-radius: 3px; font-family: 'DM Sans', sans-serif;
-  font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.4); transition: background 0.2s, transform 0.15s;
-  display: flex; align-items: center; gap: 8px;
-}
-#cms-toggle-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
-#cms-toggle-btn svg { width: 14px; height: 14px; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
 
-/* ===================== CMS SIDEBAR ===================== */
-.cms-sidebar {
-  width: 240px; flex-shrink: 0; background: var(--cms-surface);
-  border-right: 1px solid var(--cms-border); display: flex; flex-direction: column;
-  overflow: hidden;
-}
-.cms-logo {
-  padding: 24px 20px 20px; border-bottom: 1px solid var(--cms-border);
-  font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700;
-  color: var(--cms-text); line-height: 1.3;
-}
-.cms-logo span { color: var(--gold); display: block; font-size: 10px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 2px; opacity: 0.7; }
-.cms-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
-.cms-nav-section { padding: 8px 20px 4px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cms-muted); margin-top: 8px; }
-.cms-nav-item {
-  display: flex; align-items: center; gap: 10px; padding: 10px 20px;
-  font-size: 13px; color: var(--cms-muted); cursor: pointer;
-  transition: color 0.15s, background 0.15s; border-left: 2px solid transparent;
-}
-.cms-nav-item:hover { color: var(--cms-text); background: rgba(255,255,255,0.03); }
-.cms-nav-item.active { color: var(--gold); border-left-color: var(--gold); background: rgba(201,162,39,0.06); }
-.cms-nav-item svg { width: 14px; height: 14px; flex-shrink: 0; opacity: 0.7; }
-.cms-nav-item.active svg { opacity: 1; }
-.cms-footer-btn {
-  padding: 16px 20px; border-top: 1px solid var(--cms-border);
-  display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--cms-muted);
-  cursor: pointer; transition: color 0.15s; letter-spacing: 0.05em;
-}
-.cms-footer-btn:hover { color: var(--cms-text); }
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; background: rgba(13,26,43,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,162,39,0.2); transition: background 0.3s; }
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .nav-crest { width: 42px; height: 42px; flex-shrink: 0; }
+  .nav-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; letter-spacing: 0.04em; color: var(--white); line-height: 1.2; }
+  .nav-name span { color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--gold); color: var(--navy) !important; padding: 9px 22px !important; border-radius: 2px; font-weight: 500 !important; letter-spacing: 0.1em !important; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--gold-light) !important; }
 
-/* ===================== CMS MAIN ===================== */
-.cms-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-.cms-topbar {
-  height: 56px; border-bottom: 1px solid var(--cms-border); display: flex;
-  align-items: center; justify-content: space-between; padding: 0 28px; flex-shrink: 0;
-  background: var(--cms-surface);
-}
-.cms-topbar-title { font-size: 15px; font-weight: 500; color: var(--cms-text); }
-.cms-topbar-actions { display: flex; gap: 10px; align-items: center; }
-.cms-btn {
-  padding: 8px 18px; border-radius: 3px; font-family: 'DM Sans', sans-serif;
-  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-  cursor: pointer; transition: all 0.15s; border: none;
-}
-.cms-btn-primary { background: var(--gold); color: var(--navy); }
-.cms-btn-primary:hover { background: var(--gold-light); }
-.cms-btn-ghost { background: transparent; color: var(--cms-muted); border: 1px solid var(--cms-border); }
-.cms-btn-ghost:hover { color: var(--cms-text); border-color: rgba(255,255,255,0.2); }
-.cms-btn-danger { background: transparent; color: var(--cms-danger); border: 1px solid rgba(226,75,74,0.3); }
-.cms-btn-danger:hover { background: rgba(226,75,74,0.1); }
-.cms-btn-sm { padding: 5px 12px; font-size: 11px; }
-.cms-content { flex: 1; overflow-y: auto; padding: 28px; }
+  /* HERO */
+  #hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 60px 80px; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(155,28,46,0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 20% 80%, rgba(201,162,39,0.08) 0%, transparent 55%), linear-gradient(160deg, #0d1a2b 0%, #132238 50%, #0d1a2b 100%); }
+  .hero-tartan { position: absolute; inset: 0; opacity: 0.04; background-image: repeating-linear-gradient(0deg, var(--tartan-red) 0px, var(--tartan-red) 8px, transparent 8px, transparent 24px, var(--tartan-red) 24px, var(--tartan-red) 30px, transparent 30px, transparent 52px), repeating-linear-gradient(90deg, var(--tartan-red) 0px, var(--tartan-red) 8px, transparent 8px, transparent 24px, var(--tartan-red) 24px, var(--tartan-red) 30px, transparent 30px, transparent 52px), repeating-linear-gradient(0deg, var(--gold) 0px, var(--gold) 2px, transparent 2px, transparent 52px), repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 2px, transparent 2px, transparent 52px); }
+  .hero-content { position: relative; max-width: 760px; animation: fadeUp 1s ease both; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+  .hero-badge::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+  .hero-content h1 { font-family: 'Playfair Display', serif; font-size: clamp(52px, 7vw, 88px); font-weight: 900; line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 28px; }
+  .hero-content h1 em { font-style: italic; color: var(--gold); }
+  .hero-subtitle { font-size: 18px; line-height: 1.7; color: var(--muted); max-width: 520px; margin-bottom: 48px; font-weight: 300; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary { background: var(--gold); color: var(--navy); padding: 14px 32px; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline { border: 1px solid rgba(201,162,39,0.4); color: var(--gold); padding: 14px 32px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: border-color 0.2s, background 0.2s; }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(201,162,39,0.06); }
+  .hero-established { position: absolute; bottom: 60px; right: 60px; text-align: right; animation: fadeUp 1.3s ease both; }
+  .hero-year { font-family: 'Playfair Display', serif; font-size: 96px; font-weight: 900; line-height: 1; color: rgba(201,162,39,0.10); letter-spacing: -0.03em; }
+  .hero-est-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(201,162,39,0.35); margin-top: -8px; }
+  .hero-est-sub { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 13px; color: rgba(201,162,39,0.3); margin-top: 6px; }
+  .scroll-hint { position: absolute; bottom: 32px; left: 60px; display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); animation: fadeUp 1.5s ease both; }
+  .scroll-line { width: 40px; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); }
 
-/* ===================== CMS PANELS ===================== */
-.cms-panel { display: none; }
-.cms-panel.active { display: block; }
-.cms-card {
-  background: var(--cms-surface); border: 1px solid var(--cms-border);
-  border-radius: 6px; margin-bottom: 20px; overflow: hidden;
-}
-.cms-card-header {
-  padding: 16px 20px; border-bottom: 1px solid var(--cms-border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.cms-card-title { font-size: 13px; font-weight: 500; color: var(--cms-text); letter-spacing: 0.03em; }
-.cms-card-body { padding: 20px; }
+  /* SHARED */
+  section { position: relative; }
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
+  .section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); opacity: 0.5; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 20px; }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .section-body { font-size: 17px; line-height: 1.8; color: var(--muted); font-weight: 300; max-width: 580px; }
+  .divider { width: 60px; height: 2px; background: linear-gradient(to right, var(--gold), transparent); margin: 24px 0; }
 
-/* ===================== CMS FORM ELEMENTS ===================== */
-.cms-field { margin-bottom: 18px; }
-.cms-label { display: block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); opacity: 0.8; margin-bottom: 7px; }
-.cms-input, .cms-textarea, .cms-select {
-  width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--cms-border);
-  border-radius: 4px; padding: 10px 14px; font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 300; color: var(--cms-text); outline: none;
-  transition: border-color 0.15s;
-}
-.cms-input:focus, .cms-textarea:focus, .cms-select:focus { border-color: rgba(201,162,39,0.5); }
-.cms-textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
-.cms-select option { background: #1a2035; }
-.cms-input::placeholder, .cms-textarea::placeholder { color: rgba(232,230,223,0.25); }
-.cms-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.cms-field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  /* ABOUT */
+  #about { background: var(--navy-mid); border-top: 1px solid rgba(201,162,39,0.12); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about-visual { position: relative; aspect-ratio: 3/4; max-width: 420px; }
+  .about-frame { width: 100%; height: 100%; border: 1px solid rgba(201,162,39,0.25); border-radius: 4px; background: var(--navy-light); overflow: hidden; position: relative; }
+  .about-pattern { position: absolute; inset: 0; opacity: 0.06; background-image: repeating-linear-gradient(0deg, var(--tartan-red) 0px, var(--tartan-red) 6px, transparent 6px, transparent 18px, var(--tartan-red) 18px, var(--tartan-red) 22px, transparent 22px, transparent 38px), repeating-linear-gradient(90deg, var(--tartan-red) 0px, var(--tartan-red) 6px, transparent 6px, transparent 18px, var(--tartan-red) 18px, var(--tartan-red) 22px, transparent 22px, transparent 38px), repeating-linear-gradient(0deg, var(--gold) 0px, var(--gold) 1.5px, transparent 1.5px, transparent 38px), repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 1.5px, transparent 1.5px, transparent 38px); }
+  .about-center-emblem { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+  .about-thistle-svg { width: 120px; opacity: 0.7; }
+  .about-motto { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 15px; color: var(--gold-pale); letter-spacing: 0.05em; opacity: 0.8; text-align: center; padding: 0 20px; }
+  .about-accent { position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border: 1px solid rgba(201,162,39,0.3); border-radius: 2px; pointer-events: none; }
+  .about-accent-2 { position: absolute; bottom: -20px; left: -20px; width: 60px; height: 60px; border: 1px solid rgba(201,162,39,0.15); border-radius: 2px; pointer-events: none; }
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 48px; border: 1px solid rgba(201,162,39,0.15); border-radius: 4px; overflow: hidden; }
+  .stat-item { padding: 24px 20px; border-right: 1px solid rgba(201,162,39,0.12); text-align: center; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 
-/* ===================== CMS LIST ITEMS ===================== */
-.cms-list { display: flex; flex-direction: column; gap: 0; }
-.cms-list-item {
-  display: flex; align-items: center; gap: 14px; padding: 14px 20px;
-  border-bottom: 1px solid var(--cms-border); transition: background 0.15s;
-}
-.cms-list-item:last-child { border-bottom: none; }
-.cms-list-item:hover { background: rgba(255,255,255,0.02); }
-.cms-drag-handle { color: var(--cms-muted); cursor: grab; font-size: 16px; flex-shrink: 0; }
-.cms-item-avatar {
-  width: 38px; height: 38px; border-radius: 50%; background: var(--navy-light);
-  border: 1px solid rgba(201,162,39,0.25); display: flex; align-items: center;
-  justify-content: center; font-family: 'Playfair Display', serif; font-size: 14px;
-  font-weight: 700; color: var(--gold); flex-shrink: 0; text-transform: uppercase;
-}
-.cms-item-img {
-  width: 56px; height: 38px; border-radius: 3px; object-fit: cover;
-  background: var(--navy-light); flex-shrink: 0; border: 1px solid var(--cms-border);
-  display: flex; align-items: center; justify-content: center; font-size: 18px;
-  overflow: hidden;
-}
-.cms-item-info { flex: 1; min-width: 0; }
-.cms-item-name { font-size: 13px; font-weight: 500; color: var(--cms-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cms-item-sub { font-size: 11px; color: var(--cms-muted); margin-top: 2px; }
-.cms-item-badge {
-  padding: 3px 10px; border-radius: 2px; font-size: 10px; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0;
-}
-.badge-active { background: rgba(29,158,117,0.15); color: var(--cms-success); border: 1px solid rgba(29,158,117,0.25); }
-.badge-draft  { background: rgba(201,162,39,0.12); color: var(--gold); border: 1px solid rgba(201,162,39,0.25); }
-.cms-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  /* EVENTS */
+  #events { background: var(--navy); border-top: 1px solid rgba(201,162,39,0.08); }
+  .events-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px; gap: 30px; }
+  .events-empty { border: 1px dashed rgba(201,162,39,0.25); border-radius: 4px; padding: 80px 40px; text-align: center; background: var(--navy-mid); position: relative; overflow: hidden; }
+  .events-empty::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,162,39,0.04) 0%, transparent 70%); pointer-events: none; }
+  .events-empty-icon { font-size: 48px; opacity: 0.35; margin-bottom: 20px; display: block; }
+  .events-empty-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+  .events-empty-text { font-size: 16px; line-height: 1.7; color: var(--muted); max-width: 440px; margin: 0 auto 32px; }
+  .events-empty-cta { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 1px solid rgba(201,162,39,0.3); padding: 12px 28px; border-radius: 2px; transition: border-color 0.2s, background 0.2s; }
+  .events-empty-cta:hover { border-color: var(--gold); background: rgba(201,162,39,0.06); }
 
-/* ===================== CMS MODAL ===================== */
-.cms-modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 10000;
-  display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.cms-modal-overlay.open { display: flex; }
-.cms-modal {
-  background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 8px;
-  width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto;
-  animation: modalIn 0.2s ease;
-}
-@keyframes modalIn { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-.cms-modal-header {
-  padding: 20px 24px 16px; border-bottom: 1px solid var(--cms-border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.cms-modal-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--cms-text); }
-.cms-modal-close { background: none; border: none; color: var(--cms-muted); cursor: pointer; font-size: 20px; line-height: 1; padding: 4px; transition: color 0.15s; }
-.cms-modal-close:hover { color: var(--cms-text); }
-.cms-modal-body { padding: 24px; }
-.cms-modal-footer { padding: 16px 24px; border-top: 1px solid var(--cms-border); display: flex; justify-content: flex-end; gap: 10px; }
+  /* GALLERY */
+  #gallery { background: var(--navy-mid); border-top: 1px solid rgba(201,162,39,0.08); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 200px 200px; gap: 12px; margin-top: 48px; }
+  .gallery-item { background: var(--navy-light); border-radius: 3px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(201,162,39,0.1); cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
+  .gallery-item:hover { border-color: rgba(201,162,39,0.45); transform: scale(1.015); }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gallery-item img, .gallery-item video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: opacity 0.2s; }
+  .gallery-item:hover img, .gallery-item:hover video { opacity: 1; }
+  .gallery-overlay { position: absolute; inset: 0; background: rgba(13,26,43,0); transition: background 0.2s; display: flex; align-items: center; justify-content: center; z-index: 2; }
+  .gallery-item:hover .gallery-overlay { background: rgba(13,26,43,0.35); }
+  .gallery-overlay-icon { opacity: 0; transform: scale(0.8); transition: opacity 0.2s, transform 0.2s; font-size: 28px; }
+  .gallery-item:hover .gallery-overlay-icon { opacity: 1; transform: scale(1); }
+  .gallery-video-badge { position: absolute; top: 10px; left: 10px; z-index: 3; background: rgba(13,26,43,0.7); border: 1px solid rgba(201,162,39,0.4); color: var(--gold); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
+  .gallery-placeholder { position: relative; z-index: 1; text-align: center; }
+  .gallery-placeholder-icon { font-size: 48px; opacity: 0.3; display: block; margin-bottom: 8px; }
+  .gallery-item:nth-child(1) .gallery-placeholder-icon { font-size: 64px; }
+  .gallery-placeholder-text { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); opacity: 0.6; }
+  .gallery-note { text-align: center; margin-top: 28px; font-size: 14px; color: var(--muted); font-style: italic; }
 
-/* ===================== IMAGE UPLOAD ===================== */
-.cms-upload-zone {
-  border: 2px dashed rgba(201,162,39,0.25); border-radius: 4px; padding: 28px;
-  text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;
-  position: relative; overflow: hidden;
-}
-.cms-upload-zone:hover, .cms-upload-zone.drag-over { border-color: rgba(201,162,39,0.6); background: rgba(201,162,39,0.04); }
-.cms-upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.cms-upload-icon { font-size: 28px; margin-bottom: 8px; opacity: 0.5; }
-.cms-upload-text { font-size: 13px; color: var(--cms-muted); }
-.cms-upload-text strong { color: var(--gold); }
-.cms-photo-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px;
-}
-.cms-photo-thumb {
-  aspect-ratio: 1; border-radius: 4px; overflow: hidden; position: relative;
-  background: var(--navy-light); border: 1px solid var(--cms-border);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: border-color 0.15s;
-}
-.cms-photo-thumb:hover { border-color: rgba(201,162,39,0.4); }
-.cms-photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.cms-photo-thumb .remove-photo {
-  position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.7);
-  color: #fff; border: none; width: 20px; height: 20px; border-radius: 50%;
-  font-size: 12px; cursor: pointer; display: none; align-items: center; justify-content: center;
-  line-height: 1;
-}
-.cms-photo-thumb:hover .remove-photo { display: flex; }
-.cms-photo-thumb .photo-emoji { font-size: 24px; opacity: 0.4; }
+  /* LIGHTBOX */
+  .lightbox { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(8,15,26,0.96); align-items: center; justify-content: center; flex-direction: column; }
+  .lightbox.open { display: flex; }
+  .lightbox-media { max-width: 90vw; max-height: 80vh; border-radius: 3px; object-fit: contain; }
+  .lightbox-controls { display: flex; align-items: center; gap: 16px; margin-top: 20px; }
+  .lightbox-btn { background: rgba(201,162,39,0.12); border: 1px solid rgba(201,162,39,0.3); color: var(--gold); padding: 10px 20px; border-radius: 2px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: background 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .lightbox-btn:hover { background: rgba(201,162,39,0.22); }
+  .lightbox-close { position: absolute; top: 24px; right: 32px; background: none; border: none; color: var(--muted); font-size: 32px; cursor: pointer; line-height: 1; transition: color 0.2s; }
+  .lightbox-close:hover { color: var(--white); }
+  .lightbox-caption { font-size: 13px; color: var(--muted); margin-top: 8px; letter-spacing: 0.05em; }
 
-/* ===================== CMS TOAST ===================== */
-#cms-toast {
-  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--cms-success); color: #fff; padding: 12px 24px; border-radius: 4px;
-  font-size: 13px; font-weight: 500; z-index: 99999; opacity: 0; transition: all 0.3s;
-  pointer-events: none; white-space: nowrap;
-}
-#cms-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  /* MEMBERSHIP */
+  #membership { background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%); border-top: 1px solid rgba(201,162,39,0.08); }
+  .membership-layout { display: grid; grid-template-columns: 1fr 400px; gap: 80px; align-items: start; }
+  .mem-single-card { background: var(--navy-light); border: 1px solid rgba(201,162,39,0.3); border-radius: 4px; padding: 40px; position: relative; }
+  .mem-single-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(to right, var(--gold), rgba(201,162,39,0.2)); border-radius: 4px 4px 0 0; }
+  .mem-tier { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .mem-sub { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 24px; }
+  .mem-price { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+  .mem-price-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .mem-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .mem-features li { font-size: 14px; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+  .mem-features li::before { content: ''; width: 16px; height: 16px; flex-shrink: 0; background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='8' r='7.5' stroke='%23c9a227' stroke-opacity='0.4'/%3E%3Cpath d='M5 8l2 2 4-4' stroke='%23c9a227' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; margin-top: 1px; }
+  .mem-btn { display: block; text-align: center; padding: 14px; background: var(--gold); border: none; border-radius: 2px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); text-decoration: none; font-weight: 500; transition: background 0.2s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .mem-btn:hover { background: var(--gold-light); }
+  .mem-open-box { background: var(--navy-mid); border: 1px solid rgba(201,162,39,0.15); border-radius: 4px; padding: 28px; margin-top: 20px; }
+  .mem-open-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .mem-open-text { font-size: 14px; line-height: 1.7; color: var(--muted); }
 
-/* ===================== PREVIEW STRIP ===================== */
-.cms-preview-strip {
-  background: rgba(201,162,39,0.08); border: 1px solid rgba(201,162,39,0.2);
-  border-radius: 4px; padding: 12px 16px; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--cms-muted);
-}
-.cms-preview-strip strong { color: var(--gold); }
+  /* BENEFITS */
+  #benefits { background: var(--navy); border-top: 1px solid rgba(201,162,39,0.08); }
+  .benefits-intro { max-width: 680px; margin-bottom: 56px; }
+  .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .benefit-card { background: var(--navy-mid); border: 1px solid rgba(201,162,39,0.12); border-radius: 4px; padding: 28px; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+  .benefit-card:hover { border-color: rgba(201,162,39,0.4); transform: translateY(-3px); }
+  .benefit-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, rgba(201,162,39,0.4), transparent); opacity: 0; transition: opacity 0.2s; }
+  .benefit-card:hover::after { opacity: 1; }
+  .benefit-category { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 14px; }
+  .benefit-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+  .benefit-detail { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 14px; }
+  .benefit-discount { display: inline-block; background: rgba(201,162,39,0.12); border: 1px solid rgba(201,162,39,0.25); color: var(--gold); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 2px; }
+  .benefit-tbc { color: var(--muted); font-size: 12px; font-style: italic; }
+  .benefits-cta-note { margin-top: 36px; padding: 24px 28px; background: var(--navy-mid); border: 1px solid rgba(201,162,39,0.15); border-radius: 4px; border-left: 3px solid var(--gold); font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .benefits-cta-note strong { color: var(--white); font-weight: 500; }
 
-/* ===================== DASHBOARD STATS ===================== */
-.cms-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
-.cms-stat {
-  background: var(--cms-surface); border: 1px solid var(--cms-border); border-radius: 6px;
-  padding: 20px; text-align: center;
-}
-.cms-stat-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--gold); line-height: 1; }
-.cms-stat-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cms-muted); margin-top: 6px; }
+  /* COMMITTEE */
+  #committee { background: var(--navy-mid); border-top: 1px solid rgba(201,162,39,0.08); }
+  .committee-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+  .committee-card { background: var(--navy); border: 1px solid rgba(201,162,39,0.12); border-radius: 4px; padding: 28px 24px; text-align: center; transition: border-color 0.2s, transform 0.2s; }
+  .committee-card:hover { border-color: rgba(201,162,39,0.3); transform: translateY(-2px); }
+  .committee-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--navy-light); border: 2px solid rgba(201,162,39,0.25); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--gold); }
+  .committee-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .committee-role { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); opacity: 0.7; }
 
-/* ===================== WEBSITE STYLES ===================== */
-#view-site nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 60px; background: rgba(13,26,43,0.85); backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(201,162,39,0.2); transition: background 0.3s;
-}
-.nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-.nav-crest { width: 42px; height: 42px; flex-shrink: 0; }
-.nav-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; letter-spacing: 0.04em; color: var(--white); line-height: 1.2; }
-.nav-name span { color: var(--gold); }
-.nav-links { display: flex; gap: 36px; list-style: none; }
-.nav-links a { text-decoration: none; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
-.nav-links a:hover { color: var(--gold); }
-.nav-cta { background: var(--gold) !important; color: var(--navy) !important; padding: 9px 22px !important; border-radius: 2px; font-weight: 500 !important; }
-.nav-cta:hover { background: var(--gold-light) !important; }
+  /* CONTACT */
+  #contact { background: var(--navy-mid); border-top: 1px solid rgba(201,162,39,0.08); }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .contact-info { display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
+  .contact-item { display: flex; align-items: flex-start; gap: 18px; }
+  .contact-icon { width: 40px; height: 40px; border: 1px solid rgba(201,162,39,0.25); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .contact-item-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 4px; }
+  .contact-item-val { font-size: 15px; color: var(--white); }
+  .contact-item-val a { color: var(--white); text-decoration: none; transition: color 0.2s; }
+  .contact-item-val a:hover { color: var(--gold); }
+  .contact-social { display: flex; gap: 12px; margin-top: 40px; }
+  .social-btn { width: 44px; height: 44px; border: 1px solid rgba(201,162,39,0.2); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 18px; text-decoration: none; transition: border-color 0.2s, background 0.2s; color: var(--white); }
+  .social-btn:hover { border-color: rgba(201,162,39,0.5); background: rgba(201,162,39,0.05); }
+  .contact-form-side { padding-top: 20px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 8px; }
+  .form-input, .form-textarea { width: 100%; background: var(--navy); border: 1px solid rgba(201,162,39,0.2); border-radius: 2px; padding: 12px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300; color: var(--white); outline: none; transition: border-color 0.2s; }
+  .form-input:focus, .form-textarea:focus { border-color: rgba(201,162,39,0.5); }
+  .form-textarea { height: 120px; resize: vertical; }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(250,248,243,0.3); }
+  .form-submit { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); cursor: pointer; transition: background 0.2s; margin-top: 8px; }
+  .form-submit:hover { background: var(--gold-light); }
 
-#hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 60px 80px; }
-.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(155,28,46,0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 20% 80%, rgba(201,162,39,0.08) 0%, transparent 55%), linear-gradient(160deg, #0d1a2b 0%, #132238 50%, #0d1a2b 100%); }
-.hero-tartan { position: absolute; inset: 0; opacity: 0.04; background-image: repeating-linear-gradient(0deg, var(--tartan-red) 0px, var(--tartan-red) 8px, transparent 8px, transparent 24px, var(--tartan-red) 24px, var(--tartan-red) 30px, transparent 30px, transparent 52px), repeating-linear-gradient(90deg, var(--tartan-red) 0px, var(--tartan-red) 8px, transparent 8px, transparent 24px, var(--tartan-red) 24px, var(--tartan-red) 30px, transparent 30px, transparent 52px), repeating-linear-gradient(0deg, var(--gold) 0px, var(--gold) 2px, transparent 2px, transparent 52px), repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 2px, transparent 2px, transparent 52px); }
-.hero-content { position: relative; max-width: 760px; animation: fadeUp 1s ease both; }
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
-.hero-badge::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
-.hero-content h1 { font-family: 'Playfair Display', serif; font-size: clamp(52px, 7vw, 88px); font-weight: 900; line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 28px; }
-.hero-content h1 em { font-style: italic; color: var(--gold); }
-.hero-subtitle { font-size: 18px; line-height: 1.7; color: var(--muted); max-width: 520px; margin-bottom: 48px; font-weight: 300; }
-.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
-.hero-year-display { position: absolute; bottom: 60px; right: 60px; text-align: right; }
-.hero-year-num { font-family: 'Playfair Display', serif; font-size: 96px; font-weight: 900; line-height: 1; color: rgba(201,162,39,0.12); letter-spacing: -0.03em; }
-.hero-est-label { font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(201,162,39,0.4); margin-top: -8px; }
+  /* FOOTER */
+  footer { background: #080f1a; border-top: 1px solid rgba(201,162,39,0.12); padding: 48px 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--white); opacity: 0.6; }
+  .footer-brand span { color: var(--gold); }
+  .footer-links { display: flex; gap: 28px; list-style: none; flex-wrap: wrap; }
+  .footer-links a { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; opacity: 0.5; }
+  .footer-links a:hover { color: var(--gold); opacity: 1; }
+  .footer-copy { font-size: 12px; color: var(--muted); opacity: 0.35; }
 
-.btn-primary { background: var(--gold); color: var(--navy); padding: 14px 32px; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.15s; display: inline-block; }
-.btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
-.btn-outline { border: 1px solid rgba(201,162,39,0.4); color: var(--gold); padding: 14px 32px; font-size: 13px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: border-color 0.2s, background 0.2s; display: inline-block; }
-.btn-outline:hover { border-color: var(--gold); background: rgba(201,162,39,0.06); }
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-section { position: relative; }
-.section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
-.section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-.section-label::after { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); opacity: 0.5; }
-.section-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 20px; }
-.section-title em { color: var(--gold); font-style: italic; }
-.section-body { font-size: 17px; line-height: 1.8; color: var(--muted); font-weight: 300; max-width: 580px; }
-.divider { width: 60px; height: 2px; background: linear-gradient(to right, var(--gold), transparent); margin: 24px 0; }
-
-#about { background: var(--navy-mid); border-top: 1px solid rgba(201,162,39,0.12); }
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.about-frame { width: 100%; aspect-ratio: 3/4; background: var(--navy-light); border: 1px solid rgba(201,162,39,0.25); border-radius: 4px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px; }
-.about-img { width: 100%; height: 100%; object-fit: cover; }
-.about-pattern { position: absolute; inset: 0; opacity: 0.06; background-image: repeating-linear-gradient(0deg, var(--tartan-red) 0px, var(--tartan-red) 6px, transparent 6px, transparent 18px, var(--tartan-red) 18px, var(--tartan-red) 22px, transparent 22px, transparent 38px), repeating-linear-gradient(90deg, var(--tartan-red) 0px, var(--tartan-red) 6px, transparent 6px, transparent 18px, var(--tartan-red) 18px, var(--tartan-red) 22px, transparent 22px, transparent 38px), repeating-linear-gradient(0deg, var(--gold) 0px, var(--gold) 1.5px, transparent 1.5px, transparent 38px), repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 1.5px, transparent 1.5px, transparent 38px); pointer-events: none; }
-.about-thistle { width: 100px; opacity: 0.6; position: relative; z-index: 1; }
-.about-motto { font-family: 'Libre Baskerville', serif; font-style: italic; font-size: 15px; color: var(--gold-pale); opacity: 0.8; text-align: center; padding: 0 20px; position: relative; z-index: 1; }
-.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 48px; border: 1px solid rgba(201,162,39,0.15); border-radius: 4px; overflow: hidden; }
-.stat-item { padding: 24px 20px; border-right: 1px solid rgba(201,162,39,0.12); text-align: center; }
-.stat-item:last-child { border-right: none; }
-.stat-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
-.stat-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-
-#events { background: var(--navy); border-top: 1px solid rgba(201,162,39,0.08); }
-.events-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px; gap: 30px; }
-.events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.event-card { border: 1px solid rgba(201,162,39,0.15); border-radius: 4px; overflow: hidden; background: var(--navy-mid); transition: border-color 0.25s, transform 0.25s; cursor: pointer; text-decoration: none; display: block; }
-.event-card:hover { border-color: rgba(201,162,39,0.5); transform: translateY(-4px); }
-.event-card.featured { grid-column: span 2; }
-.event-img-area { height: 200px; background: var(--navy-light); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.event-card.featured .event-img-area { height: 260px; }
-.event-img-area img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-.event-img-bg { position: absolute; inset: 0; opacity: 0.08; }
-.event-icon { position: relative; z-index: 1; font-size: 56px; opacity: 0.5; }
-.event-card.featured .event-icon { font-size: 72px; }
-.event-date-badge { position: absolute; top: 16px; left: 16px; background: var(--gold); color: var(--navy); padding: 6px 12px; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 2px; z-index: 2; }
-.event-tag { position: absolute; top: 16px; right: 16px; border: 1px solid rgba(201,162,39,0.4); color: var(--gold); padding: 4px 10px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; z-index: 2; }
-.event-body { padding: 24px; }
-.event-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; line-height: 1.25; margin-bottom: 8px; color: var(--white); }
-.event-card.featured .event-title { font-size: 26px; }
-.event-meta { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
-.event-desc { font-size: 14px; line-height: 1.65; color: var(--muted); }
-.event-price { display: inline-block; margin-top: 16px; font-size: 13px; font-weight: 500; color: var(--gold); }
-.no-events { text-align: center; padding: 60px 20px; color: var(--muted); font-style: italic; grid-column: 1/-1; }
-
-#gallery-section { background: var(--navy-mid); border-top: 1px solid rgba(201,162,39,0.08); }
-.gallery-grid-display { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 48px; }
-.gallery-photo { aspect-ratio: 1; border-radius: 3px; overflow: hidden; background: var(--navy-light); border: 1px solid rgba(201,162,39,0.1); display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
-.gallery-photo:hover { border-color: rgba(201,162,39,0.35); }
-.gallery-photo img { width: 100%; height: 100%; object-fit: cover; }
-.gallery-photo.large { grid-column: span 2; grid-row: span 2; }
-.gallery-placeholder { font-size: 36px; opacity: 0.3; }
-
-#committee-section { background: var(--navy); border-top: 1px solid rgba(201,162,39,0.08); }
-.committee-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
-.committee-card { background: var(--navy-mid); border: 1px solid rgba(201,162,39,0.12); border-radius: 4px; padding: 28px 24px; text-align: center; transition: border-color 0.2s, transform 0.2s; }
-.committee-card:hover { border-color: rgba(201,162,39,0.3); transform: translateY(-2px); }
-.committee-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--navy-light); border: 2px solid rgba(201,162,39,0.25); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--gold); overflow: hidden; }
-.committee-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.committee-name { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-.committee-role { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); opacity: 0.7; }
-
-#contact { background: var(--navy-mid); border-top: 1px solid rgba(201,162,39,0.08); }
-.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-.contact-info { display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
-.contact-item { display: flex; align-items: flex-start; gap: 18px; }
-.contact-icon { width: 40px; height: 40px; border: 1px solid rgba(201,162,39,0.25); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; color: var(--gold); }
-.contact-item-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 4px; }
-.contact-item-val { font-size: 15px; color: var(--white); }
-.contact-item-val a { color: var(--white); text-decoration: none; transition: color 0.2s; }
-.contact-item-val a:hover { color: var(--gold); }
-.contact-form-side { padding-top: 20px; }
-.form-group { margin-bottom: 20px; }
-.form-label { display: block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 8px; }
-.form-input, .form-textarea { width: 100%; background: var(--navy); border: 1px solid rgba(201,162,39,0.2); border-radius: 2px; padding: 12px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300; color: var(--white); outline: none; transition: border-color 0.2s; }
-.form-input:focus, .form-textarea:focus { border-color: rgba(201,162,39,0.5); }
-.form-textarea { height: 120px; resize: vertical; }
-.form-submit { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); cursor: pointer; transition: background 0.2s; margin-top: 8px; }
-.form-submit:hover { background: var(--gold-light); }
-
-footer { background: #080f1a; border-top: 1px solid rgba(201,162,39,0.12); padding: 48px 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
-.footer-brand { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--white); opacity: 0.6; }
-.footer-brand span { color: var(--gold); }
-.footer-links { display: flex; gap: 28px; list-style: none; }
-.footer-links a { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; opacity: 0.5; }
-.footer-links a:hover { color: var(--gold); opacity: 1; }
-.footer-copy { font-size: 12px; color: var(--muted); opacity: 0.35; }
-
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-
-@media (max-width: 900px) {
-  #view-site nav { padding: 16px 24px; }
-  .nav-links { display: none; }
-  .section-inner { padding: 70px 24px; }
-  #hero { padding: 100px 24px 60px; }
-  .about-grid, .contact-layout { grid-template-columns: 1fr; gap: 40px; }
-  .events-grid { grid-template-columns: 1fr; }
-  .event-card.featured { grid-column: span 1; }
-  .committee-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-grid-display { grid-template-columns: repeat(2, 1fr); }
-  .gallery-photo.large { grid-column: span 2; grid-row: span 1; }
-  footer { flex-direction: column; align-items: flex-start; padding: 36px 24px; }
-  .cms-sidebar { width: 200px; }
-  .cms-stats { grid-template-columns: repeat(2, 1fr); }
-  .cms-field-row, .cms-field-row-3 { grid-template-columns: 1fr; }
-}
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .section-inner { padding: 70px 24px; }
+    #hero { padding: 100px 24px 60px; }
+    .hero-established { right: 24px; bottom: 40px; }
+    .hero-year { font-size: 64px; }
+    .about-grid, .membership-layout, .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    .about-visual { max-width: 100%; aspect-ratio: 4/3; }
+    .committee-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+    .benefits-grid { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; align-items: flex-start; padding: 36px 24px; }
+    .scroll-hint { display: none; }
+  }
+  @media (max-width: 600px) {
+    .benefits-grid { grid-template-columns: 1fr; }
+    .committee-grid { grid-template-columns: 1fr 1fr; }
+  }
 </style>
 </head>
 <body>
 
-<!-- ==================== LIVE WEBSITE ==================== -->
-<div id="view-site">
-  <nav id="site-nav">
-    <a href="#hero" class="nav-logo">
-      <svg class="nav-crest" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="20" stroke="#c9a227" stroke-width="0.75" opacity="0.5"/><circle cx="21" cy="21" r="16" stroke="#c9a227" stroke-width="0.5" opacity="0.3"/><path d="M21 30V18" stroke="#c9a227" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="21" cy="15" rx="4.5" ry="5.5" fill="none" stroke="#c9a227" stroke-width="0.9"/><path d="M21 18C19 14 16 12 16 12M21 18C23 14 26 12 26 12" stroke="#c9a227" stroke-width="0.7" stroke-linecap="round" opacity="0.7"/><path d="M21 22C19.5 20.5 17 20 17 20M21 22C22.5 20.5 25 20 25 20" stroke="#c9a227" stroke-width="0.7" stroke-linecap="round" opacity="0.5"/><path d="M18 28C17 26 15.5 26 15.5 26M24 28C25 26 26.5 26 26.5 26" stroke="#c9a227" stroke-width="0.7" stroke-linecap="round" opacity="0.4"/></svg>
-      <div class="nav-name">Abu Dhabi<br><span>Scottish Society</span></div>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="#gallery-section">Gallery</a></li>
-      <li><a href="#committee-section">Committee</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#contact" class="nav-cta">Join Us</a></li>
-    </ul>
-  </nav>
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <svg class="nav-crest" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="21" cy="21" r="20" stroke="#c9a227" stroke-width="0.75" opacity="0.5"/>
+      <circle cx="21" cy="21" r="16" stroke="#c9a227" stroke-width="0.5" opacity="0.3"/>
+      <path d="M21 30V18" stroke="#c9a227" stroke-width="1.2" stroke-linecap="round"/>
+      <ellipse cx="21" cy="15" rx="4.5" ry="5.5" fill="none" stroke="#c9a227" stroke-width="0.9"/>
+      <path d="M21 18C19 14 16 12 16 12M21 18C23 14 26 12 26 12" stroke="#c9a227" stroke-width="0.7" stroke-linecap="round" opacity="0.7"/>
+      <path d="M21 22C19.5 20.5 17 20 17 20M21 22C22.5 20.5 25 20 25 20" stroke="#c9a227" stroke-width="0.7" stroke-linecap="round" opacity="0.5"/>
+      <path d="M18 28C17 26 15.5 26 15.5 26M24 28C25 26 26.5 26 26.5 26" stroke="#c9a227" stroke-width="0.7" stroke-linecap="round" opacity="0.4"/>
+    </svg>
+    <div class="nav-name">Abu Dhabi<br><span>Scottish Society</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#benefits">Benefits</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#membership" class="nav-cta">Join Us</a></li>
+  </ul>
+</nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-bg"></div><div class="hero-tartan"></div>
-    <div class="hero-content">
-      <div class="hero-badge" id="site-hero-badge">Abu Dhabi · UAE</div>
-      <h1 id="site-hero-h1">Scotland's<br>Heart in the<br><em>Desert</em></h1>
-      <p class="hero-subtitle" id="site-hero-sub">Bringing together Scots, their families, and all who love Scotland — celebrating culture, community, and camaraderie in the heart of Abu Dhabi since 1969.</p>
-      <div class="hero-btns">
-        <a href="#contact" class="btn-primary" id="site-hero-btn1">Become a Member</a>
-        <a href="#events" class="btn-outline" id="site-hero-btn2">Upcoming Events</a>
-      </div>
-    </div>
-    <div class="hero-year-display">
-      <div class="hero-year-num" id="site-hero-year">1969</div>
-      <div class="hero-est-label">Est. Abu Dhabi</div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-inner">
-      <div class="about-grid">
-        <div class="reveal">
-          <div class="about-frame" id="about-img-frame">
-            <div class="about-pattern"></div>
-            <svg class="about-thistle" viewBox="0 0 100 140" fill="none"><path d="M50 130V55" stroke="#c9a227" stroke-width="2" stroke-linecap="round"/><path d="M50 55C42 35 30 25 30 25M50 55C58 35 70 25 70 25" stroke="#c9a227" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/><ellipse cx="50" cy="38" rx="14" ry="18" fill="none" stroke="#c9a227" stroke-width="1.5"/><path d="M50 70C44 63 36 62 36 62M50 70C56 63 64 62 64 62" stroke="#c9a227" stroke-width="1.2" stroke-linecap="round" opacity="0.65"/><path d="M50 85C45 79 38 79 38 79M50 85C55 79 62 79 62 79" stroke="#c9a227" stroke-width="1" stroke-linecap="round" opacity="0.5"/><circle cx="50" cy="36" r="5" fill="rgba(201,162,39,0.2)" stroke="#c9a227" stroke-width="1"/></svg>
-            <div class="about-motto" id="site-about-motto">"Caraid nan Gàidheal"<br><span style="font-size:12px;opacity:0.6">Friend of the Gaels</span></div>
-          </div>
-        </div>
-        <div class="reveal">
-          <div class="section-label">Our Story</div>
-          <h2 class="section-title" id="site-about-title">55+ Years of <em>Scottish</em> Community</h2>
-          <div class="divider"></div>
-          <p class="section-body" id="site-about-body">The Abu Dhabi Scottish Society has been a home away from home for Scots — and all friends of Scotland — since 1969. We are one of the oldest and most active expat societies in the UAE, fostering Scottish culture, friendships, and celebration across generations.</p>
-          <p class="section-body" id="site-about-body2" style="margin-top:16px">Our aim is to bring together Scottish people, their families, and everyone who shares a love of Scotland in Abu Dhabi. Whether you've roots in Inverness or just an affection for a good ceilidh, you belong here.</p>
-          <div class="stat-row">
-            <div class="stat-item"><div class="stat-num" id="site-stat1">1969</div><div class="stat-label">Founded</div></div>
-            <div class="stat-item"><div class="stat-num" id="site-stat2">3</div><div class="stat-label">Annual Balls</div></div>
-            <div class="stat-item"><div class="stat-num" id="site-stat3">2</div><div class="stat-label">Charities/Year</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EVENTS -->
-  <section id="events">
-    <div class="section-inner">
-      <div class="events-header">
-        <div>
-          <div class="section-label">What's On</div>
-          <h2 class="section-title" style="margin-bottom:0">Upcoming <em>Events</em></h2>
-        </div>
-        <a href="mailto:committee@adscottishsociety.com" class="btn-outline">View All Events</a>
-      </div>
-      <div class="events-grid" id="site-events-grid">
-        <!-- rendered by JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- GALLERY -->
-  <section id="gallery-section">
-    <div class="section-inner">
-      <div class="section-label reveal">Moments</div>
-      <h2 class="section-title reveal" id="site-gallery-title">Life at the <em>Society</em></h2>
-      <div class="gallery-grid-display reveal" id="site-gallery-grid">
-        <!-- rendered by JS -->
-      </div>
-      <p style="text-align:center;margin-top:28px;font-size:14px;color:var(--muted);font-style:italic" id="site-gallery-caption">Follow us on Facebook &amp; Instagram for the latest photos from our events</p>
-    </div>
-  </section>
-
-  <!-- COMMITTEE -->
-  <section id="committee-section">
-    <div class="section-inner">
-      <div class="section-label reveal">The Team</div>
-      <h2 class="section-title reveal" id="site-committee-title">Our <em>Committee</em></h2>
-      <div class="committee-grid" id="site-committee-grid">
-        <!-- rendered by JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-inner">
-      <div class="contact-layout">
-        <div>
-          <div class="section-label reveal">Get in Touch</div>
-          <h2 class="section-title reveal">Contact <em>Us</em></h2>
-          <div class="divider reveal"></div>
-          <p class="section-body reveal" id="site-contact-body">Whether you're interested in membership, have questions about upcoming events, or want to discuss corporate sponsorship, we'd love to hear from you.</p>
-          <div class="contact-info reveal">
-            <div class="contact-item">
-              <div class="contact-icon">📧</div>
-              <div><div class="contact-item-label">General Enquiries</div><div class="contact-item-val"><a href="#" id="site-email1-link" id="site-email1-link">abudhabiscottishsociety@gmail.com</a></div></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">🎟️</div>
-              <div><div class="contact-item-label">Tickets &amp; Events</div><div class="contact-item-val"><a href="#" id="site-email2-link">committee@adscottishsociety.com</a></div></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">📍</div>
-              <div><div class="contact-item-label">Based In</div><div class="contact-item-val" id="site-location">Abu Dhabi, UAE</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="contact-form-side reveal">
-          <div class="section-label" style="margin-bottom:24px">Send a Message</div>
-          <form onsubmit="handleContactSubmit(event)">
-            <div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-input" placeholder="Full name"></div>
-            <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="you@example.com"></div>
-            <div class="form-group"><label class="form-label">Subject</label><input type="text" class="form-input" placeholder="Membership, events, sponsorship..."></div>
-            <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Tell us a bit about yourself..."></textarea></div>
-            <button type="submit" class="form-submit" id="contact-submit-btn">Send Message</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-brand">Abu Dhabi <span>Scottish Society</span><br><span style="font-size:11px;font-weight:300;opacity:0.5;font-family:'DM Sans',sans-serif;letter-spacing:0.1em">Established 1969 · Abu Dhabi, UAE</span></div>
-    <ul class="footer-links">
-      <li><a href="#about">About</a></li><li><a href="#events">Events</a></li>
-      <li><a href="#gallery-section">Gallery</a></li><li><a href="#committee-section">Committee</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="footer-copy">© 2025 Abu Dhabi Scottish Society</div>
-  </footer>
-</div>
-
-<!-- ==================== CMS ==================== -->
-<div id="view-cms">
-  <div class="cms-sidebar">
-    <div class="cms-logo">ADSS<br><span>Content Manager</span></div>
-    <nav class="cms-nav">
-      <div class="cms-nav-section">Overview</div>
-      <div class="cms-nav-item active" data-panel="dashboard" onclick="showPanel('dashboard',this)">
-        <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
-        Dashboard
-      </div>
-      <div class="cms-nav-section">Sections</div>
-      <div class="cms-nav-item" data-panel="hero" onclick="showPanel('hero',this)">
-        <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4 9l2-2 2 2 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Hero Section
-      </div>
-      <div class="cms-nav-item" data-panel="about" onclick="showPanel('about',this)">
-        <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        About Section
-      </div>
-      <div class="cms-nav-item" data-panel="events" onclick="showPanel('events',this)">
-        <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 1v3M11 1v3M1 7h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Events
-      </div>
-      <div class="cms-nav-item" data-panel="gallery" onclick="showPanel('gallery',this)">
-        <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="5.5" cy="5.5" r="1.5" stroke="currentColor" stroke-width="1"/><path d="M1 11l4-4 3 3 2-2 5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Gallery
-      </div>
-      <div class="cms-nav-item" data-panel="committee" onclick="showPanel('committee',this)">
-        <svg viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="5" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M1 14c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M12 9c1.7 0 3 1.3 3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Committee
-      </div>
-      <div class="cms-nav-item" data-panel="contact" onclick="showPanel('contact',this)">
-        <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 5l7 5 7-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Contact Info
-      </div>
-    </nav>
-    <div class="cms-footer-btn" onclick="exitCMS()">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Back to Website
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tartan"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Abu Dhabi · UAE</div>
+    <h1>Scotland's<br>Heart in the<br><em>Desert</em></h1>
+    <p class="hero-subtitle">Bringing together Scots, their families, and all who love Scotland — the Abu Dhabi Scottish Society is back, with a new committee and fresh energy for 2025 and beyond.</p>
+    <div class="hero-btns">
+      <a href="#membership" class="btn-primary">Become a Member</a>
+      <a href="#events" class="btn-outline">Upcoming Events</a>
     </div>
   </div>
+  <div class="hero-established">
+    <div class="hero-year">2025</div>
+    <div class="hero-est-label">Reborn · Abu Dhabi</div>
+    <div class="hero-est-sub">The spirit of Scotland, renewed</div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Discover
+  </div>
+</section>
 
-  <div class="cms-main">
-    <div class="cms-topbar">
-      <div class="cms-topbar-title" id="cms-topbar-title">Dashboard</div>
-      <div class="cms-topbar-actions">
-        <button class="cms-btn cms-btn-ghost" onclick="exitCMS()">Preview Site</button>
-        <button class="cms-btn cms-btn-primary" onclick="saveAll()">Save &amp; Publish</button>
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-frame">
+          <div class="about-pattern"></div>
+          <div class="about-center-emblem">
+            <svg class="about-thistle-svg" viewBox="0 0 100 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 130V55" stroke="#c9a227" stroke-width="2" stroke-linecap="round"/>
+              <path d="M50 55C42 35 30 25 30 25M50 55C58 35 70 25 70 25" stroke="#c9a227" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+              <ellipse cx="50" cy="38" rx="14" ry="18" fill="none" stroke="#c9a227" stroke-width="1.5"/>
+              <path d="M50 70C44 63 36 62 36 62M50 70C56 63 64 62 64 62" stroke="#c9a227" stroke-width="1.2" stroke-linecap="round" opacity="0.65"/>
+              <path d="M50 85C45 79 38 79 38 79M50 85C55 79 62 79 62 79" stroke="#c9a227" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+              <path d="M42 105C38 99 32 99 32 99M58 105C62 99 68 99 68 99" stroke="#c9a227" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
+              <circle cx="50" cy="36" r="5" fill="rgba(201,162,39,0.2)" stroke="#c9a227" stroke-width="1"/>
+            </svg>
+            <div class="about-motto">"Caraid nan Gàidheal"<br><span style="font-size:12px;opacity:0.6">Friend of the Gaels</span></div>
+          </div>
+        </div>
+        <div class="about-accent"></div>
+        <div class="about-accent-2"></div>
+      </div>
+      <div class="reveal">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">Scotland's Spirit, <em>Renewed</em></h2>
+        <div class="divider"></div>
+        <p class="section-body">The Abu Dhabi Scottish Society has a proud history in the UAE — and in 2025, a passionate new committee breathed fresh life back into it. We're rebuilding a home away from home for Scots, their families, and all friends of Scotland in Abu Dhabi.</p>
+        <p class="section-body" style="margin-top:16px">Our mission is simple: foster Scottish culture, build genuine friendships, and celebrate everything that makes Scotland great — right here in the heart of the Gulf. Whether you've roots in Inverness or just a love of a good ceilidh, you belong here.</p>
+        <div class="stat-row">
+          <div class="stat-item"><div class="stat-num">2025</div><div class="stat-label">Relaunched</div></div>
+          <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Annual Balls</div></div>
+          <div class="stat-item"><div class="stat-num">2</div><div class="stat-label">Charities/Year</div></div>
+        </div>
       </div>
     </div>
-    <div class="cms-content">
+  </div>
+</section>
 
-      <!-- DASHBOARD -->
-      <div class="cms-panel active" id="panel-dashboard">
-        <div class="cms-preview-strip">
-          <span>📋</span>
-          <span>Welcome to the <strong>ADSS Content Manager</strong>. Edit any section using the sidebar, then hit <strong>Save &amp; Publish</strong> to update the live site.</span>
-        </div>
-        <div class="cms-stats">
-          <div class="cms-stat"><div class="cms-stat-num" id="dash-event-count">0</div><div class="cms-stat-label">Events</div></div>
-          <div class="cms-stat"><div class="cms-stat-num" id="dash-member-count">0</div><div class="cms-stat-label">Committee</div></div>
-          <div class="cms-stat"><div class="cms-stat-num" id="dash-photo-count">0</div><div class="cms-stat-label">Gallery Photos</div></div>
-          <div class="cms-stat"><div class="cms-stat-num">Live</div><div class="cms-stat-label">Site Status</div></div>
-        </div>
-        <div class="cms-card">
-          <div class="cms-card-header"><div class="cms-card-title">Quick Access</div></div>
-          <div class="cms-card-body" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-            <button class="cms-btn cms-btn-ghost" style="padding:14px;font-size:12px;text-align:left" onclick="showPanel('events', document.querySelector('[data-panel=events]'))">📅 Add New Event</button>
-            <button class="cms-btn cms-btn-ghost" style="padding:14px;font-size:12px;text-align:left" onclick="showPanel('gallery', document.querySelector('[data-panel=gallery]'))">🖼️ Upload Photos</button>
-            <button class="cms-btn cms-btn-ghost" style="padding:14px;font-size:12px;text-align:left" onclick="showPanel('committee', document.querySelector('[data-panel=committee]'))">👥 Edit Committee</button>
-            <button class="cms-btn cms-btn-ghost" style="padding:14px;font-size:12px;text-align:left" onclick="showPanel('hero', document.querySelector('[data-panel=hero]'))">✍️ Edit Hero Text</button>
-            <button class="cms-btn cms-btn-ghost" style="padding:14px;font-size:12px;text-align:left" onclick="showPanel('about', document.querySelector('[data-panel=about]'))">📖 Edit About</button>
-            <button class="cms-btn cms-btn-ghost" style="padding:14px;font-size:12px;text-align:left" onclick="showPanel('contact', document.querySelector('[data-panel=contact]'))">📧 Update Contact</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- HERO PANEL -->
-      <div class="cms-panel" id="panel-hero">
-        <div class="cms-card">
-          <div class="cms-card-header"><div class="cms-card-title">Hero Section</div></div>
-          <div class="cms-card-body">
-            <div class="cms-field"><label class="cms-label">Location Badge</label><input type="text" class="cms-input" id="cms-hero-badge" placeholder="Abu Dhabi · UAE"></div>
-            <div class="cms-field"><label class="cms-label">Headline (use | for line break, wrap word in *italic* for gold italic)</label><input type="text" class="cms-input" id="cms-hero-h1" placeholder="Scotland's|Heart in the|*Desert*"></div>
-            <div class="cms-field"><label class="cms-label">Subheading</label><textarea class="cms-textarea" id="cms-hero-sub"></textarea></div>
-            <div class="cms-field-row">
-              <div class="cms-field"><label class="cms-label">Primary Button Text</label><input type="text" class="cms-input" id="cms-hero-btn1"></div>
-              <div class="cms-field"><label class="cms-label">Secondary Button Text</label><input type="text" class="cms-input" id="cms-hero-btn2"></div>
-            </div>
-            <div class="cms-field"><label class="cms-label">Founded Year (large watermark)</label><input type="text" class="cms-input" id="cms-hero-year" style="max-width:140px"></div>
-            <button class="cms-btn cms-btn-primary" onclick="saveHero()">Apply Changes</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ABOUT PANEL -->
-      <div class="cms-panel" id="panel-about">
-        <div class="cms-card">
-          <div class="cms-card-header"><div class="cms-card-title">About Section</div></div>
-          <div class="cms-card-body">
-            <div class="cms-field"><label class="cms-label">Section Title (wrap word in *italic* for gold)</label><input type="text" class="cms-input" id="cms-about-title"></div>
-            <div class="cms-field"><label class="cms-label">Paragraph 1</label><textarea class="cms-textarea" id="cms-about-body"></textarea></div>
-            <div class="cms-field"><label class="cms-label">Paragraph 2</label><textarea class="cms-textarea" id="cms-about-body2"></textarea></div>
-            <div class="cms-field"><label class="cms-label">Motto Text</label><input type="text" class="cms-input" id="cms-about-motto"></div>
-            <div class="cms-field-row-3">
-              <div class="cms-field"><label class="cms-label">Stat 1</label><input type="text" class="cms-input" id="cms-stat1"></div>
-              <div class="cms-field"><label class="cms-label">Stat 2</label><input type="text" class="cms-input" id="cms-stat2"></div>
-              <div class="cms-field"><label class="cms-label">Stat 3</label><input type="text" class="cms-input" id="cms-stat3"></div>
-            </div>
-            <div class="cms-field">
-              <label class="cms-label">About Image (optional)</label>
-              <div class="cms-upload-zone" id="about-upload-zone">
-                <input type="file" accept="image/*" onchange="handleAboutImage(event)">
-                <div class="cms-upload-icon">🖼️</div>
-                <div class="cms-upload-text">Click or drag an image here<br><strong>Replaces the thistle illustration</strong></div>
-              </div>
-              <div id="about-img-preview" style="margin-top:10px;display:none">
-                <img id="about-img-preview-el" style="width:100%;max-height:200px;object-fit:cover;border-radius:4px;border:1px solid var(--cms-border)">
-                <button class="cms-btn cms-btn-danger cms-btn-sm" style="margin-top:8px" onclick="clearAboutImage()">Remove Image</button>
-              </div>
-            </div>
-            <button class="cms-btn cms-btn-primary" onclick="saveAbout()">Apply Changes</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- EVENTS PANEL -->
-      <div class="cms-panel" id="panel-events">
-        <div class="cms-card">
-          <div class="cms-card-header">
-            <div class="cms-card-title">Upcoming Events</div>
-            <button class="cms-btn cms-btn-primary cms-btn-sm" onclick="openEventModal()">+ Add Event</button>
-          </div>
-          <div class="cms-list" id="cms-events-list"><!-- rendered --></div>
-        </div>
-      </div>
-
-      <!-- GALLERY PANEL -->
-      <div class="cms-panel" id="panel-gallery">
-        <div class="cms-card">
-          <div class="cms-card-header"><div class="cms-card-title">Gallery Settings</div></div>
-          <div class="cms-card-body">
-            <div class="cms-field"><label class="cms-label">Section Title</label><input type="text" class="cms-input" id="cms-gallery-title"></div>
-            <div class="cms-field"><label class="cms-label">Caption / Social Note</label><input type="text" class="cms-input" id="cms-gallery-caption"></div>
-            <button class="cms-btn cms-btn-primary" onclick="saveGalleryMeta()">Apply</button>
-          </div>
-        </div>
-        <div class="cms-card">
-          <div class="cms-card-header">
-            <div class="cms-card-title">Gallery Photos (<span id="gallery-count">0</span>)</div>
-            <div style="display:flex;gap:8px">
-              <button class="cms-btn cms-btn-ghost cms-btn-sm" onclick="clearAllPhotos()">Clear All</button>
-            </div>
-          </div>
-          <div class="cms-card-body">
-            <div class="cms-upload-zone" id="gallery-upload-zone">
-              <input type="file" accept="image/*" multiple onchange="handleGalleryUpload(event)">
-              <div class="cms-upload-icon">📸</div>
-              <div class="cms-upload-text">Click or drag photos here<br><strong>Multiple files supported</strong> · JPG, PNG, WebP</div>
-            </div>
-            <div class="cms-photo-grid" id="cms-photo-grid"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- COMMITTEE PANEL -->
-      <div class="cms-panel" id="panel-committee">
-        <div class="cms-card">
-          <div class="cms-card-header">
-            <div class="cms-card-title">Committee Members</div>
-            <button class="cms-btn cms-btn-primary cms-btn-sm" onclick="openCommitteeModal()">+ Add Member</button>
-          </div>
-          <div class="cms-list" id="cms-committee-list"><!-- rendered --></div>
-        </div>
-      </div>
-
-      <!-- CONTACT PANEL -->
-      <div class="cms-panel" id="panel-contact">
-        <div class="cms-card">
-          <div class="cms-card-header"><div class="cms-card-title">Contact Information</div></div>
-          <div class="cms-card-body">
-            <div class="cms-field"><label class="cms-label">Intro Text</label><textarea class="cms-textarea" id="cms-contact-body"></textarea></div>
-            <div class="cms-field-row">
-              <div class="cms-field"><label class="cms-label">General Email</label><input type="email" class="cms-input" id="cms-email1"></div>
-              <div class="cms-field"><label class="cms-label">Tickets / Events Email</label><input type="email" class="cms-input" id="cms-email2"></div>
-            </div>
-            <div class="cms-field"><label class="cms-label">Location</label><input type="text" class="cms-input" id="cms-location"></div>
-            <button class="cms-btn cms-btn-primary" onclick="saveContact()">Apply Changes</button>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /cms-content -->
-  </div><!-- /cms-main -->
-</div><!-- /view-cms -->
-
-<!-- ==================== EVENT MODAL ==================== -->
-<div class="cms-modal-overlay" id="event-modal">
-  <div class="cms-modal">
-    <div class="cms-modal-header">
-      <div class="cms-modal-title" id="event-modal-title">Add Event</div>
-      <button class="cms-modal-close" onclick="closeModal('event-modal')">×</button>
-    </div>
-    <div class="cms-modal-body">
-      <input type="hidden" id="event-edit-id">
-      <div class="cms-field-row">
-        <div class="cms-field"><label class="cms-label">Event Name</label><input type="text" class="cms-input" id="ev-title" placeholder="Burns Supper 2026"></div>
-        <div class="cms-field"><label class="cms-label">Date / Period</label><input type="text" class="cms-input" id="ev-date" placeholder="January 25, 2026"></div>
-      </div>
-      <div class="cms-field-row">
-        <div class="cms-field"><label class="cms-label">Venue</label><input type="text" class="cms-input" id="ev-venue" placeholder="The Club Abu Dhabi"></div>
-        <div class="cms-field"><label class="cms-label">Category Tag</label><input type="text" class="cms-input" id="ev-tag" placeholder="Annual / Social / Golf..."></div>
-      </div>
-      <div class="cms-field"><label class="cms-label">Short Description</label><textarea class="cms-textarea" id="ev-desc" style="min-height:70px"></textarea></div>
-      <div class="cms-field-row">
-        <div class="cms-field"><label class="cms-label">Member Price (AED)</label><input type="text" class="cms-input" id="ev-price-m" placeholder="325"></div>
-        <div class="cms-field"><label class="cms-label">Non-Member Price (AED)</label><input type="text" class="cms-input" id="ev-price-nm" placeholder="375"></div>
-      </div>
-      <div class="cms-field">
-        <label class="cms-label">Dress Code / Notes</label>
-        <input type="text" class="cms-input" id="ev-dresscode" placeholder="Black Tie & Tartan">
-      </div>
-      <div class="cms-field">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-          <label class="cms-label" style="margin:0">Featured Event (spans 2 columns)</label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-            <input type="checkbox" id="ev-featured" style="accent-color:var(--gold)">
-            <span style="font-size:12px;color:var(--cms-muted)">Make featured</span>
-          </label>
-        </div>
-      </div>
-      <div class="cms-field">
-        <label class="cms-label">Event Photo (optional)</label>
-        <div class="cms-upload-zone" style="padding:18px">
-          <input type="file" accept="image/*" onchange="handleEventPhoto(event)" id="ev-photo-input">
-          <div class="cms-upload-icon" style="font-size:20px">📷</div>
-          <div class="cms-upload-text" style="font-size:12px">Upload event photo</div>
-        </div>
-        <div id="ev-photo-preview" style="margin-top:8px;display:none">
-          <img id="ev-photo-preview-el" style="width:100%;max-height:140px;object-fit:cover;border-radius:4px;border:1px solid var(--cms-border)">
-          <button class="cms-btn cms-btn-danger cms-btn-sm" style="margin-top:6px" onclick="clearEventPhoto()">Remove Photo</button>
-        </div>
-        <input type="hidden" id="ev-photo-data">
-      </div>
-      <div class="cms-field">
-        <label class="cms-label">Event Icon (emoji fallback)</label>
-        <input type="text" class="cms-input" id="ev-icon" placeholder="🎭" style="font-size:20px;max-width:80px">
+<!-- EVENTS -->
+<section id="events">
+  <div class="section-inner">
+    <div class="events-header">
+      <div>
+        <div class="section-label">What's On</div>
+        <h2 class="section-title" style="margin-bottom:0">Upcoming <em>Events</em></h2>
       </div>
     </div>
-    <div class="cms-modal-footer">
-      <button class="cms-btn cms-btn-ghost" onclick="closeModal('event-modal')">Cancel</button>
-      <button class="cms-btn cms-btn-primary" onclick="saveEvent()">Save Event</button>
+    <div id="eventsContainer"><div class="events-empty reveal">
+      <span class="events-empty-icon">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>
+      <div class="events-empty-title">Events Coming Soon</div>
+      <div class="events-empty-text">We're planning an exciting calendar for the year ahead — Burns Suppers, Ceilidh nights, the Chieftain's Ball, and more. Check back soon or follow us on social media to be the first to know.</div>
+      <a href="/cdn-cgi/l/email-protection#05646770616d64676c76666a71716c766d766a666c60717c456268646c692b666a68" class="events-empty-cta">Get Notified →</a>
+    </div></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <div class="section-label reveal">Moments</div>
+    <h2 class="section-title reveal">Life at the <em>Society</em></h2>
+    <p class="section-body reveal" style="margin-bottom:0">Click any photo or video to open it full screen. You can download from there too.</p>
+    <div class="gallery-grid reveal" id="galleryGrid">
+      <div class="gallery-item" data-src="" data-type="image" data-caption="St Andrews Ball">
+        <div class="gallery-placeholder"><span class="gallery-placeholder-icon">📸</span><div class="gallery-placeholder-text">Add photo here</div></div>
+        <div class="gallery-overlay"><span class="gallery-overlay-icon">⛶</span></div>
+      </div>
+      <div class="gallery-item" data-src="" data-type="image" data-caption="Ceilidh Night">
+        <div class="gallery-placeholder"><span class="gallery-placeholder-icon">💃</span><div class="gallery-placeholder-text">Add photo here</div></div>
+        <div class="gallery-overlay"><span class="gallery-overlay-icon">⛶</span></div>
+      </div>
+      <div class="gallery-item" data-src="" data-type="image" data-caption="Burns Supper">
+        <div class="gallery-placeholder"><span class="gallery-placeholder-icon">🥃</span><div class="gallery-placeholder-text">Add photo here</div></div>
+        <div class="gallery-overlay"><span class="gallery-overlay-icon">⛶</span></div>
+      </div>
+      <div class="gallery-item" data-src="" data-type="video" data-caption="Highlights Reel">
+        <span class="gallery-video-badge">▶ Video</span>
+        <div class="gallery-placeholder"><span class="gallery-placeholder-icon">🎬</span><div class="gallery-placeholder-text">Add video here</div></div>
+        <div class="gallery-overlay"><span class="gallery-overlay-icon">▶</span></div>
+      </div>
+      <div class="gallery-item" data-src="" data-type="image" data-caption="Golf Day">
+        <div class="gallery-placeholder"><span class="gallery-placeholder-icon">⛳</span><div class="gallery-placeholder-text">Add photo here</div></div>
+        <div class="gallery-overlay"><span class="gallery-overlay-icon">⛶</span></div>
+      </div>
     </div>
+    <p class="gallery-note reveal">📸 Follow us on Facebook &amp; Instagram for the latest photos from our events</p>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">✕</button>
+  <img id="lightboxImg" class="lightbox-media" src="" alt="" style="display:none">
+  <video id="lightboxVid" class="lightbox-media" controls style="display:none"></video>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+  <div class="lightbox-controls">
+    <a id="lightboxDownload" class="lightbox-btn" download>↓ Download</a>
+    <button class="lightbox-btn" id="lightboxPrev">← Prev</button>
+    <button class="lightbox-btn" id="lightboxNext">Next →</button>
   </div>
 </div>
 
-<!-- ==================== COMMITTEE MODAL ==================== -->
-<div class="cms-modal-overlay" id="committee-modal">
-  <div class="cms-modal">
-    <div class="cms-modal-header">
-      <div class="cms-modal-title" id="committee-modal-title">Add Committee Member</div>
-      <button class="cms-modal-close" onclick="closeModal('committee-modal')">×</button>
+
+<!-- PREVIOUS EVENTS SECTION -->
+<section id="previous-events" style="background:var(--navy-mid);border-top:1px solid rgba(201,162,39,.08)">
+  <div class="section-inner">
+    <div class="section-label reveal">Previous Events</div>
+    <h2 class="section-title reveal">Event <em>Albums</em></h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;" class="reveal" id="albumsGrid">
+      <div style="grid-column:1/-1;border:1px dashed rgba(201,162,39,.2);border-radius:4px;padding:60px 40px;text-align:center;background:var(--navy);color:var(--muted);font-size:15px">No event albums yet — check back after our first event!</div>
     </div>
-    <div class="cms-modal-body">
-      <input type="hidden" id="member-edit-id">
-      <div class="cms-field-row">
-        <div class="cms-field"><label class="cms-label">Full Name</label><input type="text" class="cms-input" id="mb-name" placeholder="Jane MacDonald"></div>
-        <div class="cms-field"><label class="cms-label">Role / Title</label><input type="text" class="cms-input" id="mb-role" placeholder="Chieftain"></div>
-      </div>
-      <div class="cms-field">
-        <label class="cms-label">Photo (optional)</label>
-        <div class="cms-upload-zone" style="padding:18px">
-          <input type="file" accept="image/*" onchange="handleMemberPhoto(event)">
-          <div class="cms-upload-icon" style="font-size:20px">👤</div>
-          <div class="cms-upload-text" style="font-size:12px">Upload photo</div>
-        </div>
-        <div id="mb-photo-preview" style="margin-top:8px;display:none">
-          <img id="mb-photo-preview-el" style="width:80px;height:80px;object-fit:cover;border-radius:50%;border:2px solid rgba(201,162,39,0.3)">
-          <button class="cms-btn cms-btn-danger cms-btn-sm" style="margin-top:6px;display:block" onclick="clearMemberPhoto()">Remove</button>
-        </div>
-        <input type="hidden" id="mb-photo-data">
-      </div>
+  </div>
+</section>
+
+<!-- ALBUM LIGHTBOX -->
+<div id="albumLightbox" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(6,12,22,.97);flex-direction:column">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid rgba(201,162,39,.12);flex-shrink:0">
+    <div>
+      <div id="albumLbTitle" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700"></div>
+      <div id="albumLbSubtitle" style="font-size:13px;color:var(--muted);margin-top:2px"></div>
     </div>
-    <div class="cms-modal-footer">
-      <button class="cms-btn cms-btn-ghost" onclick="closeModal('committee-modal')">Cancel</button>
-      <button class="cms-btn cms-btn-primary" onclick="saveMember()">Save Member</button>
-    </div>
+    <button id="albumLbClose" style="background:none;border:none;color:var(--muted);font-size:28px;cursor:pointer;line-height:1">✕</button>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:32px">
+    <div id="albumLbGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px"></div>
   </div>
 </div>
 
-<!-- CMS Toggle Button -->
-<button id="cms-toggle-btn" onclick="enterCMS()">
-  <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-  Manage Site
-</button>
+<!-- MEDIA VIEWER -->
+<div id="mediaViewer" style="display:none;position:fixed;inset:0;z-index:1100;background:rgba(4,8,15,.98);flex-direction:column;align-items:center;justify-content:center">
+  <button id="mediaViewerClose" style="position:absolute;top:20px;right:28px;background:none;border:none;color:var(--muted);font-size:32px;cursor:pointer">✕</button>
+  <button id="mediaViewerPrev" style="position:absolute;top:50%;transform:translateY(-50%);left:20px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:20px">‹</button>
+  <button id="mediaViewerNext" style="position:absolute;top:50%;transform:translateY(-50%);right:20px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold);width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:20px">›</button>
+  <img id="mediaViewerImg" src="" alt="" style="display:none;max-width:92vw;max-height:82vh;object-fit:contain;border-radius:3px">
+  <video id="mediaViewerVid" controls style="display:none;max-width:92vw;max-height:82vh"></video>
+  <div style="margin-top:16px">
+    <a id="mediaViewerDownload" style="background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.3);color:var(--gold);padding:9px 18px;border-radius:2px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:6px" download>↓ Download</a>
+  </div>
+</div>
 
-<!-- Toast -->
-<div id="cms-toast">✓ Changes saved successfully</div>
-
-<script>
-// ===================== DATA STORE =====================
-const DEFAULT_DATA = {
-  hero: {
-    badge: 'Abu Dhabi · UAE',
-    h1: "Scotland's|Heart in the|*Desert*",
-    sub: "Bringing together Scots, their families, and all who love Scotland — celebrating culture, community, and camaraderie in the heart of Abu Dhabi since 1969.",
-    btn1: 'Become a Member', btn2: 'Upcoming Events', year: '1969'
-  },
-  about: {
-    title: "55+ Years of *Scottish* Community",
-    body: "The Abu Dhabi Scottish Society has been a home away from home for Scots — and all friends of Scotland — since 1969. We are one of the oldest and most active expat societies in the UAE, fostering Scottish culture, friendships, and celebration across generations.",
-    body2: "Our aim is to bring together Scottish people, their families, and everyone who shares a love of Scotland in Abu Dhabi. Whether you've roots in Inverness or just an affection for a good ceilidh, you belong here.",
-    motto: '"Caraid nan Gàidheal"',
-    stat1: '1969', stat2: '3', stat3: '2',
-    img: null
-  },
-  events: [
-    { id: 1, title: "St Andrews Ball", date: "Nov 30, 2025", venue: "The Club Abu Dhabi", tag: "Annual", desc: "Our flagship annual celebration of Scotland's patron saint. Five-course Scottish-themed dinner, live ceilidh band flown in from Scotland, traditional dancing.", priceM: "325", priceNM: "375", dresscode: "Black Tie & Tartan", featured: true, icon: "🎭", photo: null },
-    { id: 2, title: "Burns Supper", date: "January 2026", venue: "The Club Abu Dhabi", tag: "Annual", desc: "Address to a Haggis, Immortal Memory, toasts and all the traditions of a proper Burns Night.", priceM: "325", priceNM: "375", dresscode: "Black Tie", featured: false, icon: "🥃", photo: null },
-    { id: 3, title: "Chieftain's Ball", date: "May/June 2026", venue: "The Club Abu Dhabi", tag: "Annual", desc: "Dust off your dancing shoes. Traditional ceilidh dancing, Scottish fare, and great company.", priceM: "375", priceNM: "450", dresscode: "Tartan Welcome", featured: false, icon: "💃", photo: null },
-    { id: 4, title: "Monthly Golf Day", date: "Monthly", venue: "Abu Dhabi Golf Club", tag: "Golf", desc: "Regular golf events for members at Abu Dhabi's finest courses. All handicaps welcome.", priceM: "", priceNM: "", dresscode: "", featured: false, icon: "⛳", photo: null },
-    { id: 5, title: "Monthly Sundowner", date: "Monthly", venue: "TBC", tag: "Social", desc: "Relaxed monthly social evenings for members to meet, catch up, and welcome new faces.", priceM: "", priceNM: "", dresscode: "", featured: false, icon: "🌅", photo: null }
-  ],
-  gallery: {
-    title: "Life at the *Society*",
-    caption: "📸 Follow us on Facebook & Instagram for the latest photos",
-    photos: []
-  },
-  committee: [
-    { id: 1, name: "The Chieftain", role: "President", photo: null },
-    { id: 2, name: "Vice-Chieftain", role: "Vice President", photo: null },
-    { id: 3, name: "Secretary", role: "Administration", photo: null },
-    { id: 4, name: "Treasurer", role: "Finance", photo: null },
-    { id: 5, name: "Events Officer", role: "Events & Programming", photo: null },
-    { id: 6, name: "Charity Officer", role: "Charitable Giving", photo: null },
-    { id: 7, name: "Membership Officer", role: "Membership & Welcome", photo: null },
-    { id: 8, name: "Committee Members", role: "Volunteer Members", photo: null }
-  ],
-  contact: {
-    body: "Whether you're interested in membership, have questions about upcoming events, or want to discuss corporate sponsorship, we'd love to hear from you.",
-    email1: "abudhabiscottishsociety@gmail.com",
-    email2: "committee@adscottishsociety.com",
-    location: "Abu Dhabi, UAE"
-  }
-};
-
-let DATA = {};
-
-function loadData() {
-  try {
-    const stored = localStorage.getItem('adss_cms_data');
-    DATA = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_DATA));
-  } catch(e) {
-    DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
-  }
-}
-
-function saveData() {
-  try { localStorage.setItem('adss_cms_data', JSON.stringify(DATA)); } catch(e) {}
-  showToast('Changes saved & published');
-}
-
-// ===================== RENDER SITE =====================
-function renderSite() {
-  const d = DATA;
-
-  // Hero
-  document.getElementById('site-hero-badge').textContent = d.hero.badge;
-  const h1 = document.getElementById('site-hero-h1');
-  h1.innerHTML = d.hero.h1.split('|').map(line => parseItalic(line)).join('<br>');
-  document.getElementById('site-hero-sub').textContent = d.hero.sub;
-  document.getElementById('site-hero-btn1').textContent = d.hero.btn1;
-  document.getElementById('site-hero-btn2').textContent = d.hero.btn2;
-  document.getElementById('site-hero-year').textContent = d.hero.year;
-
-  // About
-  document.getElementById('site-about-title').innerHTML = parseItalic(d.about.title);
-  document.getElementById('site-about-body').textContent = d.about.body;
-  document.getElementById('site-about-body2').textContent = d.about.body2;
-  document.getElementById('site-about-motto').innerHTML = d.about.motto + '<br><span style="font-size:12px;opacity:0.6">Friend of the Gaels</span>';
-  document.getElementById('site-stat1').textContent = d.about.stat1;
-  document.getElementById('site-stat2').textContent = d.about.stat2;
-  document.getElementById('site-stat3').textContent = d.about.stat3;
-  // About image
-  const frame = document.getElementById('about-img-frame');
-  const existingImg = frame.querySelector('img.about-img');
-  if (d.about.img) {
-    if (!existingImg) {
-      const img = document.createElement('img'); img.className = 'about-img';
-      frame.insertBefore(img, frame.firstChild);
-    }
-    frame.querySelector('img.about-img').src = d.about.img;
-    frame.querySelectorAll('.about-thistle, .about-motto').forEach(el => el.style.display = 'none');
-  } else {
-    if (existingImg) existingImg.remove();
-    frame.querySelectorAll('.about-thistle, .about-motto').forEach(el => el.style.display = '');
-  }
-
-  // Events
-  renderEvents();
-
-  // Gallery
-  document.getElementById('site-gallery-title').innerHTML = parseItalic(d.gallery.title);
-  document.getElementById('site-gallery-caption').textContent = d.gallery.caption;
-  renderGallery();
-
-  // Committee
-  renderCommittee();
-
-  // Contact
-  document.getElementById('site-contact-body').textContent = d.contact.body;
-  const e1link = document.getElementById('site-email1-link');
-  e1link.textContent = d.contact.email1; e1link.href = 'mailto:' + d.contact.email1;
-  const e2link = document.getElementById('site-email2-link');
-  e2link.textContent = d.contact.email2; e2link.href = 'mailto:' + d.contact.email2;
-  document.getElementById('site-location').textContent = d.contact.location;
-}
-
-function parseItalic(text) {
-  return text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-}
-
-function renderEvents() {
-  const grid = document.getElementById('site-events-grid');
-  const evs = DATA.events;
-  if (!evs.length) {
-    grid.innerHTML = '<div class="no-events">No upcoming events. Add events in the CMS.</div>';
-    return;
-  }
-  grid.innerHTML = evs.map((ev, i) => {
-    const featured = ev.featured && i === 0;
-    const priceStr = ev.priceM ? `AED ${ev.priceM} Members · AED ${ev.priceNM} Non-Members` : '';
-    const metaParts = [ev.dresscode, ev.venue].filter(Boolean).join(' · ');
-    return `<a href="mailto:${DATA.contact.email2}" class="event-card${featured ? ' featured' : ''}">
-      <div class="event-img-area">
-        ${ev.photo ? `<img src="${ev.photo}" alt="${ev.title}">` : `<div class="event-img-bg" style="background:radial-gradient(ellipse at center, rgba(201,162,39,0.08) 0%,transparent 70%)"></div>`}
-        <span class="event-icon">${ev.icon || '🎉'}</span>
-        ${ev.date ? `<div class="event-date-badge">${ev.date}</div>` : ''}
-        ${ev.tag ? `<div class="event-tag">${ev.tag}</div>` : ''}
+<!-- MEMBERSHIP -->
+<section id="membership">
+  <div class="section-inner">
+    <div class="membership-layout">
+      <div>
+        <div class="section-label reveal">Join Us</div>
+        <h2 class="section-title reveal">Become a <em>Member</em></h2>
+        <div class="divider reveal"></div>
+        <p class="section-body reveal">Open to Scottish people, their families, and anyone with an interest in Scotland and Scottish culture. Membership gives you access to discounted event tickets, exclusive member benefits across Abu Dhabi, and a warm community that feels like home.</p>
+        <div class="mem-open-box reveal" style="margin-top:32px">
+          <div class="mem-open-title">Open to All Friends of Scotland</div>
+          <div class="mem-open-text">You don't need to be Scottish to join. Whether you're a Scot far from home, a spouse, a friend, or simply someone who loves a good ceilidh — the Abu Dhabi Scottish Society welcomes you with open arms.</div>
+          <div style="margin-top:16px;display:flex;align-items:center;gap:8px">
+            <span style="font-size:13px;color:var(--gold)">📧</span>
+            <a href="/cdn-cgi/l/email-protection#c2a1adafafabb6b6a7a782a3a6b1a1adb6b6abb1aab1ada1aba7b6bbeca1adaf" style="font-size:14px;color:var(--gold);text-decoration:none"><span class="__cf_email__" data-cfemail="8eede1e3e3e7fafaebebceefeafdede1fafae7fde6fde1ede7ebfaf7a0ede1e3">[email&#160;protected]</span></a>
+          </div>
+        </div>
       </div>
-      <div class="event-body">
-        <div class="event-title">${ev.title}</div>
-        ${metaParts ? `<div class="event-meta">${metaParts}</div>` : ''}
-        <div class="event-desc">${ev.desc}</div>
-        ${priceStr ? `<div class="event-price">${priceStr}</div>` : ''}
+      <div class="reveal">
+        <div class="mem-single-card">
+          <div class="mem-tier">Society Membership</div>
+          <div class="mem-sub">Individual &amp; Family</div>
+          <div class="mem-price">AED</div>
+          <div class="mem-price-period">Contact us for current membership rates</div>
+          <ul class="mem-features">
+            <li>Discounted tickets to all Society events</li>
+            <li>Burns Supper, Chieftain's Ball &amp; St Andrews Ball access</li>
+            <li>Exclusive member discounts across Abu Dhabi</li>
+            <li>Monthly sundowner invitations</li>
+            <li>Society newsletter &amp; updates</li>
+            <li>Ceilidh dancing sessions</li>
+            <li>Golf society membership</li>
+            <li>Access to a warm, welcoming community</li>
+          </ul>
+          <a href="/cdn-cgi/l/email-protection#25464a48484c5151404065444156464a51514c564d564a464c40515c0b464a48" class="mem-btn">Apply for Membership</a>
+        </div>
       </div>
-    </a>`;
-  }).join('');
-}
+    </div>
+  </div>
+</section>
 
-function renderGallery() {
-  const grid = document.getElementById('site-gallery-grid');
-  const photos = DATA.gallery.photos;
-  if (!photos.length) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);font-style:italic">No gallery photos yet. Upload photos in the CMS.</div>`;
-    return;
-  }
-  grid.innerHTML = photos.map((p, i) => `
-    <div class="gallery-photo${i === 0 ? ' large' : ''}">
-      <img src="${p.data}" alt="${p.caption||'Gallery photo'}">
-    </div>`).join('');
-}
-
-function renderCommittee() {
-  const grid = document.getElementById('site-committee-grid');
-  grid.innerHTML = DATA.committee.map(m => {
-    const initials = m.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-    return `<div class="committee-card">
-      <div class="committee-avatar">${m.photo ? `<img src="${m.photo}" alt="${m.name}">` : initials}</div>
-      <div class="committee-name">${m.name}</div>
-      <div class="committee-role">${m.role}</div>
-    </div>`;
-  }).join('');
-}
-
-// ===================== CMS PANEL NAV =====================
-function showPanel(id, el) {
-  document.querySelectorAll('.cms-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.cms-nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
-  if (el) el.classList.add('active');
-  const titles = { dashboard:'Dashboard', hero:'Hero Section', about:'About Section', events:'Events', gallery:'Gallery', committee:'Committee', contact:'Contact Info' };
-  document.getElementById('cms-topbar-title').textContent = titles[id] || id;
-  if (id === 'hero') loadHeroForm();
-  if (id === 'about') loadAboutForm();
-  if (id === 'events') renderCMSEvents();
-  if (id === 'gallery') renderCMSGallery();
-  if (id === 'committee') renderCMSCommittee();
-  if (id === 'contact') loadContactForm();
-  if (id === 'dashboard') updateDashStats();
-}
-
-function updateDashStats() {
-  document.getElementById('dash-event-count').textContent = DATA.events.length;
-  document.getElementById('dash-member-count').textContent = DATA.committee.length;
-  document.getElementById('dash-photo-count').textContent = DATA.gallery.photos.length;
-}
-
-// ===================== HERO FORM =====================
-function loadHeroForm() {
-  const h = DATA.hero;
-  document.getElementById('cms-hero-badge').value = h.badge;
-  document.getElementById('cms-hero-h1').value = h.h1;
-  document.getElementById('cms-hero-sub').value = h.sub;
-  document.getElementById('cms-hero-btn1').value = h.btn1;
-  document.getElementById('cms-hero-btn2').value = h.btn2;
-  document.getElementById('cms-hero-year').value = h.year;
-}
-function saveHero() {
-  DATA.hero = {
-    badge: document.getElementById('cms-hero-badge').value,
-    h1: document.getElementById('cms-hero-h1').value,
-    sub: document.getElementById('cms-hero-sub').value,
-    btn1: document.getElementById('cms-hero-btn1').value,
-    btn2: document.getElementById('cms-hero-btn2').value,
-    year: document.getElementById('cms-hero-year').value
-  };
-  saveAll();
-}
-
-// ===================== ABOUT FORM =====================
-function loadAboutForm() {
-  const a = DATA.about;
-  document.getElementById('cms-about-title').value = a.title;
-  document.getElementById('cms-about-body').value = a.body;
-  document.getElementById('cms-about-body2').value = a.body2;
-  document.getElementById('cms-about-motto').value = a.motto;
-  document.getElementById('cms-stat1').value = a.stat1;
-  document.getElementById('cms-stat2').value = a.stat2;
-  document.getElementById('cms-stat3').value = a.stat3;
-  if (a.img) {
-    document.getElementById('about-img-preview').style.display = 'block';
-    document.getElementById('about-img-preview-el').src = a.img;
-  }
-}
-function saveAbout() {
-  DATA.about.title = document.getElementById('cms-about-title').value;
-  DATA.about.body = document.getElementById('cms-about-body').value;
-  DATA.about.body2 = document.getElementById('cms-about-body2').value;
-  DATA.about.motto = document.getElementById('cms-about-motto').value;
-  DATA.about.stat1 = document.getElementById('cms-stat1').value;
-  DATA.about.stat2 = document.getElementById('cms-stat2').value;
-  DATA.about.stat3 = document.getElementById('cms-stat3').value;
-  saveAll();
-}
-function handleAboutImage(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    DATA.about.img = ev.target.result;
-    document.getElementById('about-img-preview').style.display = 'block';
-    document.getElementById('about-img-preview-el').src = ev.target.result;
-    saveAll();
-  };
-  reader.readAsDataURL(file);
-}
-function clearAboutImage() {
-  DATA.about.img = null;
-  document.getElementById('about-img-preview').style.display = 'none';
-  saveAll();
-}
-
-// ===================== EVENTS CMS =====================
-let editingEventId = null;
-let tempEventPhoto = null;
-
-function renderCMSEvents() {
-  const list = document.getElementById('cms-events-list');
-  if (!DATA.events.length) {
-    list.innerHTML = '<div style="padding:32px;text-align:center;color:var(--cms-muted);font-style:italic">No events yet. Click "+ Add Event" to create one.</div>';
-    return;
-  }
-  list.innerHTML = DATA.events.map(ev => `
-    <div class="cms-list-item">
-      <div class="cms-item-img">${ev.photo ? `<img src="${ev.photo}" style="width:100%;height:100%;object-fit:cover">` : `<span style="font-size:20px">${ev.icon||'🎉'}</span>`}</div>
-      <div class="cms-item-info">
-        <div class="cms-item-name">${ev.title}${ev.featured ? ' ⭐' : ''}</div>
-        <div class="cms-item-sub">${ev.date}${ev.venue ? ' · '+ev.venue : ''}</div>
+<!-- MEMBER BENEFITS -->
+<section id="benefits">
+  <div class="section-inner">
+    <div class="benefits-intro">
+      <div class="section-label reveal">Perks of Membership</div>
+      <h2 class="section-title reveal">Member <em>Discounts</em></h2>
+      <div class="divider reveal"></div>
+      <p class="section-body reveal">Your membership card unlocks exclusive discounts at some of Abu Dhabi's best restaurants, bars, hotels and leisure venues. More partners being added all the time — this is just the beginning.</p>
+    </div>
+    <div class="benefits-grid reveal" id="benefitsGrid">
+      <div class="benefit-card">
+        <div class="benefit-category">Food &amp; Drink</div>
+        <div class="benefit-name">The Club Abu Dhabi</div>
+        <div class="benefit-detail">Member discount on food and beverage across the venue, including Sunday Roast and dining events.</div>
+        <span class="benefit-discount">Member Rate</span>
       </div>
-      <span class="cms-item-badge badge-active">${ev.tag||'Event'}</span>
-      <div class="cms-item-actions">
-        <button class="cms-btn cms-btn-ghost cms-btn-sm" onclick="editEvent(${ev.id})">Edit</button>
-        <button class="cms-btn cms-btn-danger cms-btn-sm" onclick="deleteEvent(${ev.id})">Delete</button>
+      <div class="benefit-card">
+        <div class="benefit-category">Food &amp; Drink</div>
+        <div class="benefit-name">Ma Buckley's</div>
+        <div class="benefit-detail">Sunday roast for two — exclusive member voucher available at Souk Qaryat Al Beri.</div>
+        <span class="benefit-discount">Voucher Available</span>
       </div>
-    </div>`).join('');
-}
-
-function openEventModal(id) {
-  editingEventId = null; tempEventPhoto = null;
-  document.getElementById('event-modal-title').textContent = 'Add Event';
-  document.getElementById('event-edit-id').value = '';
-  ['ev-title','ev-date','ev-venue','ev-tag','ev-desc','ev-price-m','ev-price-nm','ev-dresscode','ev-icon'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('ev-featured').checked = false;
-  document.getElementById('ev-photo-preview').style.display = 'none';
-  document.getElementById('ev-photo-data').value = '';
-  document.getElementById('event-modal').classList.add('open');
-}
-
-function editEvent(id) {
-  const ev = DATA.events.find(e => e.id === id);
-  if (!ev) return;
-  editingEventId = id; tempEventPhoto = ev.photo;
-  document.getElementById('event-modal-title').textContent = 'Edit Event';
-  document.getElementById('ev-title').value = ev.title;
-  document.getElementById('ev-date').value = ev.date;
-  document.getElementById('ev-venue').value = ev.venue;
-  document.getElementById('ev-tag').value = ev.tag;
-  document.getElementById('ev-desc').value = ev.desc;
-  document.getElementById('ev-price-m').value = ev.priceM;
-  document.getElementById('ev-price-nm').value = ev.priceNM;
-  document.getElementById('ev-dresscode').value = ev.dresscode;
-  document.getElementById('ev-featured').checked = ev.featured;
-  document.getElementById('ev-icon').value = ev.icon;
-  document.getElementById('ev-photo-data').value = ev.photo || '';
-  if (ev.photo) {
-    document.getElementById('ev-photo-preview').style.display = 'block';
-    document.getElementById('ev-photo-preview-el').src = ev.photo;
-  } else {
-    document.getElementById('ev-photo-preview').style.display = 'none';
-  }
-  document.getElementById('event-modal').classList.add('open');
-}
-
-function saveEvent() {
-  const title = document.getElementById('ev-title').value.trim();
-  if (!title) { alert('Please enter an event name.'); return; }
-  const ev = {
-    id: editingEventId || Date.now(),
-    title, date: document.getElementById('ev-date').value,
-    venue: document.getElementById('ev-venue').value,
-    tag: document.getElementById('ev-tag').value,
-    desc: document.getElementById('ev-desc').value,
-    priceM: document.getElementById('ev-price-m').value,
-    priceNM: document.getElementById('ev-price-nm').value,
-    dresscode: document.getElementById('ev-dresscode').value,
-    featured: document.getElementById('ev-featured').checked,
-    icon: document.getElementById('ev-icon').value || '🎉',
-    photo: document.getElementById('ev-photo-data').value || null
-  };
-  if (editingEventId) {
-    const idx = DATA.events.findIndex(e => e.id === editingEventId);
-    DATA.events[idx] = ev;
-  } else {
-    DATA.events.push(ev);
-  }
-  closeModal('event-modal');
-  saveAll();
-  renderCMSEvents();
-}
-
-function deleteEvent(id) {
-  if (!confirm('Delete this event?')) return;
-  DATA.events = DATA.events.filter(e => e.id !== id);
-  saveAll(); renderCMSEvents();
-}
-
-function handleEventPhoto(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    document.getElementById('ev-photo-data').value = ev.target.result;
-    document.getElementById('ev-photo-preview').style.display = 'block';
-    document.getElementById('ev-photo-preview-el').src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-function clearEventPhoto() {
-  document.getElementById('ev-photo-data').value = '';
-  document.getElementById('ev-photo-preview').style.display = 'none';
-}
-
-// ===================== GALLERY =====================
-function loadGalleryMeta() {
-  document.getElementById('cms-gallery-title').value = DATA.gallery.title;
-  document.getElementById('cms-gallery-caption').value = DATA.gallery.caption;
-}
-function saveGalleryMeta() {
-  DATA.gallery.title = document.getElementById('cms-gallery-title').value;
-  DATA.gallery.caption = document.getElementById('cms-gallery-caption').value;
-  saveAll();
-}
-
-function renderCMSGallery() {
-  loadGalleryMeta();
-  document.getElementById('gallery-count').textContent = DATA.gallery.photos.length;
-  const grid = document.getElementById('cms-photo-grid');
-  grid.innerHTML = DATA.gallery.photos.map((p, i) => `
-    <div class="cms-photo-thumb">
-      <img src="${p.data}" alt="">
-      <button class="remove-photo" onclick="removeGalleryPhoto(${i})">×</button>
-    </div>`).join('');
-}
-
-function handleGalleryUpload(e) {
-  const files = Array.from(e.target.files);
-  let loaded = 0;
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      DATA.gallery.photos.push({ data: ev.target.result, caption: file.name });
-      loaded++;
-      if (loaded === files.length) { saveAll(); renderCMSGallery(); }
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-function removeGalleryPhoto(idx) {
-  DATA.gallery.photos.splice(idx, 1);
-  saveAll(); renderCMSGallery();
-}
-
-function clearAllPhotos() {
-  if (!confirm('Remove all gallery photos?')) return;
-  DATA.gallery.photos = [];
-  saveAll(); renderCMSGallery();
-}
-
-// ===================== COMMITTEE =====================
-let editingMemberId = null;
-
-function renderCMSCommittee() {
-  const list = document.getElementById('cms-committee-list');
-  list.innerHTML = DATA.committee.map(m => {
-    const initials = m.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-    return `<div class="cms-list-item">
-      <div class="cms-item-avatar">${m.photo ? `<img src="${m.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : initials}</div>
-      <div class="cms-item-info">
-        <div class="cms-item-name">${m.name}</div>
-        <div class="cms-item-sub">${m.role}</div>
+      <div class="benefit-card">
+        <div class="benefit-category">Food &amp; Drink</div>
+        <div class="benefit-name">Partner Restaurant TBC</div>
+        <div class="benefit-detail">More dining partners coming soon. We're building relationships with the best spots across the capital.</div>
+        <span class="benefit-tbc">Coming Soon</span>
       </div>
-      <div class="cms-item-actions">
-        <button class="cms-btn cms-btn-ghost cms-btn-sm" onclick="editMember(${m.id})">Edit</button>
-        <button class="cms-btn cms-btn-danger cms-btn-sm" onclick="deleteMember(${m.id})">Remove</button>
+      <div class="benefit-card">
+        <div class="benefit-category">Leisure</div>
+        <div class="benefit-name">The Club — Day Pass</div>
+        <div class="benefit-detail">Family day pass to The Club Abu Dhabi — pool, beach and leisure facilities included.</div>
+        <span class="benefit-discount">Member Rate</span>
       </div>
-    </div>`;
-  }).join('');
-}
+      <div class="benefit-card">
+        <div class="benefit-category">Leisure</div>
+        <div class="benefit-name">Golf Partner TBC</div>
+        <div class="benefit-detail">Preferred green fee rates at selected Abu Dhabi golf courses for Society members.</div>
+        <span class="benefit-tbc">Coming Soon</span>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-category">Leisure</div>
+        <div class="benefit-name">Leisure Partner TBC</div>
+        <div class="benefit-detail">We're in conversations with leisure and wellness venues across Abu Dhabi to bring you even more perks.</div>
+        <span class="benefit-tbc">Coming Soon</span>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-category">Events</div>
+        <div class="benefit-name">Society Event Tickets</div>
+        <div class="benefit-detail">Members always pay the reduced rate at Burns Suppers, Ceilidh nights, Chieftain's Ball and St Andrews Ball.</div>
+        <span class="benefit-discount">Up to AED 75 off</span>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-category">Events</div>
+        <div class="benefit-name">Priority Booking</div>
+        <div class="benefit-detail">Members get first access to tickets for sold-out events before they open to the general public.</div>
+        <span class="benefit-discount">Early Access</span>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-category">Partner TBC</div>
+        <div class="benefit-name">Your Brand Here?</div>
+        <div class="benefit-detail">Interested in offering a discount to our growing membership? Get in touch to become a Society partner.</div>
+        <a href="/cdn-cgi/l/email-protection#86e5e9ebebeff2f2e3e3c6e7e2f5e5e9f2f2eff5eef5e9e5efe3f2ffa8e5e9eb" style="font-size:12px;color:var(--gold);text-decoration:none;display:inline-block;margin-top:4px">Partner with us →</a>
+      </div>
+    </div>
+    <div class="benefits-cta-note reveal">
+      <strong>Benefits are growing.</strong> We're actively onboarding new partners across Abu Dhabi. Members will be notified of new discounts via the Society newsletter. <a href="/cdn-cgi/l/email-protection#85e6eae8e8ecf1f1e0e0c5e4e1f6e6eaf1f1ecf6edf6eae6ece0f1fcabe6eae8" style="color:var(--gold);text-decoration:none">Contact us</a> if you'd like to offer a benefit to our members.
+    </div>
+  </div>
+</section>
 
-function openCommitteeModal() {
-  editingMemberId = null;
-  document.getElementById('committee-modal-title').textContent = 'Add Committee Member';
-  document.getElementById('mb-name').value = '';
-  document.getElementById('mb-role').value = '';
-  document.getElementById('mb-photo-data').value = '';
-  document.getElementById('mb-photo-preview').style.display = 'none';
-  document.getElementById('committee-modal').classList.add('open');
-}
+<!-- COMMITTEE -->
+<section id="committee">
+  <div class="section-inner">
+    <div class="section-label reveal">The Team</div>
+    <h2 class="section-title reveal">Our <em>Committee</em></h2>
+    <div class="committee-grid reveal" id="committeeGrid">
+      <div class="committee-card"><div class="committee-avatar">CH</div><div class="committee-name">The Chieftain</div><div class="committee-role">President</div></div>
+      <div class="committee-card"><div class="committee-avatar">VC</div><div class="committee-name">Vice-Chieftain</div><div class="committee-role">Vice President</div></div>
+      <div class="committee-card"><div class="committee-avatar">SE</div><div class="committee-name">Secretary</div><div class="committee-role">Administration</div></div>
+      <div class="committee-card"><div class="committee-avatar">TR</div><div class="committee-name">Treasurer</div><div class="committee-role">Finance</div></div>
+      <div class="committee-card"><div class="committee-avatar">EO</div><div class="committee-name">Events Officer</div><div class="committee-role">Events &amp; Programming</div></div>
+      <div class="committee-card"><div class="committee-avatar">CO</div><div class="committee-name">Charity Officer</div><div class="committee-role">Charitable Giving</div></div>
+      <div class="committee-card"><div class="committee-avatar">MO</div><div class="committee-name">Membership Officer</div><div class="committee-role">Membership &amp; Welcome</div></div>
+      <div class="committee-card"><div class="committee-avatar">+</div><div class="committee-name">Get Involved</div><div class="committee-role">Volunteer Committee</div></div>
+    </div>
+    <p style="margin-top:32px;font-size:13px;color:var(--muted);text-align:center">The Society is run by a volunteer committee. Interested in getting involved? <a href="/cdn-cgi/l/email-protection#c0a3afadada9b4b4a5a580a1a4b3a3afb4b4a9b3a8b3afa3a9a5b4b9eea3afad" style="color:var(--gold);text-decoration:none">Get in touch →</a></p>
+  </div>
+</section>
 
-function editMember(id) {
-  const m = DATA.committee.find(x => x.id === id); if (!m) return;
-  editingMemberId = id;
-  document.getElementById('committee-modal-title').textContent = 'Edit Member';
-  document.getElementById('mb-name').value = m.name;
-  document.getElementById('mb-role').value = m.role;
-  document.getElementById('mb-photo-data').value = m.photo || '';
-  if (m.photo) {
-    document.getElementById('mb-photo-preview').style.display = 'block';
-    document.getElementById('mb-photo-preview-el').src = m.photo;
-  } else { document.getElementById('mb-photo-preview').style.display = 'none'; }
-  document.getElementById('committee-modal').classList.add('open');
-}
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-layout">
+      <div>
+        <div class="section-label reveal">Get in Touch</div>
+        <h2 class="section-title reveal">Contact <em>Us</em></h2>
+        <div class="divider reveal"></div>
+        <p class="section-body reveal">Whether you're interested in membership, have questions about upcoming events, or want to become a partner venue, we'd love to hear from you.</p>
+        <div class="contact-info reveal">
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+              <div class="contact-item-label">General Enquiries</div>
+              <div class="contact-item-val"><a href="/cdn-cgi/l/email-protection#9cfdfee9f8f4fdfef5effff3e8e8f5eff4eff3fff5f9e8e5dcfbf1fdf5f0b2fff3f1"><span class="__cf_email__" data-cfemail="98f9faedfcf0f9faf1ebfbf7ececf1ebf0ebf7fbf1fdece1d8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span></a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🎟️</div>
+            <div>
+              <div class="contact-item-label">Tickets &amp; Events</div>
+              <div class="contact-item-val"><a href="/cdn-cgi/l/email-protection#1f7c707272766b6b7a7a5f7e7b6c7c706b6b766c776c707c767a6b66317c7072"><span class="__cf_email__" data-cfemail="99faf6f4f4f0ededfcfcd9f8fdeafaf6ededf0eaf1eaf6faf0fcede0b7faf6f4">[email&#160;protected]</span></a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-item-label">Based In</div>
+              <div class="contact-item-val" id="contactLocation">Abu Dhabi, UAE</div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-social reveal">
+          <a id="socialFacebook" href="#" class="social-btn" title="Facebook">f</a>
+          <a id="socialInstagram" href="#" class="social-btn" title="Instagram" style="font-style:italic;font-family:serif">ig</a>
+        </div>
+      </div>
+      <div class="contact-form-side reveal">
+        <div class="section-label" style="margin-bottom:24px">Send a Message</div>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="you@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" placeholder="Membership, events, partnerships...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Tell us a bit about yourself and how we can help..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-function saveMember() {
-  const name = document.getElementById('mb-name').value.trim();
-  if (!name) { alert('Please enter a name.'); return; }
-  const m = { id: editingMemberId || Date.now(), name, role: document.getElementById('mb-role').value, photo: document.getElementById('mb-photo-data').value || null };
-  if (editingMemberId) {
-    const idx = DATA.committee.findIndex(x => x.id === editingMemberId);
-    DATA.committee[idx] = m;
-  } else { DATA.committee.push(m); }
-  closeModal('committee-modal');
-  saveAll(); renderCMSCommittee();
-}
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Abu Dhabi <span>Scottish Society</span><br><span style="font-size:11px;font-weight:300;opacity:0.5;font-family:'DM Sans',sans-serif;letter-spacing:0.1em">Relaunched 2025 · Abu Dhabi, UAE</span></div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#benefits">Benefits</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Abu Dhabi Scottish Society</div>
+</footer>
 
-function deleteMember(id) {
-  if (!confirm('Remove this member?')) return;
-  DATA.committee = DATA.committee.filter(m => m.id !== id);
-  saveAll(); renderCMSCommittee();
-}
-
-function handleMemberPhoto(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    document.getElementById('mb-photo-data').value = ev.target.result;
-    document.getElementById('mb-photo-preview').style.display = 'block';
-    document.getElementById('mb-photo-preview-el').src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-function clearMemberPhoto() {
-  document.getElementById('mb-photo-data').value = '';
-  document.getElementById('mb-photo-preview').style.display = 'none';
-}
-
-// ===================== CONTACT FORM =====================
-function loadContactForm() {
-  document.getElementById('cms-contact-body').value = DATA.contact.body;
-  document.getElementById('cms-email1').value = DATA.contact.email1;
-  document.getElementById('cms-email2').value = DATA.contact.email2;
-  document.getElementById('cms-location').value = DATA.contact.location;
-}
-function saveContact() {
-  DATA.contact = {
-    body: document.getElementById('cms-contact-body').value,
-    email1: document.getElementById('cms-email1').value,
-    email2: document.getElementById('cms-email2').value,
-    location: document.getElementById('cms-location').value
-  };
-  saveAll();
-}
-
-// ===================== MODAL =====================
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.cms-modal-overlay').forEach(m => {
-  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
-});
-
-// ===================== SAVE ALL =====================
-function saveAll() {
-  saveData();
-  renderSite();
-}
-
-// ===================== CMS TOGGLE =====================
-function enterCMS() {
-  document.body.classList.add('cms-mode');
-  document.getElementById('cms-toggle-btn').style.display = 'none';
-  updateDashStats();
-}
-function exitCMS() {
-  document.body.classList.remove('cms-mode');
-  document.getElementById('cms-toggle-btn').style.display = 'flex';
-}
-
-// ===================== TOAST =====================
-function showToast(msg) {
-  const t = document.getElementById('cms-toast');
-  t.textContent = '✓ ' + msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-// ===================== SITE UTILS =====================
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('#view-site nav');
-  if (!nav) return;
-  nav.style.background = window.scrollY > 60 ? 'rgba(8,15,26,0.97)' : 'rgba(13,26,43,0.85)';
-});
-
-const revealObs = new IntersectionObserver(entries => {
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
 
-function initReveal() { document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el)); }
-
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t && !document.body.classList.contains('cms-mode')) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+document.querySelectorAll('.benefits-grid.reveal, .committee-grid.reveal').forEach(parent => {
+  parent.querySelectorAll('.benefit-card, .committee-card').forEach((child, i) => {
+    child.style.transitionDelay = (i * 0.06) + 's';
   });
 });
 
-function handleContactSubmit(e) {
-  e.preventDefault();
-  const btn = document.getElementById('contact-submit-btn');
-  btn.textContent = "Message Sent — Slàinte! 🥃";
-  btn.style.background = 'rgba(201,162,39,0.3)'; btn.style.color = 'var(--gold)'; btn.disabled = true;
-  setTimeout(() => { window.location.href = 'mailto:' + DATA.contact.email2 + '?subject=Website Enquiry'; }, 1500);
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background = window.scrollY > 60 ? 'rgba(8,15,26,0.97)' : 'rgba(13,26,43,0.85)';
+});
+
+// LIGHTBOX
+const items = document.querySelectorAll('.gallery-item');
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightboxImg');
+const lbVid = document.getElementById('lightboxVid');
+const lbCaption = document.getElementById('lightboxCaption');
+const lbDownload = document.getElementById('lightboxDownload');
+let currentIdx = 0;
+
+function openLightbox(idx) {
+  const item = items[idx];
+  const src = item.dataset.src;
+  const type = item.dataset.type;
+  const caption = item.dataset.caption || '';
+  currentIdx = idx;
+  lbImg.style.display = 'none';
+  lbVid.style.display = 'none';
+  if (lbVid.pause) lbVid.pause();
+  if (!src) return;
+  if (type === 'video') {
+    lbVid.src = src; lbVid.style.display = 'block';
+    lbDownload.href = src; lbDownload.download = caption || 'video';
+  } else {
+    lbImg.src = src; lbImg.alt = caption; lbImg.style.display = 'block';
+    lbDownload.href = src; lbDownload.download = caption || 'photo';
+  }
+  lbCaption.textContent = caption;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-// ===================== INIT =====================
-loadData();
-renderSite();
-initReveal();
-</script>
-</body>
-</html>
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  if (lbVid.pause) lbVid.pause();
+  document.body.style.overflow = '';
+}
+
+items.forEach((item, idx) => item.addEventListener('click', () => openLightbox(idx)));
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.getElementById('lightboxPrev').addEventListener('click', e => { e.stopPropagation(); openLightbox((currentIdx - 1 + items.length) % items.length); });
+document.getElementById('lightboxNext').addEventListener('click', e => { e.stopPropagation(); openLightbox((currentIdx + 1) % items.length); });
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
