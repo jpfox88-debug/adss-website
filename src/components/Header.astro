@@ -10,11 +10,16 @@ const links = [
   { href: '/downloads/', label: 'Downloads' },
 ];
 
+interface Props {
+  /** Transparent header laid over a full-bleed hero (homepage). */
+  overlay?: boolean;
+}
+const { overlay = false } = Astro.props;
+
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
-<header class="site-header">
-  <div class="tartan-band" aria-hidden="true"></div>
+<header class:list={['site-header', { overlay }]}>
   <div class="bar wrap">
     <a class="brand" href="/">
       <Image src={logo} alt="" width={64} height={50} loading="eager" />
@@ -60,6 +65,15 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
   .site-header {
     background: var(--navy);
     color: var(--warm-white);
+  }
+  .site-header.overlay {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 10;
+    background: linear-gradient(rgba(8, 13, 26, 0.7), rgba(8, 13, 26, 0));
+  }
+  .site-header.overlay:has(.nav.is-open) {
+    background: var(--navy);
   }
   .bar {
     display: flex;

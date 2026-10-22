@@ -14,9 +14,11 @@ interface Props {
   imageAlt?: string | null;
   noindex?: boolean;
   type?: 'website' | 'article';
+  /** Lay the header over the first section (full-bleed hero). */
+  overlayHeader?: boolean;
 }
 
-const { title, description, image, imageAlt, noindex = false, type = 'website' } = Astro.props;
+const { title, description, image, imageAlt, noindex = false, type = 'website', overlayHeader = false } = Astro.props;
 // Pre-launch builds are never indexed; set SITE_LAUNCHED=true in Netlify at launch.
 const launched = process.env.SITE_LAUNCHED === 'true';
 const settings = await getSettings();
@@ -53,7 +55,7 @@ const ogAlt = image ? imageAlt ?? '' : `${settings.site_name} logo on a navy tar
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
-    <Header />
+    <Header overlay={overlayHeader} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
