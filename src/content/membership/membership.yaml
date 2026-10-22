@@ -1,24 +1,24 @@
-intro: "Membership is arranged directly with the society through WhatsApp. Message our membership contact and we'll guide you through the next steps."
-eligibility: "[ELIGIBILITY RULES]"
-period: "[MEMBERSHIP PERIOD]"
-renewal: "[RENEWAL ARRANGEMENTS]"
-how_to_join: "Tap 'Join via WhatsApp' to send us a message. We'll reply with the next steps."
+intro: Membership is arranged directly with the society through WhatsApp. Message our membership contact and we'll guide you through the next steps.
+eligibility: '[ELIGIBILITY RULES]'
+period: '[MEMBERSHIP PERIOD]'
+renewal: '[RENEWAL ARRANGEMENTS]'
+how_to_join: Tap 'Join via WhatsApp' to send us a message. We'll reply with the next steps.
 options:
-  - name: "[MEMBERSHIP OPTIONS]"
-    price_aed: "[PRICES IN AED]"
-    description: "[OPTION DESCRIPTION]"
+  - name: '[MEMBERSHIP OPTIONS]'
+    price_aed: '[PRICES IN AED]'
+    description: '[OPTION DESCRIPTION]'
 benefits:
-  - title: "[CONFIRMED BENEFITS]"
-    description: "[BENEFIT DESCRIPTION]"
-whatsapp_number: "[MEMBERSHIP WHATSAPP NUMBER]"
-whatsapp_message: "Hi, I'd like to join the Abu Dhabi Scottish Society. Could you please let me know the next steps?"
-email: "[MEMBERSHIP EMAIL ADDRESS]"
+  - title: '[CONFIRMED BENEFITS]'
+    description: '[BENEFIT DESCRIPTION]'
+whatsapp_number: '[MEMBERSHIP WHATSAPP NUMBER]'
+whatsapp_message: Hi, I'd like to join the Abu Dhabi Scottish Society. Could you please let me know the next steps?
+email: '[MEMBERSHIP EMAIL ADDRESS]'
 faq:
   - question: Who can join?
-    answer: "[ELIGIBILITY RULES]"
+    answer: '[ELIGIBILITY RULES]'
   - question: How long does membership last?
-    answer: "[MEMBERSHIP PERIOD]"
+    answer: '[MEMBERSHIP PERIOD]'
   - question: How do I join?
-    answer: "Send us a message using the 'Join via WhatsApp' button and we'll take it from there."
+    answer: Send us a message using the 'Join via WhatsApp' button and we'll take it from there.
   - question: How do I renew?
-    answer: "[RENEWAL ARRANGEMENTS]"
+    answer: '[RENEWAL ARRANGEMENTS]'
