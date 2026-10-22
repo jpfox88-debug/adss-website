@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Ph from '../components/Ph.astro';
+import { getCommittee, getSettings } from '../lib/content';
+import { isPlaceholder, safeUrl } from '../lib/site';
+
+const settings = await getSettings();
+const members = await Promise.all(
+  (await getCommittee()).map(async (m) => ({ ...m, Bio: (await render(m)).Content })),
+);
+---
+<Base
+  title="The Committee"
+  description="Meet the volunteer committee who run the Abu Dhabi Scottish Society and organise its events."
+>
+  <div class="wrap page-head">
+    <h1>The Committee</h1>
+    <p>The society is run by volunteers elected by the members. Committee for <Ph text={settings.committee_term} />.</p>
+  </div>
+
+  <div class="wrap section-tight">
+    {members.length === 0 ? (
+      <p>Committee details will be published soon.</p>
+    ) : (
+      <ul class="people">
+        {members.map((m) => {
+          const contact = safeUrl(m.data.contact_url);
+          return (
+            <li class="person">
+              <div class="portrait">
+                {m.data.photo ? (
+                  <Image
+                    src={m.data.photo}
+                    alt={m.data.photo_alt && !isPlaceholder(m.data.name) ? m.data.photo_alt : isPlaceholder(m.data.name) ? 'Committee photo placeholder' : `${m.data.name}`}
+                    widths={[300, 600]}
+                    sizes="(min-width: 60rem) 18rem, (min-width: 36rem) 45vw, 90vw"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="no-photo" aria-hidden="true"></div>
+                )}
+              </div>
+              <h2 class="name"><Ph text={m.data.name} /></h2>
+              <p class="role"><Ph text={m.data.role} /></p>
+              <div class="bio"><m.Bio /></div>
+              {contact && m.data.contact_label && <p><a href={contact}>{m.data.contact_label}</a></p>}
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </div>
+</Base>
+
+<style>
+  .section-tight {
+    padding-bottom: var(--space-5);
+  }
+  .people {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-4) var(--space-3);
+  }
+  .person {
+    max-width: none;
+  }
+  .portrait {
+    margin-bottom: var(--space-2);
+    border-bottom: 6px solid transparent;
+    border-image: var(--tartan) 1;
+  }
+  .portrait img,
+  .no-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--stone);
+  }
+  .name {
+    font-size: var(--step-1);
+    margin-bottom: 0.15rem;
+  }
+  .role {
+    color: var(--forest-deep);
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  .bio :global(p) {
+    margin-bottom: 0.6rem;
+  }
+</style>
