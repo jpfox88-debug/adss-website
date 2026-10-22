@@ -1,29 +1,28 @@
-// Generates the default social share image and favicon from the society logo.
-// Run: node scripts/make-brand-images.mjs
+// Social share image, favicon and apple-touch-icon from the Society's logo.
+// Run after scripts/make-logos.mjs: node scripts/make-brand-images.mjs
 import sharp from 'sharp';
-const logo = 'src/assets/brand/adss-logo.png';
-const tartan = (w, h) => `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
-<defs><pattern id="t" width="46" height="46" patternUnits="userSpaceOnUse">
-<rect width="46" height="46" fill="#14213d"/>
-<rect x="0" y="0" width="46" height="12" fill="#2f5d4a" opacity=".75"/><rect x="0" y="34" width="46" height="12" fill="#2f5d4a" opacity=".75"/>
-<rect x="0" y="0" width="12" height="46" fill="#2f5d4a" opacity=".75"/><rect x="34" y="0" width="12" height="46" fill="#2f5d4a" opacity=".75"/>
-<rect x="0" y="22" width="46" height="2" fill="#b3263a" opacity=".85"/><rect x="22" y="0" width="2" height="46" fill="#b3263a" opacity=".85"/>
-</pattern></defs><rect width="100%" height="100%" fill="url(#t)"/>
-<rect x="${w * 0.08}" y="${h * 0.14}" width="${w * 0.84}" height="${h * 0.72}" rx="6" fill="#faf8f3"/></svg>`;
+const brand = 'src/assets/brand';
+const CREAM = '#F5F0E8';
 
-const card = await sharp(Buffer.from(tartan(1200, 630))).png().toBuffer();
-const logoSized = await sharp(logo).resize({ height: 300 }).toBuffer();
-const meta = await sharp(logoSized).metadata();
-const text = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="560" height="300">
-<text x="0" y="120" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#14213d">Scottish Society</text>
-<text x="0" y="190" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#14213d">Abu Dhabi</text></svg>`);
-await sharp(card)
+// Share image: the arched logo on cream with a navy rule along the bottom.
+const arched = await sharp(`${brand}/logo-arched.png`).resize({ height: 500 }).toBuffer();
+await sharp({ create: { width: 1200, height: 630, channels: 3, background: CREAM } })
   .composite([
-    { input: logoSized, left: 140, top: 165 },
-    { input: text, left: 160 + meta.width, top: 165 },
+    { input: arched, gravity: 'centre' },
+    { input: { create: { width: 1200, height: 14, channels: 3, background: '#14213d' } }, left: 0, top: 616 },
   ])
-  .jpeg({ quality: 85 })
+  .jpeg({ quality: 88 })
   .toFile('public/og-default.jpg');
 
-await sharp(logo).resize(64, 64, { fit: 'contain', background: '#faf8f3' }).png().toFile('public/favicon.png');
+// Icons: the thistle alone, centred with a little breathing room.
+const icon = async (size, file, bg) => {
+  const pad = Math.round(size * 0.08);
+  const mark = await sharp(`${brand}/logo-thistle.png`).resize(size - pad * 2, size - pad * 2, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).toBuffer();
+  await sharp({ create: { width: size, height: size, channels: 4, background: bg } })
+    .composite([{ input: mark, gravity: 'centre' }])
+    .png()
+    .toFile(file);
+};
+await icon(64, 'public/favicon.png', { r: 0, g: 0, b: 0, alpha: 0 });
+await icon(180, 'public/apple-touch-icon.png', CREAM);
 console.log('ok');
