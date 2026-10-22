@@ -3,8 +3,9 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Ph from '../components/Ph.astro';
 import BookingButton from '../components/BookingButton.astro';
+import logo from '../assets/brand/adss-logo.png';
 import { canBeNext, getAlbums, getCommittee, getEvents, getHome, getMembership, isPastAtBuild } from '../lib/content';
-import { formatDay, formatMonthYear, formatTimeRange, isPlaceholder, STATUS_LABEL } from '../lib/site';
+import { formatDay, formatMonthYear, formatTimeRange, STATUS_LABEL } from '../lib/site';
 
 const home = await getHome();
 const membership = await getMembership();
@@ -22,135 +23,140 @@ const firstOption = membership.options[0];
   description="The Abu Dhabi Scottish Society brings together Scots in Abu Dhabi, their families and anyone who loves Scotland — Burns Supper, ceilidhs, the St Andrew's Ball and more."
   image={home.hero_image}
   imageAlt={home.hero_alt}
+  overlayHeader
 >
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-media">
-      {home.hero_image ? (
-        <Image
-          src={home.hero_image}
-          alt={home.hero_alt ?? ''}
-          widths={[640, 960, 1280, 1920]}
-          sizes="100vw"
-          loading="eager"
-          fetchpriority="high"
-        />
-      ) : <div class="hero-fallback" aria-hidden="true"></div>}
-    </div>
-    <div class="hero-panel wrap">
-      <div class="hero-copy">
-        <h1 id="hero-title">{home.hero_heading}</h1>
-        <p><Ph text={home.hero_intro} /></p>
-        <div class="btn-row">
-          <a class="btn btn--light" href="/events/">Upcoming Events</a>
-          <a class="btn btn--outline-light" href="/join/">Join the Society</a>
-        </div>
+    {home.hero_image && (
+      <Image
+        class="hero-img"
+        src={home.hero_image}
+        alt={home.hero_alt ?? ''}
+        widths={[640, 960, 1280, 1920, 2400]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    )}
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-copy">
+      <span class="crest" aria-hidden="true"><Image src={logo} alt="" width={120} loading="eager" /></span>
+      <h1 id="hero-title">{home.hero_heading}</h1>
+      <p class="hero-intro"><Ph text={home.hero_intro} /></p>
+      <div class="hero-actions">
+        <a class="btn btn--light" href="/events/">Upcoming Events</a>
+        <a class="btn btn--outline-light" href="/join/">Join the Society</a>
       </div>
     </div>
   </section>
 
-  <section class="next wrap" aria-labelledby="next-title">
-    <div class="next-card">
-      <h2 id="next-title" class="next-label">Next event</h2>
-      <ul class="plain" id="next-event" data-event-list="next">
-        {candidates.map((e, i) => (
-          <li data-event data-end={e.end.toISOString()} data-status={e.data.status} hidden={i !== 0} class="next-item">
-            <div class="next-main">
-              <p class="next-title"><a href={`/events/${e.id}/`}><Ph text={e.data.title} /></a></p>
-              <p class="next-when">
-                <strong>{formatDay(e.start)}</strong><br />
-                {formatTimeRange(e.start, e.end)} · <Ph text={e.data.venue} />
-              </p>
+  <section class="invite-section" aria-labelledby="next-title">
+    <div class="sash" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="card">
+        <span class="seal" aria-hidden="true">ADSS</span>
+        <h2 id="next-title" class="card-kicker">Next event</h2>
+        <ul class="plain" id="next-event" data-event-list="next">
+          {candidates.map((e, i) => (
+            <li data-event data-end={e.end.toISOString()} data-status={e.data.status} hidden={i !== 0}>
+              <p class="card-title"><a href={`/events/${e.id}/`}><Ph text={e.data.title} /></a></p>
+              <p class="card-date">{formatDay(e.start)}</p>
+              <p class="card-meta">{formatTimeRange(e.start, e.end)} &nbsp;·&nbsp; <Ph text={e.data.venue} /></p>
               {e.data.status !== 'open' && <p><span class={`status status--${e.data.status}`}>{STATUS_LABEL[e.data.status]}</span></p>}
-            </div>
-            <div class="next-actions">
-              <BookingButton event={e} />
-              <a href={`/events/${e.id}/`}>Event details<span class="visually-hidden">: {e.data.title}</span></a>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div data-event-empty="next-event" hidden={!!nextAtBuild} class="next-empty">
-        <p>No events are currently scheduled — follow us or join to hear first.</p>
-        <div class="btn-row">
-          <a class="btn btn--primary" href="/join/">Join the Society</a>
-          <a class="btn btn--outline" href="/events/archive/">See past events</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section about wrap" aria-labelledby="about-title">
-    <div class="about-grid">
-      <div>
-        <h2 id="about-title">{home.about_heading}</h2>
-        <p class="lede"><Ph text={home.about_intro} /></p>
-      </div>
-      <ul class="objectives">
-        {home.objectives.map((o) => <li><Ph text={o} /></li>)}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section section--stone" aria-labelledby="join-title">
-    <div class="wrap join">
-      <div>
-        <h2 id="join-title">Why join?</h2>
-        <ul class="benefits">
-          {membership.benefits.map((b) => (
-            <li>
-              <strong><Ph text={b.title} /></strong>
-              {b.description && <> — <Ph text={b.description} /></>}
+              <div class="card-actions">
+                <BookingButton event={e} />
+                <a href={`/events/${e.id}/`}>Event details<span class="visually-hidden">: {e.data.title}</span></a>
+              </div>
             </li>
           ))}
         </ul>
+        <div data-event-empty="next-event" hidden={!!nextAtBuild}>
+          <p class="card-title">No events are currently scheduled — follow us or join to hear first.</p>
+          <div class="card-actions">
+            <a class="btn btn--primary" href="/join/">Join the Society</a>
+            <a href="/events/archive/">See past events</a>
+          </div>
+        </div>
       </div>
-      <div class="join-aside">
-        {firstOption && (
-          <p class="price">
-            <span class="price-label"><Ph text={firstOption.name} /></span>
-            <span class="price-value"><Ph text={firstOption.price_aed} /></span>
-          </p>
-        )}
-        <p>Joining is arranged directly with the society through WhatsApp.</p>
-        <a class="btn btn--accent" href="/join/">Join the Society</a>
+    </div>
+  </section>
+
+  <section class="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="paper">
+        <h2 id="about-title">{home.about_heading}</h2>
+        <div class="about-grid">
+          <p class="about-lead"><Ph text={home.about_intro} /></p>
+          <ul class="objectives">
+            {home.objectives.map((o) => <li><Ph text={o} /></li>)}
+          </ul>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <section class="join" aria-labelledby="join-title">
+    <div class="wrap join-inner">
+      <h2 id="join-title">Why join?</h2>
+      <ul class="benefits">
+        {membership.benefits.map((b) => (
+          <li>
+            <strong><Ph text={b.title} /></strong>
+            {b.description && <span><Ph text={b.description} /></span>}
+          </li>
+        ))}
+      </ul>
+      {firstOption && (
+        <p class="price"><Ph text={firstOption.price_aed} /> <span class="price-label"><Ph text={firstOption.name} /></span></p>
+      )}
+      <p class="join-note">Joining is arranged directly with the society through WhatsApp.</p>
+      <a class="btn btn--accent" href="/join/">Join the Society</a>
     </div>
   </section>
 
   {albums.length > 0 && (
-    <section class="section wrap" aria-labelledby="photos-title">
-      <div class="section-head">
-        <h2 id="photos-title">Recent highlights</h2>
-        <a href="/photos/">All photos and videos</a>
+    <section class="highlights" aria-labelledby="photos-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="photos-title">Recent highlights</h2>
+          <a href="/photos/">All photos and videos</a>
+        </div>
+        <ul class="cards">
+          {albums.map((a) => (
+            <li>
+              <a href={`/photos/${a.id}/`} class="photo-card">
+                <Image src={a.data.cover} alt="" widths={[400, 800, 1200]} sizes="(min-width: 60rem) 33vw, (min-width: 40rem) 50vw, 100vw" />
+                <span class="plate">
+                  <span class="plate-title"><Ph text={a.data.title} /></span>
+                  <span class="plate-sub">{formatMonthYear(a.date)}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul class="highlights">
-        {albums.map((a) => (
-          <li>
-            <a href={`/photos/${a.id}/`}>
-              <Image src={a.data.cover} alt="" widths={[400, 800]} sizes="(min-width: 60rem) 33vw, (min-width: 40rem) 50vw, 100vw" />
-              <span class="hl-title"><Ph text={a.data.title} /></span>
-              <span class="hl-date">{formatMonthYear(a.date)}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </section>
   )}
 
-  <section class="section section--stone" aria-labelledby="committee-title">
-    <div class="wrap committee">
-      <div>
+  <section class="committee" aria-labelledby="committee-title">
+    <div class="wrap">
+      <div class="section-head">
         <h2 id="committee-title">Meet the committee</h2>
-        <p><Ph text={home.committee_intro} /></p>
-        <a class="btn btn--primary" href="/committee/">Meet the committee</a>
+        <a href="/committee/">The full committee</a>
       </div>
+      <p class="committee-intro"><Ph text={home.committee_intro} /></p>
       {committee.length > 0 && (
-        <ul class="faces" aria-label="Committee members">
-          {committee.slice(0, 4).map((c) =>
-            c.data.photo ? (
-              <li><Image src={c.data.photo} alt={isPlaceholder(c.data.name) ? 'Committee photo placeholder' : c.data.name} width={160} height={200} fit="cover" /></li>
-            ) : null,
-          )}
+        <ul class="people">
+          {committee.slice(0, 4).map((c) => (
+            <li>
+              <a class="person-card" href="/committee/">
+                {c.data.photo && <Image src={c.data.photo} alt="" widths={[320, 640]} sizes="(min-width: 60rem) 22vw, 45vw" />}
+                <span class="plate">
+                  <span class="plate-title"><Ph text={c.data.name} /></span>
+                  <span class="plate-sub"><Ph text={c.data.role} /></span>
+                </span>
+              </a>
+            </li>
+          ))}
         </ul>
       )}
     </div>
@@ -162,237 +168,334 @@ const firstOption = membership.options[0];
 </script>
 
 <style>
+  /* ── Hero: full-bleed photo, centred headline under the crest ── */
   .hero {
     position: relative;
-    background: var(--navy);
-    color: var(--warm-white);
+    min-height: min(94vh, 58rem);
     display: grid;
+    place-items: center;
+    background: var(--navy-deep);
+    color: var(--warm-white);
+    text-align: center;
+    overflow: hidden;
   }
-  .hero-media,
-  .hero-panel {
-    grid-area: 1 / 1;
-  }
-  .hero-media img,
-  .hero-fallback {
+  .hero-img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: clamp(26rem, 72vh, 44rem);
+    height: 100%;
     object-fit: cover;
   }
-  .hero-fallback {
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(14, 24, 48, 0.55) 0%, rgba(14, 24, 48, 0.8) 100%);
+  }
+  .hero-copy {
+    position: relative;
+    padding-block: 9rem var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .crest {
+    display: grid;
+    place-items: center;
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    background: var(--paper);
+    margin-bottom: var(--space-3);
+    box-shadow: 0 0 0 6px rgba(246, 239, 225, 0.25);
+  }
+  .crest img {
+    width: 5.6rem;
+    height: auto;
+  }
+  .hero h1 {
+    color: var(--warm-white);
+    font-size: var(--step-5);
+    line-height: 1;
+    max-width: 18ch;
+    margin-bottom: var(--space-3);
+  }
+  .hero-intro {
+    font-size: var(--step-1);
+    line-height: 1.5;
+    max-width: 36rem;
+    color: #ece4d3;
+    margin: 0 auto var(--space-4);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+  .hero :focus-visible {
+    box-shadow: 0 0 0 3px var(--navy-deep), 0 0 0 6px var(--warm-white);
+  }
+
+  /* ── Invitation: tilted printed card beside one tall tartan sash ── */
+  .invite-section {
+    position: relative;
+    background: var(--navy);
+    padding-block: var(--space-6);
+    overflow: hidden;
+  }
+  .sash {
+    position: absolute;
+    inset: 0 auto 0 max(var(--gutter), calc(50% - 36rem));
+    width: 88px;
     background: var(--tartan);
     background-size: 46px 46px;
   }
-  .hero-panel {
-    align-self: end;
-    padding-bottom: calc(var(--space-6) + 2rem);
-  }
-  .hero-copy {
-    background: rgba(20, 33, 61, 0.92);
-    padding: var(--space-4);
-    max-width: 38rem;
-    border-radius: var(--radius);
-  }
-  .hero-copy h1 {
-    color: var(--warm-white);
-  }
-  .hero-copy p {
-    font-size: var(--step-1);
-    line-height: 1.45;
-    margin-bottom: var(--space-3);
-  }
-  .hero-copy .btn:focus-visible {
-    box-shadow: 0 0 0 3px var(--navy), 0 0 0 6px var(--warm-white);
-  }
-
-  /* Next event: the tartan sash overlapping the hero. */
-  .next {
+  .card {
     position: relative;
-    margin-top: calc(-1 * var(--space-6));
+    max-width: 38rem;
+    margin-inline: auto;
+    padding: var(--space-5) var(--space-4) var(--space-4);
+    background: var(--paper);
+    text-align: center;
+    border-radius: 3px;
+    transform: rotate(-1.2deg);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7), 0 2px 0 rgba(0, 0, 0, 0.08);
   }
-  .next-card {
-    background: var(--warm-white);
-    border-left: 14px solid transparent;
-    border-image: var(--tartan) 1;
-    box-shadow: 0 1px 0 var(--stone-deep), 0 18px 40px -24px rgba(20, 33, 61, 0.45);
-    padding: var(--space-3) var(--space-4);
+  .seal {
+    position: absolute;
+    top: -2.25rem;
+    left: 50%;
+    translate: -50% 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #c0394d, var(--seal) 60%, #6e1424);
+    color: #f6dfe2;
+    font: 400 1.05rem/1 var(--font-display);
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35), inset 0 0 0 4px rgba(255, 255, 255, 0.12);
   }
-  .next-label {
-    font: 700 var(--step-0) / 1.2 var(--font-body);
-    color: var(--forest-deep);
-    margin-bottom: 0.25rem;
+  .card-kicker {
+    font: italic 400 var(--step-1) / 1.2 var(--font-display);
+    color: var(--seal);
+    margin-bottom: var(--space-2);
   }
   .plain {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
-  .next-item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
+  .card li,
+  .card p {
     max-width: none;
   }
-  .next-title {
-    font: 700 var(--step-3) / 1.15 var(--font-display);
-    margin-bottom: 0.4rem;
-  }
-  .next-title a {
+  .card-title {
+    font: 400 var(--step-3) / 1.1 var(--font-display);
     color: var(--navy);
+    margin-bottom: var(--space-2);
+    text-wrap: balance;
+  }
+  .card-title a {
+    color: inherit;
     text-decoration: none;
   }
-  .next-title a:hover {
-    text-decoration: underline;
+  .card-date {
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.2rem;
   }
-  .next-when {
+  .card-meta {
     color: var(--ink-soft);
-    margin: 0;
+    margin-bottom: var(--space-3);
   }
-  .next-when strong {
-    color: var(--ink);
-  }
-  .next-actions {
+  .card-actions {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.6rem;
-  }
-  .next-empty p {
-    font: 500 var(--step-2) / 1.25 var(--font-display);
-    color: var(--navy);
+    align-items: center;
+    gap: var(--space-2);
   }
 
+  /* ── About: a cream paper panel set on navy ── */
+  .about {
+    background: var(--navy);
+    padding-bottom: var(--space-6);
+  }
+  .paper {
+    background: var(--paper);
+    border-radius: 3px;
+    padding: var(--space-5) clamp(1.5rem, 5vw, 4rem);
+  }
+  .paper h2 {
+    font-size: var(--step-4);
+    margin-bottom: var(--space-3);
+  }
   .about-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
     gap: var(--space-4);
-    align-items: start;
+  }
+  .about-lead {
+    font: 400 var(--step-2) / 1.3 var(--font-display);
+    color: var(--navy);
   }
   .objectives {
-    padding-left: 1.2rem;
+    padding-left: 1.1rem;
     margin: 0;
   }
   .objectives li {
+    padding-left: 0.4rem;
     margin-bottom: var(--space-2);
-    padding-left: 0.3rem;
   }
   .objectives li::marker {
-    color: var(--tartan-red);
+    color: var(--seal);
   }
 
+  /* ── Why join: centred on navy ── */
   .join {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-    gap: var(--space-4);
-    align-items: start;
+    background: var(--navy-deep);
+    color: var(--warm-white);
+    padding-block: var(--space-6);
+    text-align: center;
+  }
+  .join-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .join h2 {
+    color: var(--warm-white);
+    font-size: var(--step-4);
   }
   .benefits {
-    padding-left: 1.2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4);
   }
   .benefits li {
-    margin-bottom: 0.6rem;
-  }
-  .join-aside {
-    background: var(--warm-white);
-    padding: var(--space-3);
-    border-radius: var(--radius);
-  }
-  .price {
     display: flex;
     flex-direction: column;
     margin-bottom: var(--space-2);
+    max-width: 40rem;
+  }
+  .benefits span {
+    color: #d5d9e3;
+  }
+  .price {
+    font: 400 var(--step-4) / 1.1 var(--font-display);
+    color: var(--paper);
+    margin-bottom: var(--space-1);
   }
   .price-label {
-    color: var(--ink-soft);
+    display: block;
+    font: 400 var(--step-0) / 1.4 var(--font-body);
+    color: #d5d9e3;
   }
-  .price-value {
-    font: 700 var(--step-3) / 1.1 var(--font-display);
-    color: var(--navy);
+  .join-note {
+    color: #d5d9e3;
+    margin-bottom: var(--space-3);
+  }
+  .join :focus-visible {
+    box-shadow: 0 0 0 3px var(--navy-deep), 0 0 0 6px var(--warm-white);
   }
 
+  /* ── Image-led cards with cream caption plates ── */
+  .highlights {
+    background: var(--warm-white);
+    padding-block: var(--space-6);
+  }
+  .committee {
+    background: var(--stone);
+    padding-block: var(--space-6);
+  }
   .section-head {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
     gap: var(--space-2);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
   }
-  .highlights {
-    list-style: none;
-    padding: 0;
+  .section-head h2 {
+    font-size: var(--step-4);
     margin: 0;
+  }
+  .cards,
+  .people {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
     gap: var(--space-3);
   }
-  .highlights li {
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  }
+  .people {
+    grid-template-columns: repeat(auto-fill, minmax(min(46%, 14rem), 1fr));
+  }
+  .cards li,
+  .people li {
     max-width: none;
   }
-  .highlights a {
+  .photo-card,
+  .person-card {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    color: var(--ink);
     text-decoration: none;
-  }
-  .highlights img {
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    width: 100%;
-    border-radius: var(--radius);
-    margin-bottom: 0.4rem;
-  }
-  .hl-title {
-    font: 700 var(--step-1) / 1.2 var(--font-display);
     color: var(--navy);
   }
-  .highlights a:hover .hl-title {
-    text-decoration: underline;
-  }
-  .hl-date {
-    color: var(--ink-soft);
-  }
-
-  .committee {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-    gap: var(--space-4);
-    align-items: center;
-  }
-  .faces {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 0.6rem;
-  }
-  .faces li {
-    flex: 1;
-    max-width: 9rem;
-  }
-  .faces img {
-    aspect-ratio: 4 / 5;
+  .photo-card img,
+  .person-card img {
+    width: 100%;
     object-fit: cover;
-    border-radius: var(--radius);
+    border-radius: 3px;
+  }
+  .photo-card img {
+    aspect-ratio: 4 / 5;
+  }
+  .person-card img {
+    aspect-ratio: 3 / 4;
+  }
+  .plate {
+    position: relative;
+    margin: -2.5rem 0.9rem 0;
+    background: var(--paper);
+    padding: 0.9rem 1rem 1rem;
+    border-radius: 3px;
+    box-shadow: 0 12px 24px -16px rgba(14, 24, 48, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .plate-title {
+    font: 400 var(--step-1) / 1.15 var(--font-display);
+  }
+  .plate-sub {
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+  .photo-card:hover .plate-title,
+  .person-card:hover .plate-title {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .committee-intro {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-4);
   }
 
-  @media (max-width: 40rem) {
-    .hero-panel {
-      padding-inline: 0;
-      padding-bottom: var(--space-5);
+  @media (max-width: 48rem) {
+    .sash {
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 28px;
     }
-    .hero-copy {
-      border-radius: 0;
-      padding: var(--space-3) var(--gutter);
-    }
-    .next {
-      margin-top: calc(-1 * var(--space-4));
-    }
-    .next-card {
-      padding: var(--space-3);
-      border-left-width: 10px;
+    .card {
+      transform: none;
+      padding: var(--space-5) var(--space-3) var(--space-4);
     }
   }
 </style>
