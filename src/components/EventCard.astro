@@ -32,7 +32,7 @@ const parts = dateParts(event.start);
 <style>
   .event {
     display: grid;
-    grid-template-columns: 5rem 1fr;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
     gap: var(--space-3);
     padding-block: var(--space-3);
     border-top: 1px solid var(--stone-deep);
@@ -61,6 +61,7 @@ const parts = dateParts(event.start);
   .title {
     font-size: var(--step-2);
     margin-bottom: 0.4rem;
+    overflow-wrap: break-word;
   }
   .title a {
     color: var(--navy);
