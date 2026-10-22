@@ -57,7 +57,7 @@ const members = await Promise.all(
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(45%, 15.5rem), 1fr));
     gap: var(--space-5) var(--space-3);
   }
   .person {
@@ -75,6 +75,18 @@ const members = await Promise.all(
   .bio {
     margin-top: var(--space-2);
     padding-inline: 0.25rem;
+  }
+  @media (max-width: 36rem) {
+    .people {
+      gap: var(--space-4) var(--space-2);
+    }
+    .people :global(.caption-panel) {
+      margin-inline: 0.4rem;
+      padding: 0.6rem 0.7rem;
+    }
+    .caption-title {
+      font-size: 1.15rem;
+    }
   }
   .bio :global(p) {
     margin-bottom: 0.6rem;

@@ -48,7 +48,7 @@ Because the site was created through the Netlify API, it had **no deploy notific
 
 ## D9 — Self-hosted fonts — 2026-10-22
 
-Alegreya (headings) and Alegreya Sans (body) are served from the site itself through `@fontsource` packages, with Latin subsets only, rather than from Google Fonts. Public pages therefore contact no third party, which keeps the privacy page simple and avoids a cookie or consent question.
+Cormorant Garamond (headings) and Source Sans 3 (body), originally Alegreya and Alegreya Sans (see D13), are served from the site itself through `@fontsource` packages, with Latin subsets only, rather than from Google Fonts. Public pages therefore contact no third party, which keeps the privacy page simple and avoids a cookie or consent question.
 
 ## D10 — Markdown processor — 2026-10-22
 
@@ -66,6 +66,15 @@ As BRIEF §6 specifies, every list renders all the events it might need, with `d
 - the build-time split was correct on the homepage, upcoming and archive pages;
 - a cancelled event was never chosen as next;
 - moving an end time into the past in the browser hid the event, showed the no-events block, and switched the event page to "This event has finished" with booking hidden.
+
+## D13 — Name, logo and visual redesign — 2026-10-22
+
+- **Name:** the Society is **Scottish Society Abu Dhabi**. It is changed everywhere, including BRIEF.md. "ADSS" remains only in historical source URLs and the repo/domain identifiers.
+- **Logo:** the three supplied logos replace the old site's low-resolution PNG. Reversed variants (black → cream, blue → sky `#7FB2FF`, green and red unchanged) are used on navy and over photos; the originals are used on cream. The owner approved this on 2026-10-22. Provenance is in IMAGE-CREDITS.md.
+- **Typography:** Cormorant Garamond (display) and Source Sans 3 (body, navigation, buttons), self-hosted. Lining figures are used throughout, because Cormorant's old-style "1" reads as "I" in dates.
+- **Palette:** warm cream `#F5F0E8` dominant; navy for the hero overlay, event band, footer and calls to action; the logo's green `#2E7D32` (text links `#25692A`) and red `#E8363A` (decorative only; `#C62D33` where red must be read) as restrained accents. The logo's blue stays inside the logo. Tartan is no longer used.
+- **Photography:** decorative Scottish stock (nine Unsplash photos, credited in IMAGE-CREDITS.md) appears only in the homepage hero, the next-event band, compact inner-page headers, and as the illustrative fallback for events without an image, which carries an "Illustrative image" caption. Albums and committee portraits are always genuine Society photos, never stock. Without them the site shows a "coming soon" state and initials tiles.
+- **Bug fixed:** component `display` rules were overriding the `hidden` attribute, so ended or future events could still be visible on the wrong list. The global rule `[hidden] { display: none !important }` fixes this. It was re-verified with computed visibility, not just the attribute.
 
 ## CMS demonstration (BRIEF Section 0 / Section 16 step 2)
 

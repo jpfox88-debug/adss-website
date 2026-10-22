@@ -64,6 +64,11 @@
   box-sizing: border-box;
 }
 
+/* The event-visibility script toggles [hidden]; component display rules must never override it. */
+[hidden] {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -76,6 +81,8 @@ body {
   font-family: var(--font-body);
   font-size: var(--step-0);
   line-height: 1.6;
+  /* Cormorant's old-style figures make "1" read as "I" in dates; use lining figures everywhere. */
+  font-variant-numeric: lining-nums;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

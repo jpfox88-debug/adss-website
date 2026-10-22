@@ -21,9 +21,11 @@ The single list of every placeholder, missing asset and launch decision. Each it
 
 | Item | Where | Status |
 |---|---|---|
-| Higher-resolution logo needed (current file is 424 × 330 px PNG from the old site) | `src/assets/brand/adss-logo.png` | can follow later |
-| Approved homepage opening photo from a real society event | Homepage → Opening photo | must resolve before launch |
-| Approved event photos and albums (placeholder album seeded) | Photos & videos | must resolve before launch |
+| Vector (SVG/PDF) versions of the Society logo, for crisper print and large display (the supplied JPEGs, up to 1600 px wide, are fine on screen) | `src/assets/brand/` | can follow later |
+| Homepage opening photo: currently a decorative Unsplash landscape (Kilchurn Castle, Loch Awe). Replace with a strong, approved Society photo if the committee prefers one | Homepage → Opening photo | can follow later |
+| Genuine Society event albums. Until one exists, Photos & Videos and the homepage show "Society event photos coming soon"; the seeded placeholder album is only a layout preview and is excluded at launch | Photos & videos | can follow later |
+| Committee portraits of the actual members. Until uploaded, each member shows an initials tile (a thistle while the name is a placeholder) | Committee → Photo | can follow later |
+| Event images: any event without its own image shows an illustrative Shetland coast photo with an "Illustrative image" caption. Upload the event's photo or artwork to replace it | Events → Event image | can follow later |
 | The old site has photo pages for St Andrew's Ball 2025, May 2025 Ceilidh, Burns Supper 2025, Nov 2024 at The Club, Six Nations 2025 (Italy) and pre-Christmas drinks 2024. They are candidate sources for approved albums; once albums exist, point their redirects at them (docs/REDIRECTS.md) | Photos & videos | can follow later |
 
 ## Site settings (`src/content/settings/site.yaml`)

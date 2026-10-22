@@ -47,15 +47,18 @@ Go to **Events**, then click **New** (or click an existing event to edit it).
 - **Status:** set *Sold out*, *Postponed* or *Cancelled* when that happens. The event stays visible with the status shown, and a postponed or cancelled event is never advertised as the next event.
 - After an event, link its photo album with **Photo & video albums**.
 - Only publish confirmed details.
+- **Event image:** upload the event's photo or artwork. If you leave it empty, the site shows an illustrative Scottish landscape with a small "Illustrative image" caption. If you upload stock or artwork that could be mistaken for a photo of the Society, tick **Illustrative image** so the same caption appears.
 
 ## 4. Committee
+
 
 Go to **Committee**. Each person has their own entry.
 
 - **Add someone:** click **New** and fill in name, role, photo and a short biography.
 - **Remove someone:** in the Committee list, tick the box next to their entry and click **Delete** (top right).
 - **Change the order:** set **Sort order** (lower numbers appear first, e.g. President 10, Secretary 20).
-- Use a head-and-shoulders photo. The website crops all portraits to the same size.
+- Use a head-and-shoulders photo of the actual committee member; never a stock photo. The website crops all portraits to the same size.
+- No photo yet? Leave the field empty and the website shows a neat tile with the person's initials.
 - The committee year shown on the page is set in **Site pages & settings → Contacts, social links & committee term**.
 
 ## 5. Photos and videos
@@ -63,7 +66,8 @@ Go to **Committee**. Each person has their own entry.
 Go to **Photos & videos**, then **New** to create an album for an event.
 
 - Choose a **Cover photo**, then add photos one at a time under **Photos**, each with a short **Description** for people who can't see it.
-- **Only upload photos the society has approval to publish.**
+- **Only upload actual photos from that Society event, with approval to publish them.** Never use stock or internet photos in albums.
+- Until the first real album is published, Photos & Videos shows a "Society event photos coming soon" message.
 - **Photo size:** aim for **2 MB or less per photo**. The editor shrinks very large photos before saving them, and the website makes smaller versions for phones automatically.
 - **Videos:** upload them to YouTube or Vimeo first (unlisted is fine), then paste the link under **Videos**. Videos never play automatically.
 
@@ -90,7 +94,8 @@ Go to **Downloads**, then **New**.
 
 ## 8. Homepage, contacts and social links
 
-- **Site pages & settings → Homepage:** the opening photo, welcome text, the "about" text and objectives, and the committee introduction.
+- **Site pages & settings → Homepage:** the opening photo, welcome text, the "about" text and objectives, and the committee introduction. The opening photo is currently a Scottish landscape (Kilchurn Castle); you can replace it with an approved Society photo. Use a wide, landscape photo, since the middle of it stays visible on phones.
+- The photos at the top of the other pages, and behind the next-event card, are fixed decorative Scottish landscapes. Changing them needs the website owner. All are credited in [IMAGE-CREDITS.md](IMAGE-CREDITS.md).
 - **Site pages & settings → Contacts, social links & committee term:** the email address, WhatsApp number, phone, address and social media links shown at the bottom of every page.
 
 ## 9. Placeholders
