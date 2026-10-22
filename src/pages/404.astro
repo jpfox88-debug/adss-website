@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found" description="The page you were looking for isn't here." noindex>
+  <div class="wrap page-head">
+    <h1>Page not found</h1>
+    <p>The page you were looking for isn't here. It may have moved when the society's website was rebuilt.</p>
+  </div>
+  <div class="wrap links">
+    <h2>Try one of these instead</h2>
+    <ul>
+      <li><a href="/events/">Upcoming Events</a> — dates, venues and how to book</li>
+      <li><a href="/join/">Join the Society</a> — membership and how to join</li>
+      <li><a href="/photos/">Photos & Videos</a> — albums from past events</li>
+      <li><a href="/committee/">The Committee</a></li>
+      <li><a href="/downloads/">Downloads</a> — constitution and minutes</li>
+      <li><a href="/">Homepage</a></li>
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .links {
+    padding-bottom: var(--space-6);
+  }
+  .links h2 {
+    font-size: var(--step-1);
+  }
+  .links li {
+    margin-bottom: 0.5rem;
+  }
+</style>
