@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import EventCard from '../../components/EventCard.astro';
+import { getEvents, isPastAtBuild } from '../../lib/content';
+
+// Render every event; the shared script hides those that have ended since the build.
+const events = await getEvents();
+const anyUpcoming = events.some((e) => !isPastAtBuild(e));
+---
+<Base
+  title="Upcoming Events"
+  description="Upcoming Abu Dhabi Scottish Society events: dates, venues, prices and how to book."
+>
+  <div class="wrap page-head">
+    <h1>Upcoming Events</h1>
+    <p>Each event page explains who can attend, what it costs and how to book.</p>
+  </div>
+
+  <div class="wrap list-wrap">
+    <ul class="events" id="upcoming-events" data-event-list="upcoming">
+      {events.map((e) => <EventCard event={e} hidden={isPastAtBuild(e)} headingLevel="h2" />)}
+    </ul>
+    <div class="empty" data-event-empty="upcoming-events" hidden={anyUpcoming}>
+      <p class="empty-lead">No events are currently scheduled — follow us or join to hear first.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/join/">Join the Society</a>
+      </div>
+    </div>
+    <p class="archive-link"><a href="/events/archive/">Past events</a></p>
+  </div>
+</Base>
+
+<script>
+  import '../../scripts/event-visibility';
+</script>
+
+<style>
+  .list-wrap {
+    padding-bottom: var(--space-5);
+  }
+  .events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--stone-deep);
+  }
+  .events:not(:has(> li:not([hidden]))) {
+    border-bottom: 0;
+  }
+  .empty-lead {
+    font: 500 var(--step-2) / 1.25 var(--font-display);
+    color: var(--navy);
+  }
+  .archive-link {
+    margin-top: var(--space-4);
+  }
+</style>

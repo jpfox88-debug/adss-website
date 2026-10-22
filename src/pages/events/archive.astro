@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import EventCard from '../../components/EventCard.astro';
+import { getEvents, isPastAtBuild } from '../../lib/content';
+
+// Most recent first; the shared script hides any that haven't finished yet.
+const events = (await getEvents()).reverse();
+const anyPast = events.some((e) => isPastAtBuild(e));
+---
+<Base
+  title="Past events"
+  description="An archive of past Abu Dhabi Scottish Society events, with links to photos and videos."
+>
+  <div class="wrap page-head">
+    <h1>Past events</h1>
+    <p>A record of what we've been up to. Photos and videos are in <a href="/photos/">Photos & Videos</a>.</p>
+  </div>
+
+  <div class="wrap list-wrap">
+    <ul class="events" id="past-events" data-event-list="past">
+      {events.map((e) => <EventCard event={e} hidden={!isPastAtBuild(e)} headingLevel="h2" />)}
+    </ul>
+    <p data-event-empty="past-events" hidden={anyPast}>No past events have been added yet.</p>
+    <p class="back"><a href="/events/">Upcoming Events</a></p>
+  </div>
+</Base>
+
+<script>
+  import '../../scripts/event-visibility';
+</script>
+
+<style>
+  .list-wrap {
+    padding-bottom: var(--space-5);
+  }
+  .events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .back {
+    margin-top: var(--space-4);
+  }
+</style>
