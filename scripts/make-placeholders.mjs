@@ -21,9 +21,7 @@ const make = async (file, w, h, label, glows, base = ['#1b2a4a', '#0b1222']) => 
   await sharp(Buffer.from(svg)).jpeg({ quality: 82 }).toFile(`${out}/${file}`);
 };
 
-const evening = [[0.18, 0.35, 0.2, '#c9a35a', 0.35], [0.72, 0.3, 0.25, '#e8d9b0', 0.22], [0.55, 0.62, 0.17, '#b3263a', 0.18], [0.85, 0.7, 0.22, '#2f5d4a', 0.3], [0.35, 0.75, 0.28, '#3d5a8a', 0.35]];
-await make('placeholder-hero.jpg', 2400, 1350, 'Approved society event photo needed', evening);
-await make('placeholder-event.jpg', 1200, 800, 'Event image needed', [[0.3, 0.4, 0.3, '#c9a35a', 0.4], [0.75, 0.55, 0.3, '#b3263a', 0.25], [0.5, 0.9, 0.3, '#3d5a8a', 0.4]]);
-await make('placeholder-album.jpg', 1200, 800, 'Album photo needed', [[0.25, 0.3, 0.3, '#e8d9b0', 0.3], [0.7, 0.4, 0.28, '#2f5d4a', 0.45], [0.45, 0.8, 0.3, '#c9a35a', 0.3]], ['#22314f', '#101a30']);
-await make('placeholder-portrait.jpg', 600, 750, 'Committee photo needed', [[0.5, 0.38, 0.32, '#d9c7a4', 0.45], [0.5, 0.95, 0.45, '#3d5a8a', 0.5]], ['#2a3756', '#141d33']);
+// Only the album placeholder remains: decorative photography is now real Scottish stock
+// (src/assets/stock), and committee members without photos get initial tiles.
+await make('placeholder-album.jpg', 1200, 800, 'Society event photo needed', [[0.25, 0.3, 0.3, '#e8d9b0', 0.3], [0.7, 0.4, 0.28, '#2f5d4a', 0.45], [0.45, 0.8, 0.3, '#c9a35a', 0.3]], ['#22314f', '#101a30']);
 console.log('ok');

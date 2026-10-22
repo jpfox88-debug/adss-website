@@ -1,14 +1,16 @@
 ---
 import type { EventEntry } from '../lib/content';
 import { dateParts, formatDay, formatTimeRange, STATUS_LABEL } from '../lib/site';
+import EventImage from './EventImage.astro';
 import Ph from './Ph.astro';
 
 interface Props {
   event: EventEntry;
   hidden?: boolean;
   headingLevel?: 'h2' | 'h3';
+  eagerImage?: boolean;
 }
-const { event, hidden = false, headingLevel: H = 'h3' } = Astro.props;
+const { event, hidden = false, headingLevel: H = 'h3', eagerImage = false } = Astro.props;
 const d = event.data;
 const parts = dateParts(event.start);
 ---
@@ -22,46 +24,54 @@ const parts = dateParts(event.start);
     <H class="title"><a href={`/events/${event.id}/`}><Ph text={d.title} /></a></H>
     <p class="meta">
       <span class="visually-hidden">{formatDay(event.start)}, </span>{formatTimeRange(event.start, event.end)}
-      <br /><Ph text={d.venue} />
+      <span class="sep" aria-hidden="true">·</span>
+      <Ph text={d.venue} />
     </p>
     {d.summary && <p class="summary"><Ph text={d.summary} /></p>}
-    {d.status !== 'open' && <p><span class={`status status--${d.status}`}>{STATUS_LABEL[d.status]}</span></p>}
+    {d.status !== 'open' && <p class="status-line"><span class={`status status--${d.status}`}>{STATUS_LABEL[d.status]}</span></p>}
   </div>
+  <a class="thumb" href={`/events/${event.id}/`} tabindex="-1" aria-hidden="true">
+    <EventImage event={event} widths={[320, 640]} sizes="15rem" eager={eagerImage} />
+  </a>
 </li>
 
 <style>
   .event {
     display: grid;
-    grid-template-columns: 4.5rem minmax(0, 1fr);
+    grid-template-columns: 4.75rem minmax(0, 1fr) 15rem;
     gap: var(--space-3);
-    padding-block: var(--space-3);
-    border-top: 1px solid var(--stone-deep);
+    align-items: start;
+    padding: var(--space-3);
+    background: var(--paper);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 0 var(--stone-deep);
     max-width: none;
+  }
+  .event + :global(.event) {
+    margin-top: var(--space-2);
   }
   .date {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0.6rem 0.4rem;
+    padding: 0.7rem 0.4rem 0.6rem;
     background: var(--navy);
-    color: var(--warm-white);
+    color: var(--cream);
     border-radius: var(--radius);
     line-height: 1.1;
-    align-self: start;
-    border-left: 6px solid transparent;
-    border-image: var(--tartan) 1;
+    border-top: 3px solid var(--red);
   }
   .wd,
   .mon {
     font-size: var(--step--1);
+    color: var(--on-navy-soft);
   }
   .day {
-    font: 700 2rem/1 var(--font-display);
+    font: 600 2.1rem/1 var(--font-display);
   }
   .title {
     font-size: var(--step-2);
-    margin-bottom: 0.4rem;
-    overflow-wrap: break-word;
+    margin-bottom: 0.35rem;
   }
   .title a {
     color: var(--navy);
@@ -69,12 +79,34 @@ const parts = dateParts(event.start);
   }
   .title a:hover {
     text-decoration: underline;
+    text-underline-offset: 0.15em;
   }
   .meta {
     color: var(--ink-soft);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
-  .summary {
-    margin-bottom: 0.5rem;
+  .sep {
+    margin-inline: 0.35rem;
+  }
+  .summary,
+  .status-line {
+    margin-bottom: 0.4rem;
+  }
+  .thumb {
+    display: block;
+    aspect-ratio: 3 / 2;
+  }
+  .thumb :global(.event-image) {
+    height: 100%;
+  }
+  @media (max-width: 48rem) {
+    .event {
+      grid-template-columns: 4.25rem minmax(0, 1fr);
+      padding: var(--space-2);
+      gap: var(--space-2);
+    }
+    .thumb {
+      display: none;
+    }
   }
 </style>

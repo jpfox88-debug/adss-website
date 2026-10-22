@@ -1,6 +1,9 @@
 ---
 import { Image } from 'astro:assets';
-import logo from '../assets/brand/adss-logo.png';
+import logoHorizontal from '../assets/brand/logo-horizontal.png';
+import logoHorizontalReversed from '../assets/brand/logo-horizontal-reversed.png';
+import thistle from '../assets/brand/logo-thistle.png';
+import thistleReversed from '../assets/brand/logo-thistle-reversed.png';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -11,7 +14,7 @@ const links = [
 ];
 
 interface Props {
-  /** Transparent header laid over a full-bleed hero (homepage). */
+  /** Transparent header laid over a photographic hero or page header (reversed logo). */
   overlay?: boolean;
 }
 const { overlay = false } = Astro.props;
@@ -19,11 +22,11 @@ const { overlay = false } = Astro.props;
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
-<header class:list={['site-header', { overlay }]}>
+<header class:list={['site-header', overlay ? 'overlay' : 'solid']}>
   <div class="bar wrap">
     <a class="brand" href="/">
-      <Image src={logo} alt="" width={64} height={50} loading="eager" />
-      <span>Scottish Society <br class="brand-break" />Abu Dhabi</span>
+      <Image class="logo-full" src={overlay ? logoHorizontalReversed : logoHorizontal} alt="Scottish Society Abu Dhabi — home" height={56} densities={[1, 2]} loading="eager" />
+      <Image class="logo-mark" src={overlay ? thistleReversed : thistle} alt="Scottish Society Abu Dhabi — home" height={44} densities={[1, 2]} loading="eager" />
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       <span class="menu-icon" aria-hidden="true"></span>
@@ -63,16 +66,23 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 
 <style>
   .site-header {
-    background: var(--navy);
-    color: var(--warm-white);
+    --fg: var(--navy);
+    --fg-soft: rgba(20, 33, 61, 0.22);
+    color: var(--fg);
   }
-  .site-header.overlay {
+  .solid {
+    background: var(--cream);
+    border-bottom: 1px solid var(--stone-deep);
+  }
+  .overlay {
+    --fg: var(--cream);
+    --fg-soft: rgba(245, 240, 232, 0.35);
     position: absolute;
     inset: 0 0 auto;
     z-index: 10;
-    background: linear-gradient(rgba(8, 13, 26, 0.7), rgba(8, 13, 26, 0));
+    background: linear-gradient(rgba(10, 17, 34, 0.72), rgba(10, 17, 34, 0));
   }
-  .site-header.overlay:has(.nav.is-open) {
+  .overlay:has(.nav.is-open) {
     background: var(--navy);
   }
   .bar {
@@ -80,23 +90,21 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     align-items: center;
     justify-content: space-between;
     gap: var(--space-2);
-    padding-block: 0.75rem;
+    padding-block: 0.85rem;
     flex-wrap: wrap;
   }
   .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--warm-white);
-    text-decoration: none;
-    font: 700 1.2rem/1.1 var(--font-display);
+    display: block;
+    border-radius: 2px;
   }
-  .brand img {
-    width: 64px;
-    height: auto;
-    background: var(--warm-white);
-    border-radius: 3px;
-    padding: 3px;
+  .logo-full {
+    height: 56px;
+    width: auto;
+  }
+  .logo-mark {
+    display: none;
+    height: 44px;
+    width: auto;
   }
   .nav ul {
     list-style: none;
@@ -105,39 +113,44 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.25rem 1.25rem;
+    gap: 0.25rem 1.4rem;
   }
   .nav li {
     max-width: none;
   }
   .nav a:not(.btn) {
-    color: var(--warm-white);
+    color: var(--fg);
     text-decoration: none;
-    font-weight: 500;
-    padding: 0.6rem 0.1rem;
+    font-weight: 600;
+    font-size: 1.02rem;
+    padding: 0.6rem 0.05rem;
     display: inline-block;
     border-bottom: 2px solid transparent;
   }
-  .nav a:not(.btn):hover,
+  .nav a:not(.btn):hover {
+    border-bottom-color: var(--fg-soft);
+  }
   .nav a[aria-current='page']:not(.btn) {
-    border-bottom-color: var(--warm-white);
+    border-bottom-color: var(--red);
   }
   .nav .btn {
     min-height: 44px;
-    padding-block: 0.5em;
+    padding-block: 0.45em;
+    font-size: 1.02rem;
   }
-  .nav .btn:focus-visible,
-  .nav a:focus-visible,
-  .brand:focus-visible,
-  .menu-toggle:focus-visible {
-    box-shadow: 0 0 0 3px var(--navy), 0 0 0 6px var(--warm-white);
+  .overlay a:focus-visible,
+  .overlay .menu-toggle:focus-visible {
+    box-shadow: var(--focus-dark);
   }
   .menu-toggle {
     display: none;
   }
 
-  @media (max-width: 60rem) {
-    .brand-break {
+  @media (max-width: 62rem) {
+    .logo-full {
+      display: none;
+    }
+    .logo-mark {
       display: block;
     }
     :global(.has-js) .menu-toggle {
@@ -145,12 +158,12 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
       align-items: center;
       gap: 0.6rem;
       min-height: 44px;
-      padding: 0.4rem 0.9rem;
+      padding: 0.4rem 1rem;
       background: transparent;
-      color: var(--warm-white);
-      border: 2px solid rgba(250, 248, 243, 0.6);
-      border-radius: var(--radius);
-      font: 700 1rem var(--font-body);
+      color: var(--fg);
+      border: 2px solid var(--fg-soft);
+      border-radius: 999px;
+      font: 600 1rem var(--font-body);
       cursor: pointer;
     }
     .menu-icon,
@@ -189,12 +202,14 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     .nav a:not(.btn) {
       display: block;
       padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(250, 248, 243, 0.15);
+      border-bottom: 1px solid var(--fg-soft);
     }
     .nav a[aria-current='page']:not(.btn) {
-      border-bottom-color: rgba(250, 248, 243, 0.15);
+      border-bottom-color: var(--fg-soft);
       text-decoration: underline;
-      text-underline-offset: 0.3em;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.35em;
     }
     .nav-join {
       margin-top: 1rem;

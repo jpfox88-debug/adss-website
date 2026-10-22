@@ -1,8 +1,6 @@
 ---
 title: '[PLACEHOLDER EVENT — not a real event]'
 summary: '[EVENT SUMMARY]'
-image: /src/assets/uploads/placeholder-event.jpg
-image_alt: Placeholder — event image needed
 start: 2026-12-01T19:00
 end: 2026-12-01T23:30
 venue: '[VENUE]'

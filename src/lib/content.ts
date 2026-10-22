@@ -42,6 +42,9 @@ export const canBeNext = (e: EventEntry) => !isInactive(e.data.status);
 
 export type AlbumEntry = CollectionEntry<'albums'> & { date: Date };
 
+/** Albums of actual Society photos (placeholder albums are layout scaffolding only). */
+export const isGenuineAlbum = (a: { data: { placeholder?: boolean } }) => !a.data.placeholder;
+
 export async function getAlbums(): Promise<AlbumEntry[]> {
   const albums = await getCollection('albums', keep);
   return albums

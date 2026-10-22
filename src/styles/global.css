@@ -1,46 +1,48 @@
-@import '@fontsource/dm-serif-display/latin-400.css';
-@import '@fontsource/dm-serif-display/latin-400-italic.css';
-@import '@fontsource/work-sans/latin-400.css';
-@import '@fontsource/work-sans/latin-400-italic.css';
-@import '@fontsource/work-sans/latin-500.css';
-@import '@fontsource/work-sans/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-600-italic.css';
+@import '@fontsource/source-sans-3/latin-400.css';
+@import '@fontsource/source-sans-3/latin-400-italic.css';
+@import '@fontsource/source-sans-3/latin-600.css';
+@import '@fontsource/source-sans-3/latin-700.css';
 
 :root {
-  /* Palette (BRIEF §2): deep navy, warm white, restrained accents. */
+  /* Palette: warm cream dominant; navy for the hero overlay, event band, footer and calls to action;
+     the logo's green and red as restrained accents (the logo's blue stays inside the logo). */
+  --cream: #f5f0e8;
+  --paper: #fbf8f2;
+  --stone: #ebe3d4;
+  --stone-deep: #d8ccb6;
   --navy: #14213d;
   --navy-deep: #0e1830;
-  --warm-white: #f6efe1;
   --ink: #1d2333;
   --ink-soft: #4a5063;
-  --forest: #2f5d4a;
-  --forest-deep: #24493a;
-  --tartan-red: #b3263a;
-  --stone: #ece2cd;
-  --stone-deep: #d9ccb0;
-  --seal: #9e2235;
-  --paper: #fbf6ea;
+  --on-navy: #f5f0e8;
+  --on-navy-soft: #cfd5e2;
+  --green: #2e7d32; /* logo green: buttons, marks */
+  --green-deep: #25692a; /* text links on cream */
+  --red: #e8363a; /* logo red: decorative only (fails text contrast on cream) */
+  --red-text: #c62d33; /* red when it must be read */
+  --sky: #7fb2ff; /* reversed logo blue on navy */
   --placeholder-bg: #fff3c4;
   --placeholder-ink: #5c4500;
 
-  /* Generic navy/green sett with a thin red over-check — not a clan tartan. */
-  --tartan:
-    repeating-linear-gradient(90deg, transparent 0 22px, rgba(179, 38, 58, 0.85) 22px 24px, transparent 24px 46px),
-    repeating-linear-gradient(0deg, transparent 0 22px, rgba(179, 38, 58, 0.85) 22px 24px, transparent 24px 46px),
-    repeating-linear-gradient(90deg, rgba(47, 93, 74, 0.75) 0 12px, transparent 12px 34px, rgba(47, 93, 74, 0.75) 34px 46px),
-    repeating-linear-gradient(0deg, rgba(47, 93, 74, 0.75) 0 12px, transparent 12px 34px, rgba(47, 93, 74, 0.75) 34px 46px),
-    var(--navy);
+  /* Legacy names still used by some page styles. */
+  --warm-white: var(--cream);
+  --forest: var(--green);
+  --forest-deep: var(--green-deep);
 
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body: 'Work Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
 
-  /* Type scale: 1.25 ratio on an 18px base. */
-  --step--1: 0.889rem;
+  /* Type scale. Cormorant has a small x-height, so display sizes run large. */
+  --step--1: 0.9rem;
   --step-0: 1.125rem;
-  --step-1: 1.406rem;
-  --step-2: 1.758rem;
-  --step-3: clamp(2rem, 1.6rem + 1.6vw, 2.9rem);
-  --step-4: clamp(2.5rem, 1.8rem + 3vw, 4.2rem);
-  --step-5: clamp(3rem, 2rem + 5vw, 6rem);
+  --step-1: 1.35rem;
+  --step-2: clamp(1.6rem, 1.4rem + 0.8vw, 2rem);
+  --step-3: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+  --step-4: clamp(2.4rem, 1.8rem + 2.6vw, 3.6rem);
+  --step-5: clamp(2.8rem, 2rem + 3.6vw, 4.6rem);
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -52,8 +54,10 @@
   --measure: 66ch;
   --page: 72rem;
   --gutter: clamp(1rem, 4vw, 2.5rem);
-  --radius: 6px;
-  --focus: 0 0 0 3px var(--warm-white), 0 0 0 6px var(--forest);
+  --radius: 4px;
+  --shadow-card: 0 18px 40px -24px rgba(14, 24, 48, 0.45);
+  --focus: 0 0 0 3px var(--cream), 0 0 0 6px var(--green-deep);
+  --focus-dark: 0 0 0 3px var(--navy-deep), 0 0 0 6px var(--cream);
 }
 
 *,
@@ -69,11 +73,11 @@ html {
 
 body {
   margin: 0;
-  background: var(--warm-white);
+  background: var(--cream);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.65;
+  font-size: var(--step-0);
+  line-height: 1.6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -89,9 +93,9 @@ h3,
 h4 {
   overflow-wrap: break-word;
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 600;
   color: var(--navy);
-  line-height: 1.1;
+  line-height: 1.08;
   margin: 0 0 var(--space-2);
   text-wrap: balance;
 }
@@ -104,7 +108,7 @@ h2 {
   font-size: var(--step-3);
 }
 h3 {
-  font-size: var(--step-1);
+  font-size: var(--step-2);
 }
 
 p,
@@ -120,9 +124,9 @@ li {
 }
 
 a {
-  color: var(--forest-deep);
+  color: var(--green-deep);
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
+  text-underline-offset: 0.2em;
 }
 a:hover {
   text-decoration-thickness: 2px;
@@ -169,69 +173,131 @@ img {
 
 .lede {
   font-size: var(--step-1);
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--ink-soft);
 }
 
+/* Plain page heading for pages without a photographic header (event and album pages). */
 .page-head {
-  padding-block: var(--space-5) var(--space-4);
+  padding-block: var(--space-4) var(--space-3);
 }
 .page-head p {
   font-size: var(--step-1);
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--ink-soft);
 }
 
-/* Buttons */
+/* A short red rule: the one recurring red accent. */
+.accent-rule {
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  background: var(--red);
+  border-radius: 2px;
+  margin-bottom: var(--space-2);
+}
+
+/* Section headings with a link at the right. */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.section-head h2 {
+  margin: 0;
+}
+
+/* Image-led card with an overlapping caption panel (albums, committee). */
+.photo-card {
+  display: flex;
+  flex-direction: column;
+  color: var(--navy);
+  text-decoration: none;
+}
+.photo-card img,
+.photo-card .tile {
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+.caption-panel {
+  position: relative;
+  margin: -2.25rem 0.85rem 0;
+  background: var(--paper);
+  padding: 0.85rem 1rem 0.95rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.caption-title {
+  font: 600 var(--step-1) / 1.15 var(--font-display);
+  color: var(--navy);
+}
+.caption-sub {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+a.photo-card:hover .caption-title {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* Buttons: one shape everywhere. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5em;
   min-height: 48px;
-  padding: 0.65em 1.4em;
-  border-radius: var(--radius);
-  border: 2px solid transparent;
-  font: 500 var(--step-0) / 1.2 var(--font-body);
-  padding-inline: 1.8em;
+  padding: 0.6em 1.6em;
   border-radius: 999px;
+  border: 2px solid transparent;
+  font: 600 var(--step-0) / 1.2 var(--font-body);
   text-decoration: none;
   cursor: pointer;
   text-align: center;
 }
 .btn--primary {
   background: var(--navy);
-  color: var(--warm-white);
+  color: var(--cream);
 }
 .btn--primary:hover {
   background: var(--navy-deep);
 }
 .btn--accent {
-  background: var(--seal);
+  background: var(--green);
   color: #fff;
 }
 .btn--accent:hover {
-  background: #84192b;
+  background: var(--green-deep);
 }
 .btn--light {
-  background: var(--warm-white);
+  background: var(--cream);
   color: var(--navy);
 }
 .btn--light:hover {
   background: #fff;
 }
 .btn--outline {
-  border-color: currentColor;
+  border-color: var(--navy);
   color: var(--navy);
   background: transparent;
 }
+.btn--outline:hover {
+  background: rgba(20, 33, 61, 0.06);
+}
 .btn--outline-light {
-  border-color: var(--warm-white);
-  color: var(--warm-white);
+  border-color: var(--cream);
+  color: var(--cream);
   background: transparent;
 }
 .btn--outline-light:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
 }
 .btn[aria-disabled='true'] {
   background: var(--stone);
@@ -255,18 +321,12 @@ img {
   font-style: normal;
 }
 
-.tartan-band {
-  height: 10px;
-  background: var(--tartan);
-  background-size: 46px 46px;
-}
-
 .status {
   display: inline-block;
   font-weight: 700;
   font-size: var(--step--1);
-  padding: 0.15em 0.6em;
-  border-radius: var(--radius);
+  padding: 0.15em 0.7em;
+  border-radius: 999px;
   background: var(--stone);
   color: var(--navy);
 }
@@ -279,7 +339,7 @@ img {
   color: #45306b;
 }
 .status--cancelled {
-  background: #f4dcdf;
+  background: #f6dcdd;
   color: #8a1c2c;
 }
 
@@ -291,12 +351,4 @@ img {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Direction B: Work Sans runs wide; keep the header nav on one line. */
-.site-header .nav ul {
-  column-gap: 1.1rem;
-}
-.site-header .nav a:not(.btn) {
-  font-size: 0.98rem;
 }

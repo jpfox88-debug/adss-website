@@ -98,6 +98,8 @@ const events = defineCollection({
       summary: optionalText,
       image: image().optional().nullable(),
       image_alt: optionalText,
+      // Stock or artwork rather than a photo of the Society: shown with an "Illustrative image" caption.
+      image_illustrative: z.boolean().default(false),
       start: localDateTime,
       end: localDateTime,
       venue: z.string(),
