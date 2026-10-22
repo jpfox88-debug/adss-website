@@ -46,4 +46,21 @@ An older Netlify site, `lucent-strudel-b8c6cf` (created 2026-03-31), was also co
 
 **D7 — Proof run with the owner account (2026-10-22).** On the owner's instruction, the first end-to-end proof uses `jpfox88-debug`, the repo **owner/admin** account, because no ordinary editor account is available yet. This **does not satisfy** the brief's requirement for an ordinary (non-admin) editor account. **A repeat of the proof with a non-admin collaborator (write access only) is still required before launch.** It is tracked in MISSING-CONTENT.md as must resolve before launch.
 
-_Result: pending; recorded below once the run completes._
+**Result: PASS with the owner account, 2026-10-22, run in Chrome against https://adss-website.netlify.app/admin/.**
+
+| Step | Evidence |
+|---|---|
+| Login | "Sign in with GitHub" through Netlify's OAuth provider landed in the CMS as `jpfox88-debug`. |
+| Edit | Homepage → Welcome text: appended `[CMS TEST EDIT]`. |
+| Photo upload | Homepage → Opening photo: uploaded a 3000×2000 JPEG (77 KB). The CMS converted it to `src/assets/uploads/cms-test-photo.webp` before committing. Astro then built 640/1280 px WebP variants. |
+| Draft → PR | Save created PR #1 (`cms/pages/home`, label `sveltia-cms/draft`) containing the photo and the YAML change. |
+| PDF upload | Downloads → new entry "[CMS TEST] PDF upload test": uploaded `cms-test-document.pdf` to `public/documents/`, creating PR #2. |
+| Preview | Netlify deploy previews `deploy-preview-1--…` and `deploy-preview-2--…` built. The CMS **View Preview** button opened preview 1, showing the edited text and the new photo. Preview 2 listed the document, and the PDF is served as `application/pdf`. |
+| Review → publish | Status Draft/In review → Ready → Publish merged PR #1 (`f78235e`) and PR #2 (`b19a3af`) into `main`. |
+| Production | Production deploy `b19a3af` is live. The homepage shows `[CMS TEST EDIT]` and the responsive WebP hero, and `/documents/cms-test-document.pdf` returns 200. |
+
+**Not yet proven:** the same flow with a non-admin collaborator (write access only). That is still required before launch; see MISSING-CONTENT.md.
+
+**Notes for later steps:**
+- The CMS rewrites YAML in its own quoting style on first save, which makes the first diff noisy. Seed files should be written in that style (step 4).
+- The test content (`[CMS TEST EDIT]`, `cms-test-photo.webp`, the "[CMS TEST] PDF upload test" document and its PDF) is still live for the owner to check. Remove it after confirmation.
