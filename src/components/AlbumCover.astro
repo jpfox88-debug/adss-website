@@ -1,0 +1,21 @@
+---
+// Album cover for listing cards. Renders either shape (docs/DECISIONS.md D15): a pipeline
+// image gets a responsive <Image>; a pre-sized photo gets its 640px thumb as a plain <img>
+// with width/height so the card doesn't shift while it loads.
+import { Image } from 'astro:assets';
+import { albumCover, type AlbumEntry } from '../lib/content';
+
+interface Props {
+  album: AlbumEntry;
+  sizes: string;
+  widths?: number[];
+  loading?: 'lazy' | 'eager';
+}
+const { album, sizes, widths = [400, 800], loading = 'lazy' } = Astro.props;
+const cover = albumCover(album);
+---
+{cover.kind === 'image' ? (
+  <Image src={cover.image} alt="" widths={widths} sizes={sizes} quality={72} loading={loading} />
+) : (
+  <img src={cover.thumb} alt="" width={cover.width} height={cover.height} loading={loading} decoding="async" />
+)}

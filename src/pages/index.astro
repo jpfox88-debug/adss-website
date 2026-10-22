@@ -5,6 +5,7 @@ import Ph from '../components/Ph.astro';
 import BookingButton from '../components/BookingButton.astro';
 import Portrait from '../components/Portrait.astro';
 import PhotosComingSoon from '../components/PhotosComingSoon.astro';
+import AlbumCover from '../components/AlbumCover.astro';
 import logoStacked from '../assets/brand/logo-stacked-reversed.png';
 import bandPhoto from '../assets/stock/skye-heather-hillside.jpg';
 import { canBeNext, getAlbums, getCommittee, getEvents, getHome, getMembership, isGenuineAlbum, isPastAtBuild } from '../lib/content';
@@ -140,7 +141,7 @@ const firstOption = membership.options[0];
           {albums.map((a) => (
             <li>
               <a href={`/photos/${a.id}/`} class="photo-card">
-                <Image src={a.data.cover} alt="" widths={[400, 800]} sizes="(min-width: 60rem) 22rem, (min-width: 40rem) 45vw, 92vw" quality={72} />
+                <AlbumCover album={a} sizes="(min-width: 60rem) 22rem, (min-width: 40rem) 45vw, 92vw" />
                 <span class="caption-panel">
                   <span class="caption-title"><Ph text={a.data.title} /></span>
                   <span class="caption-sub">{formatMonthYear(a.date)}</span>

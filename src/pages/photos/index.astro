@@ -1,8 +1,8 @@
 ---
-import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import PhotosComingSoon from '../../components/PhotosComingSoon.astro';
+import AlbumCover from '../../components/AlbumCover.astro';
 import Ph from '../../components/Ph.astro';
 import headerPhoto from '../../assets/stock/old-man-of-storr-skye.jpg';
 import { getAlbums, isGenuineAlbum } from '../../lib/content';
@@ -30,14 +30,7 @@ const layoutPreview = process.env.SITE_LAUNCHED !== 'true' ? allAlbums.find((a) 
         {albums.map((a) => (
           <li>
             <a href={`/photos/${a.id}/`} class="photo-card">
-              <Image
-                src={a.data.cover}
-                alt=""
-                widths={[400, 800, 1200]}
-                sizes="(min-width: 72rem) 22rem, (min-width: 40rem) 45vw, 92vw"
-                quality={72}
-                loading="lazy"
-              />
+              <AlbumCover album={a} widths={[400, 800, 1200]} sizes="(min-width: 72rem) 22rem, (min-width: 40rem) 45vw, 92vw" />
               <span class="caption-panel">
                 <span class="caption-title"><Ph text={a.data.title} /></span>
                 <span class="caption-sub">

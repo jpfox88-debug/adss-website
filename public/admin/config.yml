@@ -195,7 +195,7 @@ collections:
   - name: albums
     label: Photos & videos
     label_singular: Album
-    description: "One album per event, with actual photos from that Society event only — never stock images. Aim for 2 MB or less per photo."
+    description: "One album per event, with actual photos from that Society event only — never stock images. Aim for 2 MB or less per photo. The albums imported from the old website (2024–2025) are managed in the repository, not here: their photo lists point at pre-sized files under /albums/ and can't be edited in this screen — ask the website owner to add or remove photos in those."
     folder: src/content/albums
     create: true
     extension: md
@@ -213,6 +213,7 @@ collections:
         label: Photos
         widget: list
         summary: "{{alt}}"
+        hint: "Upload photos one at a time. Imported old-website albums list their photos as /albums/… file paths and are managed in the repository — don't edit those here."
         fields:
           - { name: image, label: Photo, widget: image }
           - { name: alt, label: Description, widget: string }

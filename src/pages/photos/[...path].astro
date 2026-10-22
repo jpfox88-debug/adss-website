@@ -3,27 +3,51 @@ import { Image, getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Ph from '../../components/Ph.astro';
-import { getAlbums, getEvents, type AlbumEntry } from '../../lib/content';
+import { albumCover, albumPageCount, getAlbums, getEvents, isStaticPhoto, PHOTOS_PER_PAGE, type AlbumEntry } from '../../lib/content';
 import { formatDay, isPlaceholder, videoEmbed } from '../../lib/site';
 
+// /photos/<slug>/ shows the first PHOTOS_PER_PAGE photos; longer albums continue at
+// /photos/<slug>/2/, /photos/<slug>/3/, … in the album's order. Short albums are a single page.
 export async function getStaticPaths() {
   const albums = await getAlbums();
-  return albums.map((album) => ({ params: { slug: album.id }, props: { album } }));
+  return albums.flatMap((album) =>
+    Array.from({ length: albumPageCount(album) }, (_, i) => ({
+      params: { path: i === 0 ? album.id : `${album.id}/${i + 1}` },
+      props: { album, page: i + 1 },
+    })),
+  );
 }
 
-const { album } = Astro.props as { album: AlbumEntry };
+const { album, page } = Astro.props as { album: AlbumEntry; page: number };
 const d = album.data;
 const { Content } = await render(album);
 const event = d.event ? (await getEvents()).find((e) => e.id === d.event) : undefined;
 
-// Full-size versions for the lightbox (and the no-JavaScript link target).
+const pageCount = albumPageCount(album);
+const first = (page - 1) * PHOTOS_PER_PAGE;
+const pagePhotos = d.photos.slice(first, first + PHOTOS_PER_PAGE);
+const pageHref = (n: number) => (n === 1 ? `/photos/${album.id}/` : `/photos/${album.id}/${n}/`);
+
+// Both photo shapes (docs/DECISIONS.md D15) normalised for the grid and the lightbox:
+// pre-sized photos use their thumb in the grid and the full file in the lightbox;
+// pipeline photos are resized here.
 const photos = await Promise.all(
-  d.photos.map(async (p) => ({ ...p, full: (await getImage({ src: p.image, width: 1800, format: 'webp' })).src })),
+  pagePhotos.map(async (p, i) => {
+    const index = first + i;
+    const caption = isPlaceholder(p.caption) ? '' : p.caption ?? '';
+    if (isStaticPhoto(p)) return { kind: 'static' as const, index, alt: p.alt, caption, full: p.src, thumb: p.thumb, width: p.width, height: p.height };
+    return { kind: 'image' as const, index, alt: p.alt, caption, image: p.image, full: (await getImage({ src: p.image, width: 1800, format: 'webp' })).src };
+  }),
 );
-const videos = d.videos.map((v) => ({ ...v, embed: videoEmbed(v.url) }));
-const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}, ${formatDay(album.date)}.`;
+// Videos appear once, on the first page.
+const videos = page === 1 ? d.videos.map((v) => ({ ...v, embed: videoEmbed(v.url) })) : [];
+const cover = albumCover(album);
+const shareImage = cover.kind === 'image' ? cover.image : cover.full;
+const pageSuffix = pageCount > 1 ? ` (page ${page} of ${pageCount})` : '';
+const title = `${d.title}${pageSuffix}`;
+const description = `Photos${d.videos.length ? ' and videos' : ''} from ${d.title}, ${formatDay(album.date)}.${pageSuffix}`;
 ---
-<Base title={d.title} description={description} image={d.cover} imageAlt={d.cover_alt}>
+<Base title={title} description={description} image={shareImage} imageAlt={d.cover_alt}>
   <div class="wrap page-head">
     <p class="crumb"><a href="/photos/">Photos & Videos</a></p>
     <span class="accent-rule" aria-hidden="true"></span>
@@ -32,6 +56,7 @@ const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}
     <p>
       {formatDay(album.date)}
       {event && <> · <a href={`/events/${event.id}/`}>Event details</a></>}
+      {pageCount > 1 && <> · Photos {first + 1}–{first + pagePhotos.length} of {d.photos.length}</>}
     </p>
     <div class="intro"><Content /></div>
   </div>
@@ -39,24 +64,46 @@ const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}
   <div class="wrap content">
     {photos.length > 0 && (
       <section aria-labelledby="photos-title">
-        <h2 id="photos-title" class="visually-hidden">Photos</h2>
-        <ul class="grid" data-gallery>
-          {photos.map((p, i) => (
+        <h2 id="photos-title" class="visually-hidden">Photos{pageSuffix}</h2>
+        <ul class="grid" data-gallery data-total={d.photos.length}>
+          {photos.map((p) => (
             <li>
-              <a href={p.full} data-full={p.full} data-caption={isPlaceholder(p.caption) ? '' : p.caption ?? ''} data-index={i}>
-                <Image
-                  src={p.image}
-                  alt={p.alt}
-                  widths={[320, 640]}
-                  sizes="(min-width: 72rem) 17rem, (min-width: 40rem) 30vw, 46vw"
-                  loading="lazy"
-                />
+              <a href={p.full} data-full={p.full} data-caption={p.caption} data-index={p.index}>
+                {p.kind === 'static' ? (
+                  <img src={p.thumb} alt={p.alt} width={p.width} height={p.height} loading="lazy" decoding="async" />
+                ) : (
+                  <Image
+                    src={p.image}
+                    alt={p.alt}
+                    widths={[320, 640]}
+                    sizes="(min-width: 72rem) 17rem, (min-width: 40rem) 30vw, 46vw"
+                    loading="lazy"
+                  />
+                )}
               </a>
               {p.caption && <p class="caption"><Ph text={p.caption} /></p>}
             </li>
           ))}
         </ul>
       </section>
+    )}
+
+    {pageCount > 1 && (
+      <nav class="pager" aria-label="Album pages">
+        {page > 1 ? <a class="btn btn--outline" href={pageHref(page - 1)} rel="prev">‹ Previous</a> : <span class="btn btn--outline is-disabled" aria-hidden="true">‹ Previous</span>}
+        <ol class="pages">
+          {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
+            <li>
+              {n === page ? (
+                <span class="page-link is-current" aria-current="page">{n}</span>
+              ) : (
+                <a class="page-link" href={pageHref(n)}><span class="visually-hidden">Page </span>{n}</a>
+              )}
+            </li>
+          ))}
+        </ol>
+        {page < pageCount ? <a class="btn btn--outline" href={pageHref(page + 1)} rel="next">Next ›</a> : <span class="btn btn--outline is-disabled" aria-hidden="true">Next ›</span>}
+      </nav>
     )}
 
     {videos.length > 0 && (
@@ -94,7 +141,10 @@ const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}
 </Base>
 
 <script>
-  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-gallery] a'));
+  const gallery = document.querySelector<HTMLElement>('[data-gallery]');
+  const links = Array.from(gallery?.querySelectorAll<HTMLAnchorElement>('a') ?? []);
+  // The lightbox moves through this page's photos; the counter shows the position in the whole album.
+  const total = Number(gallery?.dataset.total) || links.length;
   const dialog = document.querySelector<HTMLDialogElement>('.lightbox');
   if (dialog && links.length && typeof dialog.showModal === 'function') {
     const img = dialog.querySelector('img')!;
@@ -111,7 +161,7 @@ const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}
       img.src = link.dataset.full!;
       img.alt = link.querySelector('img')?.alt ?? '';
       caption.textContent = link.dataset.caption ?? '';
-      count.textContent = `${index + 1} of ${links.length}`;
+      count.textContent = `${Number(link.dataset.index ?? index) + 1} of ${total}`;
       // Preload neighbours so next/previous feels instant.
       [index + 1, index - 1].forEach((n) => {
         const l = links[(n + links.length) % links.length];
@@ -199,6 +249,52 @@ const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}
     font-size: var(--step--1);
     color: var(--ink-soft);
     margin: 0.3rem 0 0;
+  }
+  .pager {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+  .pages {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.35rem;
+  }
+  .pages li {
+    max-width: none;
+  }
+  .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.6rem;
+    border-radius: var(--radius);
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--navy);
+    border: 1px solid var(--stone-deep);
+    background: var(--paper);
+  }
+  .page-link:hover {
+    text-decoration: underline;
+  }
+  .page-link.is-current {
+    background: var(--navy);
+    color: var(--warm-white);
+    border-color: var(--navy);
+  }
+  .btn.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
   }
   .videos {
     margin-top: var(--space-5);
