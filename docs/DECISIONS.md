@@ -67,4 +67,4 @@ Because the site was created through the Netlify API, it had **no deploy notific
 
 **Notes for later steps:**
 - The CMS rewrites YAML in its own quoting style on first save, which makes the first diff noisy. Seed files should be written in that style (step 4).
-- The test content (`[CMS TEST EDIT]`, `cms-test-photo.webp`, the "[CMS TEST] PDF upload test" document and its PDF) is still live for the owner to check. Remove it after confirmation.
+- The owner confirmed the proof on 2026-10-22, including publishing a change of their own from the CMS, which went live. The test content was then removed.

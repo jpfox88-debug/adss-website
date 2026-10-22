@@ -11,7 +11,6 @@ The single list of every placeholder, missing asset and launch decision. Each it
 | Society-owned GitHub account to own the repo and the CMS OAuth App (the repo currently lives under `jpfox88-debug`) | must resolve before launch |
 | At least two committee members with Netlify and GitHub access | must resolve before launch |
 | Editors' GitHub usernames to invite as collaborators | must resolve before launch |
-| CMS proof test content still live: `[CMS TEST EDIT]` in the homepage welcome text, `cms-test-photo.webp` as hero, the "[CMS TEST] PDF upload test" document + `cms-test-document.pdf`. Remove once the owner has confirmed the proof | must resolve before launch |
 | CMS proof (login → edit → preview → publish, photo upload, PDF upload) repeated with an **ordinary non-admin editor account** (write-only collaborator). The first proof used the owner account `jpfox88-debug`; see docs/DECISIONS.md D7 | must resolve before launch |
 
 ## Brand and media
