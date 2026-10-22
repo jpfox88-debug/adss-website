@@ -1,22 +1,24 @@
-@import '@fontsource/alegreya/latin-500.css';
-@import '@fontsource/alegreya/latin-700.css';
-@import '@fontsource/alegreya-sans/latin-400.css';
-@import '@fontsource/alegreya-sans/latin-400-italic.css';
-@import '@fontsource/alegreya-sans/latin-500.css';
-@import '@fontsource/alegreya-sans/latin-700.css';
+@import '@fontsource/cinzel/latin-500.css';
+@import '@fontsource/cinzel/latin-600.css';
+@import '@fontsource/nunito-sans/latin-400.css';
+@import '@fontsource/nunito-sans/latin-400-italic.css';
+@import '@fontsource/nunito-sans/latin-600.css';
+@import '@fontsource/nunito-sans/latin-700.css';
 
 :root {
   /* Palette (BRIEF §2): deep navy, warm white, restrained accents. */
-  --navy: #14213d;
+  --navy: #12203f;
   --navy-deep: #0e1830;
-  --warm-white: #faf8f3;
+  --warm-white: #faf7f0;
   --ink: #1d2333;
   --ink-soft: #4a5063;
   --forest: #2f5d4a;
   --forest-deep: #24493a;
   --tartan-red: #b3263a;
-  --stone: #e8e4da;
+  --stone: #efe9dc;
   --stone-deep: #d6d0c2;
+  --card: #fffdf8;
+  --rule: #b9a77d;
   --placeholder-bg: #fff3c4;
   --placeholder-ink: #5c4500;
 
@@ -28,16 +30,17 @@
     repeating-linear-gradient(0deg, rgba(47, 93, 74, 0.75) 0 12px, transparent 12px 34px, rgba(47, 93, 74, 0.75) 34px 46px),
     var(--navy);
 
-  --font-display: 'Alegreya', Georgia, 'Times New Roman', serif;
-  --font-body: 'Alegreya Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --font-body: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
 
   /* Type scale: 1.25 ratio on an 18px base. */
   --step--1: 0.889rem;
   --step-0: 1.125rem;
   --step-1: 1.406rem;
   --step-2: 1.758rem;
-  --step-3: clamp(1.9rem, 1.6rem + 1.4vw, 2.6rem);
-  --step-4: clamp(2.3rem, 1.8rem + 2.6vw, 3.6rem);
+  --step-3: clamp(1.7rem, 1.4rem + 1.4vw, 2.4rem);
+  --step-4: clamp(2rem, 1.5rem + 2.4vw, 3.2rem);
+  --step-5: clamp(2.4rem, 1.6rem + 4vw, 5rem);
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -49,7 +52,7 @@
   --measure: 66ch;
   --page: 72rem;
   --gutter: clamp(1rem, 4vw, 2.5rem);
-  --radius: 4px;
+  --radius: 0px;
   --focus: 0 0 0 3px var(--warm-white), 0 0 0 6px var(--forest);
 }
 
@@ -86,9 +89,10 @@ h3,
 h4 {
   overflow-wrap: break-word;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--navy);
-  line-height: 1.15;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
   margin: 0 0 var(--space-2);
   text-wrap: balance;
 }
@@ -190,6 +194,7 @@ img {
   border-radius: var(--radius);
   border: 2px solid transparent;
   font: 700 var(--step-0) / 1.2 var(--font-body);
+  letter-spacing: 0.02em;
   text-decoration: none;
   cursor: pointer;
   text-align: center;
@@ -286,4 +291,12 @@ img {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Direction C: keep the header nav on one line beside the crest. */
+.site-header .nav ul {
+  column-gap: 1.1rem;
+}
+.site-header .nav a:not(.btn) {
+  font-size: 0.98rem;
 }
