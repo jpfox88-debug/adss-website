@@ -1,10 +1,12 @@
 ---
-import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Portrait from '../components/Portrait.astro';
 import Ph from '../components/Ph.astro';
+import headerPhoto from '../assets/stock/skye-stone-bridge.jpg';
 import { getCommittee, getSettings } from '../lib/content';
-import { isPlaceholder, safeUrl } from '../lib/site';
+import { safeUrl } from '../lib/site';
 
 const settings = await getSettings();
 const members = await Promise.all(
@@ -14,13 +16,13 @@ const members = await Promise.all(
 <Base
   title="The Committee"
   description="Meet the volunteer committee who run the Scottish Society Abu Dhabi and organise its events."
+  overlayHeader
 >
-  <div class="wrap page-head">
-    <h1>The Committee</h1>
-    <p>The society is run by volunteers elected by the members. Committee for <Ph text={settings.committee_term} />.</p>
-  </div>
+  <PageHeader title="The Committee" image={headerPhoto} position="50% 46%">
+    <p>Volunteers elected by the members. Committee for <Ph text={settings.committee_term} />.</p>
+  </PageHeader>
 
-  <div class="wrap section-tight">
+  <div class="wrap content">
     {members.length === 0 ? (
       <p>Committee details will be published soon.</p>
     ) : (
@@ -29,23 +31,15 @@ const members = await Promise.all(
           const contact = safeUrl(m.data.contact_url);
           return (
             <li class="person">
-              <div class="portrait">
-                {m.data.photo ? (
-                  <Image
-                    src={m.data.photo}
-                    alt={m.data.photo_alt && !isPlaceholder(m.data.name) ? m.data.photo_alt : isPlaceholder(m.data.name) ? 'Committee photo placeholder' : `${m.data.name}`}
-                    widths={[300, 600]}
-                    sizes="(min-width: 60rem) 18rem, (min-width: 36rem) 45vw, 90vw"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="no-photo" aria-hidden="true"></div>
-                )}
+              <div class="photo-card">
+                <Portrait photo={m.data.photo} name={m.data.name} alt={m.data.photo_alt} />
+                <div class="caption-panel">
+                  <h2 class="caption-title"><Ph text={m.data.name} /></h2>
+                  <p class="caption-sub role"><Ph text={m.data.role} /></p>
+                </div>
               </div>
-              <h2 class="name"><Ph text={m.data.name} /></h2>
-              <p class="role"><Ph text={m.data.role} /></p>
               <div class="bio"><m.Bio /></div>
-              {contact && m.data.contact_label && <p><a href={contact}>{m.data.contact_label}</a></p>}
+              {contact && m.data.contact_label && <p class="contact"><a href={contact}>{m.data.contact_label}</a></p>}
             </li>
           );
         })}
@@ -55,42 +49,37 @@ const members = await Promise.all(
 </Base>
 
 <style>
-  .section-tight {
-    padding-bottom: var(--space-5);
+  .content {
+    padding-block: var(--space-5) var(--space-6);
   }
   .people {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
-    gap: var(--space-4) var(--space-3);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+    gap: var(--space-5) var(--space-3);
   }
   .person {
     max-width: none;
   }
-  .portrait {
-    margin-bottom: var(--space-2);
-    border-bottom: 6px solid transparent;
-    border-image: var(--tartan) 1;
-  }
-  .portrait img,
-  .no-photo {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    background: var(--stone);
-  }
-  .name {
+  .caption-title {
+    margin: 0;
     font-size: var(--step-1);
-    margin-bottom: 0.15rem;
   }
   .role {
-    color: var(--forest-deep);
-    font-weight: 700;
-    margin-bottom: 0.6rem;
+    margin: 0;
+    font-weight: 600;
+    color: var(--green-deep);
+  }
+  .bio {
+    margin-top: var(--space-2);
+    padding-inline: 0.25rem;
   }
   .bio :global(p) {
     margin-bottom: 0.6rem;
+  }
+  .contact {
+    padding-inline: 0.25rem;
   }
 </style>

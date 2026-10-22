@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import EventCard from '../../components/EventCard.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import headerPhoto from '../../assets/stock/edinburgh-victoria-street.jpg';
 import { getEvents, isPastAtBuild } from '../../lib/content';
 
 // Most recent first; the shared script hides any that haven't finished yet.
@@ -10,11 +12,11 @@ const anyPast = events.some((e) => isPastAtBuild(e));
 <Base
   title="Past events"
   description="An archive of past Scottish Society Abu Dhabi events, with links to photos and videos."
+  overlayHeader
 >
-  <div class="wrap page-head">
-    <h1>Past events</h1>
+  <PageHeader title="Past events" image={headerPhoto} position="50% 30%">
     <p>A record of what we've been up to. Photos and videos are in <a href="/photos/">Photos & Videos</a>.</p>
-  </div>
+  </PageHeader>
 
   <div class="wrap list-wrap">
     <ul class="events" id="past-events" data-event-list="past">
@@ -31,7 +33,7 @@ const anyPast = events.some((e) => isPastAtBuild(e));
 
 <style>
   .list-wrap {
-    padding-bottom: var(--space-5);
+    padding-block: var(--space-5) var(--space-6);
   }
   .events {
     list-style: none;

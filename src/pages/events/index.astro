@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import EventCard from '../../components/EventCard.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import headerPhoto from '../../assets/stock/edinburgh-victoria-street.jpg';
 import { getEvents, isPastAtBuild } from '../../lib/content';
 
 // Render every event; the shared script hides those that have ended since the build.
@@ -10,15 +12,15 @@ const anyUpcoming = events.some((e) => !isPastAtBuild(e));
 <Base
   title="Upcoming Events"
   description="Upcoming Scottish Society Abu Dhabi events: dates, venues, prices and how to book."
+  overlayHeader
 >
-  <div class="wrap page-head">
-    <h1>Upcoming Events</h1>
+  <PageHeader title="Upcoming Events" image={headerPhoto} position="50% 55%">
     <p>Each event page explains who can attend, what it costs and how to book.</p>
-  </div>
+  </PageHeader>
 
   <div class="wrap list-wrap">
     <ul class="events" id="upcoming-events" data-event-list="upcoming">
-      {events.map((e) => <EventCard event={e} hidden={isPastAtBuild(e)} headingLevel="h2" />)}
+      {events.map((e, i) => <EventCard event={e} hidden={isPastAtBuild(e)} headingLevel="h2" eagerImage={i === 0} />)}
     </ul>
     <div class="empty" data-event-empty="upcoming-events" hidden={anyUpcoming}>
       <p class="empty-lead">No events are currently scheduled — follow us or join to hear first.</p>
@@ -36,19 +38,20 @@ const anyUpcoming = events.some((e) => !isPastAtBuild(e));
 
 <style>
   .list-wrap {
-    padding-bottom: var(--space-5);
+    padding-block: var(--space-5) var(--space-6);
   }
   .events {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid var(--stone-deep);
   }
-  .events:not(:has(> li:not([hidden]))) {
-    border-bottom: 0;
+  .empty {
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: var(--space-4);
   }
   .empty-lead {
-    font: 500 var(--step-2) / 1.25 var(--font-display);
+    font: 600 var(--step-2) / 1.25 var(--font-display);
     color: var(--navy);
   }
   .archive-link {

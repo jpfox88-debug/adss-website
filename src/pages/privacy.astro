@@ -3,6 +3,8 @@
 // no cookies on public pages, fonts self-hosted, video embeds only on album pages with videos,
 // CMS sign-in on /admin only. Re-check and update this page if any of that changes.
 import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import headerPhoto from '../assets/stock/skye-lighthouse-cliff.jpg';
 import Ph from '../components/Ph.astro';
 import { getSettings } from '../lib/content';
 import { mailLink } from '../lib/site';
@@ -10,11 +12,10 @@ import { mailLink } from '../lib/site';
 const s = await getSettings();
 const email = mailLink(s.contact_email, 'Privacy question');
 ---
-<Base title="Privacy" description="How the Scottish Society Abu Dhabi website handles your information.">
-  <div class="wrap page-head">
-    <h1>Privacy</h1>
+<Base title="Privacy" description="How the Scottish Society Abu Dhabi website handles your information." overlayHeader>
+  <PageHeader title="Privacy" image={headerPhoto} position="50% 40%">
     <p>This website is deliberately simple: it has no sign-up forms, no payments, no analytics and no advertising.</p>
-  </div>
+  </PageHeader>
 
   <div class="wrap prose">
     <h2>What this website collects</h2>
@@ -40,7 +41,7 @@ const email = mailLink(s.contact_email, 'Privacy question');
 
 <style>
   .prose {
-    padding-bottom: var(--space-5);
+    padding-block: var(--space-5) var(--space-6);
   }
   .prose h2 {
     font-size: var(--step-2);

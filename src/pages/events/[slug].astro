@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Ph from '../../components/Ph.astro';
 import BookingButton from '../../components/BookingButton.astro';
+import EventImage from '../../components/EventImage.astro';
 import { getAlbums, getEvents, isPastAtBuild, type EventEntry } from '../../lib/content';
 import { dubaiDay, formatDay, formatTimeRange, isPlaceholder, safeUrl, STATUS_LABEL } from '../../lib/site';
 
@@ -16,7 +16,7 @@ const { event } = Astro.props as { event: EventEntry };
 const d = event.data;
 const { Content } = await render(event);
 const pastAtBuild = isPastAtBuild(event);
-const albums = (await getAlbums()).filter((a) => d.albums.includes(a.id) || a.data.event === event.id);
+const albums = (await getAlbums()).filter((a) => !a.data.placeholder && (d.albums.includes(a.id) || a.data.event === event.id));
 const mapUrl = safeUrl(d.map_url);
 const hasPrice = d.price_member || d.price_non_member;
 const deadline = d.booking_deadline ? formatDay(dubaiDay(d.booking_deadline)) : null;
@@ -28,6 +28,7 @@ const description = !isPlaceholder(d.summary)
   <article data-event-page data-end={event.end.toISOString()}>
     <div class="wrap page-head">
       <p class="crumb"><a href="/events/">Upcoming Events</a></p>
+      <span class="accent-rule" aria-hidden="true"></span>
       <h1><Ph text={d.title} /></h1>
       <p class="when">
         <strong>{formatDay(event.start)}</strong>, {formatTimeRange(event.start, event.end)} (Abu Dhabi time)
@@ -38,17 +39,7 @@ const description = !isPlaceholder(d.summary)
 
     <div class="wrap layout">
       <div class="main">
-        {d.image && (
-          <Image
-            class="event-image"
-            src={d.image}
-            alt={d.image_alt ?? ''}
-            widths={[640, 960, 1280]}
-            sizes="(min-width: 60rem) 44rem, 100vw"
-            loading="eager"
-            fetchpriority="high"
-          />
-        )}
+        <EventImage class="event-image" event={event} widths={[640, 960, 1280]} sizes="(min-width: 60rem) 44rem, 100vw" eager />
         <div class="prose"><Content /></div>
 
         {albums.length > 0 && (
@@ -126,7 +117,7 @@ const description = !isPlaceholder(d.summary)
   }
   .ended {
     font-weight: 700;
-    color: var(--forest-deep);
+    color: var(--green-deep);
   }
   .layout {
     display: grid;
@@ -135,16 +126,16 @@ const description = !isPlaceholder(d.summary)
     align-items: start;
     padding-bottom: var(--space-5);
   }
-  .event-image {
-    width: 100%;
-    border-radius: var(--radius);
+  .main :global(.event-image) {
+    aspect-ratio: 3 / 2;
     margin-bottom: var(--space-3);
   }
   .facts {
-    background: var(--stone);
+    background: var(--paper);
     padding: var(--space-3);
-    border-top: 10px solid transparent;
-    border-image: var(--tartan) 1;
+    border-radius: var(--radius);
+    border-top: 4px solid var(--navy);
+    box-shadow: var(--shadow-card);
     position: sticky;
     top: var(--space-2);
   }
@@ -152,8 +143,8 @@ const description = !isPlaceholder(d.summary)
     margin: 0 0 var(--space-3);
   }
   .facts dl > div {
-    padding-block: 0.6rem;
-    border-bottom: 1px solid var(--stone-deep);
+    padding-block: 0.65rem;
+    border-bottom: 1px solid var(--stone);
   }
   dt {
     font-weight: 700;
@@ -163,7 +154,7 @@ const description = !isPlaceholder(d.summary)
     margin: 0;
   }
   .book-title {
-    font-size: var(--step-1);
+    font-size: var(--step-2);
   }
   .book :global(.btn) {
     width: 100%;

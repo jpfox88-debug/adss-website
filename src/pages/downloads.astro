@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Ph from '../components/Ph.astro';
+import PageHeader from '../components/PageHeader.astro';
+import headerPhoto from '../assets/stock/edinburgh-clock-tower.jpg';
 import { DOCUMENT_CATEGORIES, getDocuments } from '../lib/content';
 import { formatDay } from '../lib/site';
 
@@ -17,11 +19,11 @@ const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEG
 <Base
   title="Downloads"
   description="The Scottish Society Abu Dhabi constitution, approved meeting minutes, AGM reports and other society documents."
+  overlayHeader
 >
-  <div class="wrap page-head">
-    <h1>Downloads</h1>
-    <p>The society's constitution and approved minutes, reports and other documents.</p>
-  </div>
+  <PageHeader title="Downloads" image={headerPhoto} position="50% 22%">
+    <p>The Society's constitution and approved minutes, reports and other documents.</p>
+  </PageHeader>
 
   <div class="wrap list-wrap">
     {groups.length === 0 ? (
@@ -67,7 +69,7 @@ const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEG
 
 <style>
   .list-wrap {
-    padding-bottom: var(--space-5);
+    padding-block: var(--space-5) var(--space-6);
   }
   .jump ul {
     list-style: none;
@@ -112,7 +114,7 @@ const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEG
   }
   .current {
     background: #dcebe3;
-    color: var(--forest-deep);
+    color: var(--green-deep);
   }
   .superseded .doc-title {
     color: var(--ink-soft);

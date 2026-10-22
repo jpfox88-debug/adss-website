@@ -1,11 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import headerPhoto from '../assets/stock/skye-lighthouse-cliff.jpg';
 ---
-<Base title="Page not found" description="The page you were looking for isn't here." noindex>
-  <div class="wrap page-head">
-    <h1>Page not found</h1>
-    <p>The page you were looking for isn't here. It may have moved when the society's website was rebuilt.</p>
-  </div>
+<Base title="Page not found" description="The page you were looking for isn't here." noindex overlayHeader>
+  <PageHeader title="Page not found" image={headerPhoto} position="50% 40%">
+    <p>The page you were looking for isn't here. It may have moved when the Society's website was rebuilt.</p>
+  </PageHeader>
   <div class="wrap links">
     <h2>Try one of these instead</h2>
     <ul>
@@ -21,7 +22,7 @@ import Base from '../layouts/Base.astro';
 
 <style>
   .links {
-    padding-bottom: var(--space-6);
+    padding-block: var(--space-5) var(--space-6);
   }
   .links h2 {
     font-size: var(--step-1);

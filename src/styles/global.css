@@ -27,10 +27,8 @@
   --placeholder-bg: #fff3c4;
   --placeholder-ink: #5c4500;
 
-  /* Legacy names still used by some page styles. */
+  /* Older name still used by some page styles. */
   --warm-white: var(--cream);
-  --forest: var(--green);
-  --forest-deep: var(--green-deep);
 
   --font-display: 'Cormorant Garamond', Garamond, Georgia, serif;
   --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;

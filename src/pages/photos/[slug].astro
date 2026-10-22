@@ -26,7 +26,9 @@ const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}
 <Base title={d.title} description={description} image={d.cover} imageAlt={d.cover_alt}>
   <div class="wrap page-head">
     <p class="crumb"><a href="/photos/">Photos & Videos</a></p>
+    <span class="accent-rule" aria-hidden="true"></span>
     <h1><Ph text={d.title} /></h1>
+    {d.placeholder && <p class="layout-note">Layout preview with placeholder images — not a Society album. It isn't listed on the site and is left out of the launch build.</p>}
     <p>
       {formatDay(album.date)}
       {event && <> · <a href={`/events/${event.id}/`}>Event details</a></>}
@@ -155,6 +157,14 @@ const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}
 </script>
 
 <style>
+  .layout-note {
+    display: inline-block;
+    background: var(--placeholder-bg);
+    color: var(--placeholder-ink);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius);
+    font-size: var(--step--1);
+  }
   .crumb {
     margin-bottom: var(--space-1);
   }
