@@ -1,12 +1,12 @@
-hero_image: /src/assets/uploads/placeholder-hero.jpg
-hero_alt: "Placeholder — an approved photograph from a society event is needed"
+hero_image: /src/assets/uploads/cms-test-photo.webp
+hero_alt: Placeholder — an approved photograph from a society event is needed
 hero_heading: Welcome to the Abu Dhabi Scottish Society
-hero_intro: "A friendly community for Scots in Abu Dhabi, their families and anyone who loves Scotland and Scottish culture."
+hero_intro: A friendly community for Scots in Abu Dhabi, their families and anyone who loves Scotland and Scottish culture. [CMS TEST EDIT]
 about_heading: About the society
-about_intro: "We bring people together through the great Scottish celebrations, ceilidhs and social evenings throughout the year. Our aims are:"
+about_intro: 'We bring people together through the great Scottish celebrations, ceilidhs and social evenings throughout the year. Our aims are:'
 objectives:
-  - "To foster social relations amongst Scottish people, their families and anyone interested in Scotland and Scottish culture in Abu Dhabi."
-  - "To foster Scottish cultural activities and institutions."
-  - "To celebrate the Scottish anniversaries in style — each year the committee organises a Burns Supper, a Chieftain's Ceilidh or Ball and a St Andrew's Ball."
-  - "To support local and Scottish charities actively when funds are available."
-committee_intro: "The society is run by a volunteer committee elected by the members. [COMMITTEE INTRO — confirm wording]"
+  - To foster social relations amongst Scottish people, their families and anyone interested in Scotland and Scottish culture in Abu Dhabi.
+  - To foster Scottish cultural activities and institutions.
+  - To celebrate the Scottish anniversaries in style — each year the committee organises a Burns Supper, a Chieftain's Ceilidh or Ball and a St Andrew's Ball.
+  - To support local and Scottish charities actively when funds are available.
+committee_intro: The society is run by a volunteer committee elected by the members. [COMMITTEE INTRO — confirm wording]
