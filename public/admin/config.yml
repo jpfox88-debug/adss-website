@@ -1,0 +1,255 @@
+# ADSS website — CMS configuration (Sveltia CMS).
+# Field names must match the schemas in src/content.config.ts.
+
+backend:
+  name: github
+  repo: jpfox88-debug/adss-website
+  branch: main
+  # No base_url: sign-in goes through Netlify's GitHub OAuth provider
+  # (Netlify > Site configuration > Access & security > OAuth).
+  commit_messages:
+    create: "Create {{collection}} “{{slug}}” via CMS ({{author-login}})"
+    update: "Update {{collection}} “{{slug}}” via CMS ({{author-login}})"
+    delete: "Delete {{collection}} “{{slug}}” via CMS ({{author-login}})"
+    uploadMedia: "Upload “{{path}}” via CMS ({{author-login}})"
+    deleteMedia: "Delete “{{path}}” via CMS ({{author-login}})"
+
+# Draft → In review → Ready → Publish. Each draft is a pull request with its own Netlify deploy preview.
+publish_mode: editorial_workflow
+
+site_url: https://adss-website.netlify.app
+display_url: https://adss-website.netlify.app
+
+# Photos go into the repo so Astro resizes them at build time.
+media_folder: /src/assets/uploads
+public_folder: /src/assets/uploads
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 10485760 # 10 MB hard limit (PDFs); aim for 2 MB or less per photo
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2400
+          height: 2400
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  # ───────────────────────── Single pages / settings ─────────────────────────
+  - name: pages
+    label: Site pages & settings
+    description: Homepage wording, membership details and general contact information.
+    files:
+      - name: home
+        label: Homepage
+        file: src/content/home/home.yaml
+        preview_path: /
+        fields:
+          - { name: hero_image, label: Opening photo, widget: image, required: false, hint: "A strong, approved photo from a real society event. Landscape, ideally under 2 MB." }
+          - { name: hero_alt, label: Opening photo description, widget: string, required: false, hint: "Describe the photo for people using screen readers, e.g. “Members dancing at the St Andrew's Ball”." }
+          - { name: hero_heading, label: Welcome heading, widget: string }
+          - { name: hero_intro, label: Welcome text, widget: text, hint: "One or two short sentences." }
+          - { name: about_heading, label: About heading, widget: string }
+          - { name: about_intro, label: About introduction, widget: text }
+          - { name: objectives, label: Society objectives, widget: list, field: { name: objective, label: Objective, widget: text } }
+          - { name: committee_intro, label: Committee introduction (homepage), widget: text }
+
+      - name: membership
+        label: Membership & joining
+        file: src/content/membership/membership.yaml
+        preview_path: /join/
+        fields:
+          - { name: intro, label: Introduction, widget: text }
+          - { name: eligibility, label: Who can join, widget: text }
+          - { name: period, label: Membership period, widget: text, hint: "Calendar year or rolling period?" }
+          - { name: renewal, label: Renewals, widget: text }
+          - { name: how_to_join, label: How to join, widget: text }
+          - name: options
+            label: Membership options
+            widget: list
+            fields:
+              - { name: name, label: Option name, widget: string }
+              - { name: price_aed, label: Price (AED), widget: string, hint: "e.g. AED 250 per year" }
+              - { name: description, label: Description, widget: text, required: false }
+          - name: benefits
+            label: Confirmed benefits
+            widget: list
+            hint: "Only list benefits and partner offers that are current and approved. Redemption codes belong in the future members' area, not here."
+            fields:
+              - { name: title, label: Benefit, widget: string }
+              - { name: description, label: Details, widget: text, required: false }
+          - { name: whatsapp_number, label: Membership WhatsApp number, widget: string, hint: "International format with country code, e.g. +971 50 123 4567. While this still contains [square brackets] the WhatsApp button stays disabled." }
+          - { name: whatsapp_message, label: Prefilled WhatsApp message, widget: text }
+          - { name: email, label: Membership email address, widget: string }
+          - name: faq
+            label: Questions & answers
+            widget: list
+            fields:
+              - { name: question, label: Question, widget: string }
+              - { name: answer, label: Answer, widget: text }
+
+      - name: settings
+        label: Contacts, social links & committee term
+        file: src/content/settings/site.yaml
+        fields:
+          - { name: site_name, label: Society name, widget: string }
+          - { name: tagline, label: Tagline, widget: string, required: false }
+          - { name: committee_term, label: Committee term, widget: string, hint: "Shown on the committee page, e.g. 2026–27" }
+          - { name: contact_email, label: General contact email, widget: string }
+          - { name: general_whatsapp, label: General WhatsApp number, widget: string, hint: "International format, e.g. +971 50 123 4567" }
+          - { name: phone, label: Phone number, widget: string, required: false }
+          - { name: address, label: Postal address, widget: text, required: false }
+          - name: socials
+            label: Social media links
+            widget: list
+            fields:
+              - { name: platform, label: Platform, widget: select, options: [Facebook, Instagram, LinkedIn, YouTube, X, TikTok, WhatsApp channel] }
+              - { name: url, label: Link, widget: string }
+
+  # ───────────────────────── Events ─────────────────────────
+  - name: events
+    label: Events
+    label_singular: Event
+    description: "Only publish confirmed details. Times are Abu Dhabi time."
+    folder: src/content/events
+    create: true
+    extension: md
+    format: frontmatter
+    preview_path: /events/{{slug}}/
+    summary: "{{title}} — {{start}} ({{status}})"
+    sortable_fields: [start, title]
+    fields:
+      - { name: title, label: Event name, widget: string }
+      - { name: summary, label: Short summary, widget: text, required: false, hint: "One sentence for event listings." }
+      - { name: image, label: Event image, widget: image, required: false, hint: "Ideally under 2 MB." }
+      - { name: image_alt, label: Image description, widget: string, required: false }
+      - { name: start, label: Starts (Abu Dhabi time), widget: datetime, format: "YYYY-MM-DDTHH:mm" }
+      - { name: end, label: Ends (Abu Dhabi time), widget: datetime, format: "YYYY-MM-DDTHH:mm", hint: "The event moves to the archive automatically once this time has passed." }
+      - { name: venue, label: Venue, widget: string }
+      - { name: address, label: Address, widget: text, required: false }
+      - { name: map_url, label: Map link, widget: string, required: false, hint: "Paste a Google Maps link." }
+      - { name: eligibility, label: Who can attend / age restrictions, widget: text, required: false }
+      - { name: dress_code, label: Dress code, widget: string, required: false }
+      - { name: price_member, label: Member price, widget: string, required: false, hint: "e.g. AED 350" }
+      - { name: price_non_member, label: Non-member price, widget: string, required: false }
+      - { name: booking_deadline, label: Booking deadline, widget: datetime, time_format: false, format: "YYYY-MM-DD", required: false }
+      - name: booking_method
+        label: How to book
+        widget: select
+        default: none
+        options:
+          - { label: "Booking link (website)", value: url }
+          - { label: WhatsApp, value: whatsapp }
+          - { label: Email, value: email }
+          - { label: "Not open yet / no booking", value: none }
+      - { name: booking_url, label: Booking link, widget: string, required: false, hint: "Used when “How to book” is Booking link." }
+      - { name: booking_whatsapp, label: Booking WhatsApp number, widget: string, required: false, hint: "International format. Used when “How to book” is WhatsApp." }
+      - { name: booking_email, label: Booking email, widget: string, required: false, hint: "Used when “How to book” is Email." }
+      - { name: booking_label, label: Button wording, widget: string, required: false, hint: "Optional, e.g. “Book tickets”." }
+      - name: status
+        label: Status
+        widget: select
+        default: open
+        options:
+          - { label: Bookings open, value: open }
+          - { label: Sold out, value: sold-out }
+          - { label: Postponed, value: postponed }
+          - { label: Cancelled, value: cancelled }
+      - { name: albums, label: Photo & video albums, widget: relation, collection: albums, value_field: "{{slug}}", search_fields: [title], display_fields: [title], multiple: true, required: false, hint: "For past events: link the albums from this event." }
+      - { name: placeholder, label: Placeholder (not real content), widget: boolean, default: false, hint: "Leave off for real events." }
+      - { name: body, label: Description, widget: markdown, buttons: [bold, italic, link, bulleted-list, numbered-list, heading-three], editor_components: [] }
+
+  # ───────────────────────── Committee ─────────────────────────
+  - name: committee
+    label: Committee
+    label_singular: Committee member
+    description: "One entry per committee member. Lower sort numbers appear first."
+    folder: src/content/committee
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: name
+    slug: "{{name}}"
+    preview_path: /committee/
+    summary: "{{order}} · {{name}} — {{role}}"
+    sortable_fields: [order, name]
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: role, label: Committee role, widget: string }
+      - { name: photo, label: Photo, widget: image, required: false, hint: "Portrait (head and shoulders), ideally under 2 MB." }
+      - { name: photo_alt, label: Photo description, widget: string, required: false }
+      - { name: contact_label, label: Contact link wording, widget: string, required: false, hint: "Optional, e.g. “Email the Secretary”. Only add approved contact details." }
+      - { name: contact_url, label: Contact link, widget: string, required: false, hint: "mailto:… or https://…" }
+      - { name: order, label: Sort order, widget: number, value_type: int, default: 100 }
+      - { name: placeholder, label: Placeholder (not real content), widget: boolean, default: false }
+      - { name: body, label: Short biography, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+
+  # ───────────────────────── Albums ─────────────────────────
+  - name: albums
+    label: Photos & videos
+    label_singular: Album
+    description: "One album per event. Only upload approved photos. Aim for 2 MB or less per photo."
+    folder: src/content/albums
+    create: true
+    extension: md
+    format: frontmatter
+    preview_path: /photos/{{slug}}/
+    summary: "{{date}} — {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Album title, widget: string }
+      - { name: date, label: Event date, widget: datetime, time_format: false, format: "YYYY-MM-DD" }
+      - { name: event, label: Related event, widget: relation, collection: events, value_field: "{{slug}}", search_fields: [title], display_fields: [title], required: false }
+      - { name: cover, label: Cover photo, widget: image }
+      - { name: cover_alt, label: Cover photo description, widget: string }
+      - name: photos
+        label: Photos
+        widget: list
+        summary: "{{alt}}"
+        fields:
+          - { name: image, label: Photo, widget: image }
+          - { name: alt, label: Description, widget: string }
+          - { name: caption, label: Caption, widget: string, required: false }
+      - name: videos
+        label: Videos
+        widget: list
+        hint: "YouTube or Vimeo links only (unlisted is fine)."
+        fields:
+          - { name: url, label: YouTube or Vimeo link, widget: string, pattern: ['^https://(www\.)?(youtube\.com|youtu\.be|vimeo\.com)/', 'Must be a YouTube or Vimeo link'] }
+          - { name: title, label: Video title, widget: string }
+      - { name: placeholder, label: Placeholder (not real content), widget: boolean, default: false }
+      - { name: body, label: Description, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }
+
+  # ───────────────────────── Documents ─────────────────────────
+  - name: documents
+    label: Downloads
+    label_singular: Document
+    description: "⚠️ Only publish documents approved for public access. Check minutes for personal details (names, phone numbers, addresses, health or financial details) and upload the approved redacted version where appropriate."
+    folder: src/content/documents
+    create: true
+    extension: md
+    format: frontmatter
+    preview_path: /downloads/
+    summary: "{{date}} — {{title}}{{current | ternary(' (current)', '')}}"
+    sortable_fields: [date, title, category]
+    fields:
+      - { name: title, label: Title, widget: string, hint: "e.g. “AGM minutes, March 2026”" }
+      - name: category
+        label: Category
+        widget: select
+        options:
+          - { label: Constitution, value: constitution }
+          - { label: Committee meeting minutes, value: committee-minutes }
+          - { label: AGM minutes & reports, value: agm }
+          - { label: Other society documents, value: other }
+      - { name: date, label: Meeting or version date, widget: datetime, time_format: false, format: "YYYY-MM-DD" }
+      - { name: file, label: File (PDF), widget: file, media_folder: /public/documents, public_folder: /documents, accept: application/pdf, hint: "Upload the approved (redacted if necessary) PDF." }
+      - { name: current, label: Current version, widget: boolean, default: false, hint: "Tick for the current constitution. Older versions are labelled as superseded." }
+      - { name: summary, label: Short note, widget: string, required: false }
+      - { name: placeholder, label: Placeholder (not real content), widget: boolean, default: false }
