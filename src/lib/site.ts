@@ -88,3 +88,15 @@ export function formatBytes(bytes: number): string {
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
+
+/** YouTube/Vimeo link → privacy-enhanced embed URL (no autoplay). Null for anything else. */
+export function videoEmbed(url: string): string | null {
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/);
+  if (yt) return `https://www.youtube-nocookie.com/embed/${yt[1]}?rel=0`;
+  const vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([\da-f]+))?/);
+  if (vimeo) {
+    const hash = vimeo[2] ? `h=${vimeo[2]}&` : '';
+    return `https://player.vimeo.com/video/${vimeo[1]}?${hash}dnt=1`;
+  }
+  return null;
+}
