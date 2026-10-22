@@ -1,6 +1,6 @@
-# Abu Dhabi Scottish Society (ADSS) — Website Build Brief
+# Scottish Society Abu Dhabi (SSAD) — Website Build Brief
 
-Build a new website for the **Abu Dhabi Scottish Society (ADSS)**, replacing the current site at https://www.adscottishsociety.com/ (a hand-written static HTML site with no CMS; nothing to migrate except the logo and the society objectives, both reproduced below).
+Build a new website for the **Scottish Society Abu Dhabi (SSAD)**, replacing the current site at https://www.adscottishsociety.com/ (a hand-written static HTML site with no CMS; nothing to migrate except the logo and the society objectives, both reproduced below).
 
 We need a professional, welcoming website launched quickly. Prioritise clear information, strong photography, straightforward navigation and easy updates by the committee.
 
@@ -201,7 +201,7 @@ Use **"Join via WhatsApp"** as the primary action on this page.
 
 The button opens a WhatsApp conversation with the confirmed membership contact and this prefilled message:
 
-"Hi, I'd like to join the Abu Dhabi Scottish Society. Could you please let me know the next steps?"
+"Hi, I'd like to join the Scottish Society Abu Dhabi. Could you please let me know the next steps?"
 
 Use a standard `https://wa.me/<number>?text=<url-encoded message>` link with the number in international format. Must work on mobile and desktop.
 

@@ -46,6 +46,43 @@ An older Netlify site, `lucent-strudel-b8c6cf` (created 2026-03-31), was also co
 
 Because the site was created through the Netlify API, it had **no deploy notifications**, so Netlify posted no commit status on PRs. Deploy previews were built, but GitHub and the CMS couldn't see them. The standard notifications the Netlify dashboard creates for Git-linked sites were added: `github_app_commit_status` and `github_app_checks` for `deploy_building`, `deploy_created` and `deploy_failed`. After a retry, both PRs showed `netlify/adss-website/deploy-preview: success`, and Sveltia's **View Preview** button opened the right preview.
 
+## D9 — Self-hosted fonts — 2026-10-22
+
+Cormorant Garamond (headings) and Source Sans 3 (body), originally Alegreya and Alegreya Sans (see D13), are served from the site itself through `@fontsource` packages, with Latin subsets only, rather than from Google Fonts. Public pages therefore contact no third party, which keeps the privacy page simple and avoids a cookie or consent question.
+
+## D10 — Markdown processor — 2026-10-22
+
+Astro 7's default Markdown processor (Sätteri) doesn't run rehype plugins. `@astrojs/markdown-remark` is installed so that `src/lib/rehype-placeholders.mjs` can highlight `[PLACEHOLDER]` text in Markdown bodies (biographies, event descriptions) the same way as in fields.
+
+## D11 — Pre-launch protection and launch gate — 2026-10-22
+
+- Until `SITE_LAUNCHED=true` is set in Netlify, every page carries `noindex` and `robots.txt` disallows everything, so the placeholder site isn't indexed.
+- `EXCLUDE_PLACEHOLDERS=true` drops every entry marked `placeholder: true` from the build.
+- `npm run build:launch` sets both and then fails if any `[PLACEHOLDER]` text remains on a public page (`scripts/check-placeholders.mjs`). Using it as the production build command after launch means a placeholder can never be published by accident. Tested: the launch build drops the placeholder event, album, committee and document, shows the "No events are currently scheduled" block, and the gate lists the 67 placeholder fields still waiting for confirmed content.
+
+## D12 — Event "upcoming" logic — 2026-10-22
+
+As BRIEF §6 specifies, every list renders all the events it might need, with `data-end` (absolute ISO time) and `data-status`. `src/scripts/event-visibility.ts` re-splits them against the visitor's clock. Without JavaScript the build-time split stands. This was tested with temporary past and cancelled events, which were not committed:
+- the build-time split was correct on the homepage, upcoming and archive pages;
+- a cancelled event was never chosen as next;
+- moving an end time into the past in the browser hid the event, showed the no-events block, and switched the event page to "This event has finished" with booking hidden.
+
+## D13 — Name, logo and visual redesign — 2026-10-22
+
+- **Name:** the Society is **Scottish Society Abu Dhabi**. It is changed everywhere, including BRIEF.md. "ADSS" remains only in historical source URLs and the repo/domain identifiers.
+- **Logo:** the three supplied logos replace the old site's low-resolution PNG. Reversed variants (black → cream, blue → sky `#7FB2FF`, green and red unchanged) are used on navy and over photos; the originals are used on cream. The owner approved this on 2026-10-22. Provenance is in IMAGE-CREDITS.md.
+- **Typography:** Cormorant Garamond (display) and Source Sans 3 (body, navigation, buttons), self-hosted. Lining figures are used throughout, because Cormorant's old-style "1" reads as "I" in dates.
+- **Palette:** warm cream `#F5F0E8` dominant; navy for the hero overlay, event band, footer and calls to action; the logo's green `#2E7D32` (text links `#25692A`) and red `#E8363A` (decorative only; `#C62D33` where red must be read) as restrained accents. The logo's blue stays inside the logo. Tartan is no longer used.
+- **Photography:** decorative Scottish stock (nine Unsplash photos, credited in IMAGE-CREDITS.md) appears only in the homepage hero, the next-event band, compact inner-page headers, and as the illustrative fallback for events without an image, which carries an "Illustrative image" caption. Albums and committee portraits are always genuine Society photos, never stock. Without them the site shows a "coming soon" state and initials tiles.
+- **Bug fixed:** component `display` rules were overriding the `hidden` attribute, so ended or future events could still be visible on the wrong list. The global rule `[hidden] { display: none !important }` fixes this. It was re-verified with computed visibility, not just the attribute.
+
+## D14 — Review tidy-ups and stricter launch gate — 2026-10-22
+
+- **Header logo:** the homepage header shows the thistle alone at every width, because the hero already carries the stacked logo. Inner pages keep the horizontal logo (thistle alone on phones).
+- **Buttons:** the main action is navy on light backgrounds. On the navy photo overlays (hero, transparent header) it becomes cream with navy text, because a navy button would disappear there. Secondary actions are outlined. Green and red are no longer button colours; they stay as small accents (rules, bullets, panel edges, the current-page underline).
+- **Numerals:** dates in the event tiles and membership prices use Source Sans 3, because Cormorant's "1" reads as "I".
+- **Launch gate:** `npm run build:launch` now also removes the demonstration files and fails on bracketed text anywhere in a page, demonstration or test entries and files, preview-only notes (`data-preview-only`), deploy-preview links, noindex tags, Netlify addresses instead of the Society domain, no committee members, or no current constitution. Optional phone, postal address and social links are dropped from the launch build while they are unsupplied.
+
 ## CMS demonstration (BRIEF Section 0 / Section 16 step 2)
 
 **D7 — Proof run with the owner account (2026-10-22).** On the owner's instruction, the first end-to-end proof uses `jpfox88-debug`, the repo **owner/admin** account, because no ordinary editor account is available yet. This **does not satisfy** the brief's requirement for an ordinary (non-admin) editor account. **A repeat of the proof with a non-admin collaborator (write access only) is still required before launch.** It is tracked in MISSING-CONTENT.md as must resolve before launch.

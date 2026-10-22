@@ -1,8 +1,6 @@
 ---
-name: "[SECRETARY NAME]"
-role: "Secretary"
-photo: /src/assets/uploads/placeholder-portrait.jpg
-photo_alt: "Placeholder — committee photo needed"
+name: '[SECRETARY NAME]'
+role: Secretary
 order: 20
 placeholder: true
 ---

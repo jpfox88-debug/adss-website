@@ -1,4 +1,4 @@
-# ADSS website — CMS configuration (Sveltia CMS).
+# Scottish Society Abu Dhabi website — CMS configuration (Sveltia CMS).
 # Field names must match the schemas in src/content.config.ts.
 
 backend:
@@ -51,7 +51,7 @@ collections:
         file: src/content/home/home.yaml
         preview_path: /
         fields:
-          - { name: hero_image, label: Opening photo, widget: image, required: false, hint: "A strong, approved photo from a real society event. Landscape, ideally under 2 MB." }
+          - { name: hero_image, label: Opening photo, widget: image, required: false, hint: "Currently a Scottish landscape (Kilchurn Castle, Loch Awe — Unsplash, see docs/IMAGE-CREDITS.md). Replace with a strong, approved Society photo when one is available. Landscape, ideally under 2 MB; the middle of the photo stays visible on phones." }
           - { name: hero_alt, label: Opening photo description, widget: string, required: false, hint: "Describe the photo for people using screen readers, e.g. “Members dancing at the St Andrew's Ball”." }
           - { name: hero_heading, label: Welcome heading, widget: string }
           - { name: hero_intro, label: Welcome text, widget: text, hint: "One or two short sentences." }
@@ -127,8 +127,9 @@ collections:
     fields:
       - { name: title, label: Event name, widget: string }
       - { name: summary, label: Short summary, widget: text, required: false, hint: "One sentence for event listings." }
-      - { name: image, label: Event image, widget: image, required: false, hint: "Ideally under 2 MB." }
+      - { name: image, label: Event image, widget: image, required: false, hint: "An approved photo or the event's artwork, ideally under 2 MB. If left empty, an illustrative Scottish landscape is shown with an 'Illustrative image' caption — replace it when you have the real image." }
       - { name: image_alt, label: Image description, widget: string, required: false }
+      - { name: image_illustrative, label: Illustrative image (not a Society photo), widget: boolean, default: false, required: false, hint: "Tick if the image above is stock or artwork that could be mistaken for a photo of the Society. Adds a small 'Illustrative image' caption." }
       - { name: start, label: Starts (Abu Dhabi time), widget: datetime, format: "YYYY-MM-DDTHH:mm" }
       - { name: end, label: Ends (Abu Dhabi time), widget: datetime, format: "YYYY-MM-DDTHH:mm", hint: "The event moves to the archive automatically once this time has passed." }
       - { name: venue, label: Venue, widget: string }
@@ -182,7 +183,7 @@ collections:
     fields:
       - { name: name, label: Name, widget: string }
       - { name: role, label: Committee role, widget: string }
-      - { name: photo, label: Photo, widget: image, required: false, hint: "Portrait (head and shoulders), ideally under 2 MB." }
+      - { name: photo, label: Photo, widget: image, required: false, hint: "A real photo of this committee member: portrait (head and shoulders), ideally under 2 MB. Leave empty to show their initials instead. Never use stock photos here." }
       - { name: photo_alt, label: Photo description, widget: string, required: false }
       - { name: contact_label, label: Contact link wording, widget: string, required: false, hint: "Optional, e.g. “Email the Secretary”. Only add approved contact details." }
       - { name: contact_url, label: Contact link, widget: string, required: false, hint: "mailto:… or https://…" }
@@ -194,7 +195,7 @@ collections:
   - name: albums
     label: Photos & videos
     label_singular: Album
-    description: "One album per event. Only upload approved photos. Aim for 2 MB or less per photo."
+    description: "One album per event, with actual photos from that Society event only — never stock images. Aim for 2 MB or less per photo."
     folder: src/content/albums
     create: true
     extension: md

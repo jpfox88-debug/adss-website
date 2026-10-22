@@ -1,0 +1,176 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Ph from '../../components/Ph.astro';
+import BookingButton from '../../components/BookingButton.astro';
+import EventImage from '../../components/EventImage.astro';
+import { getAlbums, getEvents, isPastAtBuild, type EventEntry } from '../../lib/content';
+import { dubaiDay, formatDay, formatTimeRange, isPlaceholder, safeUrl, STATUS_LABEL } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const events = await getEvents();
+  return events.map((event) => ({ params: { slug: event.id }, props: { event } }));
+}
+
+const { event } = Astro.props as { event: EventEntry };
+const d = event.data;
+const { Content } = await render(event);
+const pastAtBuild = isPastAtBuild(event);
+const albums = (await getAlbums()).filter((a) => !a.data.placeholder && (d.albums.includes(a.id) || a.data.event === event.id));
+const mapUrl = safeUrl(d.map_url);
+const hasPrice = d.price_member || d.price_non_member;
+const deadline = d.booking_deadline ? formatDay(dubaiDay(d.booking_deadline)) : null;
+const description = !isPlaceholder(d.summary)
+  ? d.summary!
+  : `${d.title}: ${formatDay(event.start)} at ${d.venue}. Details, prices and how to book.`;
+---
+<Base title={d.title} description={description} image={d.image} imageAlt={d.image_alt} type="article">
+  <article data-event-page data-end={event.end.toISOString()}>
+    <div class="wrap page-head">
+      <p class="crumb"><a href="/events/">Upcoming Events</a></p>
+      <span class="accent-rule" aria-hidden="true"></span>
+      <h1><Ph text={d.title} /></h1>
+      <p class="when">
+        <strong>{formatDay(event.start)}</strong>, {formatTimeRange(event.start, event.end)} (Abu Dhabi time)
+      </p>
+      {d.status !== 'open' && <p><span class={`status status--${d.status}`}>{STATUS_LABEL[d.status]}</span></p>}
+      <p class="ended" data-when="past" hidden={!pastAtBuild}>This event has finished.</p>
+    </div>
+
+    <div class="wrap layout">
+      <div class="main">
+        <EventImage class="event-image" event={event} widths={[640, 960, 1280]} sizes="(min-width: 60rem) 44rem, 100vw" eager />
+        <div class="prose"><Content /></div>
+
+        {albums.length > 0 && (
+          <section aria-labelledby="albums-title">
+            <h2 id="albums-title">Photos and videos</h2>
+            <ul>{albums.map((a) => <li><a href={`/photos/${a.id}/`}><Ph text={a.data.title} /></a></li>)}</ul>
+          </section>
+        )}
+      </div>
+
+      <aside class="facts" aria-label="Event details">
+        <dl>
+          <div>
+            <dt>Where</dt>
+            <dd>
+              <Ph text={d.venue} />
+              {d.address && <><br /><Ph text={d.address} /></>}
+              {mapUrl && <><br /><a href={mapUrl} rel="noopener">Open in maps<span class="visually-hidden">: {d.venue}</span></a></>}
+            </dd>
+          </div>
+          {d.eligibility && (
+            <div>
+              <dt>Can I attend?</dt>
+              <dd><Ph text={d.eligibility} /></dd>
+            </div>
+          )}
+          {d.dress_code && (
+            <div>
+              <dt>Dress code</dt>
+              <dd><Ph text={d.dress_code} /></dd>
+            </div>
+          )}
+          {hasPrice && (
+            <div>
+              <dt>What does it cost?</dt>
+              <dd>
+                {d.price_member && <>Members: <Ph text={d.price_member} /><br /></>}
+                {d.price_non_member && <>Non-members: <Ph text={d.price_non_member} /></>}
+              </dd>
+            </div>
+          )}
+          {deadline && (
+            <div data-when="upcoming" hidden={pastAtBuild}>
+              <dt>Book by</dt>
+              <dd>{deadline}</dd>
+            </div>
+          )}
+        </dl>
+        <div class="book" data-when="upcoming" hidden={pastAtBuild}>
+          <h2 class="book-title">How do I book?</h2>
+          <BookingButton event={event} />
+        </div>
+        <p class="join-note">
+          Booking a place at an event is separate from society membership. <a href="/join/">Find out about joining</a>.
+        </p>
+      </aside>
+    </div>
+  </article>
+</Base>
+
+<script>
+  import '../../scripts/event-visibility';
+</script>
+
+<style>
+  .crumb {
+    margin-bottom: var(--space-1);
+  }
+  .when {
+    font-size: var(--step-1);
+    color: var(--ink-soft);
+  }
+  .when strong {
+    color: var(--ink);
+  }
+  .ended {
+    font-weight: 700;
+    color: var(--green-deep);
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+    gap: var(--space-4);
+    align-items: start;
+    padding-bottom: var(--space-5);
+  }
+  .main :global(.event-image) {
+    aspect-ratio: 3 / 2;
+    margin-bottom: var(--space-3);
+  }
+  .facts {
+    background: var(--paper);
+    padding: var(--space-3);
+    border-radius: var(--radius);
+    border-top: 4px solid var(--navy);
+    box-shadow: var(--shadow-card);
+    position: sticky;
+    top: var(--space-2);
+  }
+  .facts dl {
+    margin: 0 0 var(--space-3);
+  }
+  .facts dl > div {
+    padding-block: 0.65rem;
+    border-bottom: 1px solid var(--stone);
+  }
+  dt {
+    font-weight: 700;
+    color: var(--navy);
+  }
+  dd {
+    margin: 0;
+  }
+  .book-title {
+    font-size: var(--step-2);
+  }
+  .book :global(.btn) {
+    width: 100%;
+  }
+  .join-note {
+    margin: var(--space-3) 0 0;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  @media (max-width: 52rem) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .facts {
+      position: static;
+      order: -1;
+    }
+  }
+</style>

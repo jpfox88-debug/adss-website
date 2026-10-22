@@ -1,0 +1,57 @@
+---
+// Committee portrait: the member's real photo, or a neutral tile with their initials
+// (a thistle mark while the name is still a placeholder). Never a stock photo.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import thistle from '../assets/brand/logo-thistle-reversed.png';
+import { isPlaceholder } from '../lib/site';
+
+interface Props {
+  photo?: ImageMetadata | null;
+  name: string;
+  alt?: string | null;
+  sizes?: string;
+}
+const { photo, name, alt, sizes = '(min-width: 60rem) 18rem, (min-width: 36rem) 45vw, 90vw' } = Astro.props;
+const initials = isPlaceholder(name)
+  ? null
+  : name
+      .split(/\s+/)
+      .filter((w) => /^[A-Za-zÀ-ÿ]/.test(w))
+      .map((w) => w[0].toUpperCase())
+      .filter((_, i, a) => i === 0 || i === a.length - 1)
+      .join('');
+---
+{photo ? (
+  <Image class="portrait" src={photo} alt={alt ?? name} widths={[300, 600]} sizes={sizes} loading="lazy" />
+) : (
+  <div class="tile portrait portrait-tile" role="img" aria-label={initials ? `${name} — photo to follow` : 'Committee photo to follow'}>
+    {initials ? <span class="initials" aria-hidden="true">{initials}</span> : <Image src={thistle} alt="" height={96} densities={[1, 2]} class="tile-mark" />}
+  </div>
+)}
+
+<style>
+  .portrait {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+  .portrait-tile {
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(circle at 50% 38%, rgba(127, 178, 255, 0.12), transparent 60%),
+      var(--navy);
+  }
+  .initials {
+    font: 600 clamp(3rem, 2rem + 4vw, 4.5rem) / 1 var(--font-display);
+    color: var(--cream);
+    letter-spacing: 0.04em;
+  }
+  .tile-mark {
+    height: 96px;
+    width: auto;
+    opacity: 0.85;
+  }
+</style>

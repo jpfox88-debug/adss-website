@@ -1,0 +1,206 @@
+---
+import Base from '../layouts/Base.astro';
+import Ph from '../components/Ph.astro';
+import PageHeader from '../components/PageHeader.astro';
+import headerPhoto from '../assets/stock/skye-cottage-stream.jpg';
+import { getMembership } from '../lib/content';
+import { mailLink, waLink } from '../lib/site';
+
+const m = await getMembership();
+// Disabled, clearly labelled button until a real number is set (BRIEF §9).
+const whatsapp = waLink(m.whatsapp_number, m.whatsapp_message);
+const email = mailLink(m.email, 'Joining the Scottish Society Abu Dhabi');
+---
+<Base
+  title="Join the Society"
+  description="How to join the Scottish Society Abu Dhabi: who can join, membership options and prices in AED, benefits, and joining through WhatsApp."
+  overlayHeader
+>
+  <PageHeader title="Join the Society" image={headerPhoto} position="50% 45%">
+    <p><Ph text={m.intro} /></p>
+  </PageHeader>
+
+  <div class="wrap layout">
+    <div class="details">
+      <section aria-labelledby="who">
+        <h2 id="who">Who can join</h2>
+        <p><Ph text={m.eligibility} /></p>
+      </section>
+
+      <section aria-labelledby="options">
+        <h2 id="options">Membership options</h2>
+        <ul class="options">
+          {m.options.map((o) => (
+            <li>
+              <span class="opt-name"><Ph text={o.name} /></span>
+              <span class="opt-price"><Ph text={o.price_aed} /></span>
+              {o.description && <span class="opt-desc"><Ph text={o.description} /></span>}
+            </li>
+          ))}
+        </ul>
+        <dl class="terms">
+          <div>
+            <dt>Membership period</dt>
+            <dd><Ph text={m.period} /></dd>
+          </div>
+          <div>
+            <dt>Renewals</dt>
+            <dd><Ph text={m.renewal} /></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section aria-labelledby="benefits">
+        <h2 id="benefits">Member benefits</h2>
+        <ul class="benefits">
+          {m.benefits.map((b) => (
+            <li>
+              <strong><Ph text={b.title} /></strong>
+              {b.description && <><br /><Ph text={b.description} /></>}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="faq">
+        <h2 id="faq">Questions and answers</h2>
+        <div class="faq">
+          {m.faq.map((f) => (
+            <details>
+              <summary><Ph text={f.question} /></summary>
+              <p><Ph text={f.answer} /></p>
+            </details>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <aside class="how" aria-labelledby="how">
+      <h2 id="how">How to join</h2>
+      <p><Ph text={m.how_to_join} /></p>
+      {whatsapp ? (
+        <a class="btn btn--primary wa" href={whatsapp} rel="noopener">Join via WhatsApp</a>
+      ) : (
+        <span class="btn wa" aria-disabled="true">WhatsApp contact to be confirmed</span>
+      )}
+      <dl class="contacts">
+        <div>
+          <dt>WhatsApp</dt>
+          <dd><Ph text={m.whatsapp_number} /></dd>
+        </div>
+        <div>
+          <dt>Prefer email?</dt>
+          <dd>{email ? <a href={email}>{m.email}</a> : <Ph text={m.email} />}</dd>
+        </div>
+      </dl>
+      <p class="note">Booking a place at an event is separate — see <a href="/events/">Upcoming Events</a>.</p>
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 23rem);
+    gap: var(--space-4);
+    align-items: start;
+    padding-block: var(--space-5) var(--space-6);
+  }
+  .details section {
+    margin-bottom: var(--space-4);
+  }
+  h2 {
+    font-size: var(--step-2);
+  }
+  .options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-3);
+  }
+  .options li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.2rem var(--space-2);
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--stone-deep);
+    max-width: none;
+  }
+  .opt-name {
+    font-weight: 700;
+  }
+  .opt-price {
+    font: 700 var(--step-1) / 1.2 var(--font-body);
+    color: var(--navy);
+    text-align: right;
+  }
+  .opt-desc {
+    grid-column: 1 / -1;
+    color: var(--ink-soft);
+  }
+  .terms > div,
+  .contacts > div {
+    margin-bottom: var(--space-2);
+  }
+  dt {
+    font-weight: 700;
+    color: var(--navy);
+  }
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .benefits {
+    padding-left: 1.2rem;
+  }
+  .benefits li {
+    margin-bottom: var(--space-2);
+  }
+  .faq details {
+    border-top: 1px solid var(--stone-deep);
+    padding-block: var(--space-2);
+  }
+  .faq details:last-child {
+    border-bottom: 1px solid var(--stone-deep);
+  }
+  .faq summary {
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--navy);
+  }
+  .faq summary:focus-visible {
+    box-shadow: var(--focus);
+  }
+  .faq details p {
+    margin: 0.6rem 0 0;
+  }
+  .how {
+    background: var(--paper);
+    padding: var(--space-3);
+    border-radius: var(--radius);
+    border-top: 4px solid var(--green);
+    box-shadow: var(--shadow-card);
+    position: sticky;
+    top: var(--space-2);
+  }
+  .how h2 {
+    font-size: var(--step-2);
+  }
+  .wa {
+    width: 100%;
+    margin-bottom: var(--space-3);
+  }
+  .note {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  @media (max-width: 52rem) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .how {
+      position: static;
+      order: -1;
+    }
+  }
+</style>

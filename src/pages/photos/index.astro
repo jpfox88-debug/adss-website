@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import PhotosComingSoon from '../../components/PhotosComingSoon.astro';
+import Ph from '../../components/Ph.astro';
+import headerPhoto from '../../assets/stock/old-man-of-storr-skye.jpg';
+import { getAlbums, isGenuineAlbum } from '../../lib/content';
+import { formatDay } from '../../lib/site';
+
+// Only albums of actual Society photos are listed; placeholder albums are layout scaffolding.
+const allAlbums = await getAlbums();
+const albums = allAlbums.filter(isGenuineAlbum);
+const layoutPreview = process.env.SITE_LAUNCHED !== 'true' ? allAlbums.find((a) => !isGenuineAlbum(a)) : undefined;
+---
+<Base
+  title="Photos & Videos"
+  description="Photos and videos from Scottish Society Abu Dhabi events, organised by event."
+  overlayHeader
+>
+  <PageHeader title="Photos & Videos" image={headerPhoto} position="50% 40%">
+    <p>Albums from our events, most recent first.</p>
+  </PageHeader>
+
+  <div class="wrap list-wrap">
+    {albums.length === 0 ? (
+      <PhotosComingSoon previewHref={layoutPreview ? `/photos/${layoutPreview.id}/` : null} />
+    ) : (
+      <ul class="albums">
+        {albums.map((a) => (
+          <li>
+            <a href={`/photos/${a.id}/`} class="photo-card">
+              <Image
+                src={a.data.cover}
+                alt=""
+                widths={[400, 800, 1200]}
+                sizes="(min-width: 72rem) 22rem, (min-width: 40rem) 45vw, 92vw"
+                quality={72}
+                loading="lazy"
+              />
+              <span class="caption-panel">
+                <span class="caption-title"><Ph text={a.data.title} /></span>
+                <span class="caption-sub">
+                  {formatDay(a.date)} · {a.data.photos.length} {a.data.photos.length === 1 ? 'photo' : 'photos'}
+                  {a.data.videos.length > 0 && <>, {a.data.videos.length} {a.data.videos.length === 1 ? 'video' : 'videos'}</>}
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</Base>
+
+<style>
+  .list-wrap {
+    padding-block: var(--space-5) var(--space-6);
+  }
+  .albums {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: var(--space-5) var(--space-3);
+  }
+  .albums li {
+    max-width: none;
+  }
+  .albums img {
+    aspect-ratio: 4 / 3;
+  }
+</style>

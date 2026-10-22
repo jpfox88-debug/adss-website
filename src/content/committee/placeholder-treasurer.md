@@ -1,8 +1,6 @@
 ---
-name: "[TREASURER NAME]"
-role: "Treasurer"
-photo: /src/assets/uploads/placeholder-portrait.jpg
-photo_alt: "Placeholder — committee photo needed"
+name: '[TREASURER NAME]'
+role: Treasurer
 order: 30
 placeholder: true
 ---

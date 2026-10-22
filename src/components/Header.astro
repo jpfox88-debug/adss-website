@@ -1,0 +1,227 @@
+---
+import { Image } from 'astro:assets';
+import logoHorizontal from '../assets/brand/logo-horizontal.png';
+import logoHorizontalReversed from '../assets/brand/logo-horizontal-reversed.png';
+import thistle from '../assets/brand/logo-thistle.png';
+import thistleReversed from '../assets/brand/logo-thistle-reversed.png';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/committee/', label: 'The Committee' },
+  { href: '/events/', label: 'Upcoming Events' },
+  { href: '/photos/', label: 'Photos & Videos' },
+  { href: '/downloads/', label: 'Downloads' },
+];
+
+interface Props {
+  /** Transparent header laid over a photographic hero or page header (reversed logo). */
+  overlay?: boolean;
+  /** Thistle only at every width (the homepage hero already shows the full logo). */
+  markOnly?: boolean;
+}
+const { overlay = false, markOnly = false } = Astro.props;
+
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class:list={['site-header', overlay ? 'overlay' : 'solid', { 'mark-only': markOnly }]}>
+  <div class="bar wrap">
+    <a class="brand" href="/">
+      {!markOnly && <Image class="logo-full" src={overlay ? logoHorizontalReversed : logoHorizontal} alt="Scottish Society Abu Dhabi — home" height={56} densities={[1, 2]} loading="eager" />}
+      <Image class="logo-mark" src={overlay ? thistleReversed : thistle} alt="Scottish Society Abu Dhabi — home" height={44} densities={[1, 2]} loading="eager" />
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu-icon" aria-hidden="true"></span>
+      Menu
+    </button>
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        {links.map((l) => (
+          <li><a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+        <li class="nav-join">
+          <a class:list={['btn', overlay ? 'btn--light' : 'btn--primary']} href="/join/" aria-current={isCurrent('/join/') ? 'page' : undefined}>Join the Society</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.getElementById('site-nav');
+  if (toggle && nav) {
+    document.documentElement.classList.add('has-js');
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      nav.classList.toggle('is-open', open);
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    --fg: var(--navy);
+    --fg-soft: rgba(20, 33, 61, 0.22);
+    color: var(--fg);
+  }
+  .solid {
+    background: var(--cream);
+    border-bottom: 1px solid var(--stone-deep);
+  }
+  .overlay {
+    --fg: var(--cream);
+    --fg-soft: rgba(245, 240, 232, 0.35);
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 10;
+    background: linear-gradient(rgba(10, 17, 34, 0.85) 0%, rgba(10, 17, 34, 0.6) 55%, rgba(10, 17, 34, 0));
+  }
+  .overlay:has(.nav.is-open) {
+    background: var(--navy);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-block: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: block;
+    border-radius: 2px;
+  }
+  .logo-full {
+    height: 56px;
+    width: auto;
+  }
+  .logo-mark {
+    display: none;
+    height: 44px;
+    width: auto;
+  }
+  .nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.4rem;
+  }
+  .nav li {
+    max-width: none;
+  }
+  .nav a:not(.btn) {
+    color: var(--fg);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.02rem;
+    padding: 0.6rem 0.05rem;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+  }
+  .nav a:not(.btn):hover {
+    border-bottom-color: var(--fg-soft);
+  }
+  .nav a[aria-current='page']:not(.btn) {
+    border-bottom-color: var(--red);
+  }
+  .nav .btn {
+    min-height: 44px;
+    padding-block: 0.45em;
+    font-size: 1.02rem;
+  }
+  .overlay a:focus-visible,
+  .overlay .menu-toggle:focus-visible {
+    box-shadow: var(--focus-dark);
+  }
+  .menu-toggle {
+    display: none;
+  }
+  .mark-only .logo-mark {
+    display: block;
+    height: 52px;
+  }
+
+  @media (max-width: 62rem) {
+    .logo-full {
+      display: none;
+    }
+    .logo-mark {
+      display: block;
+    }
+    :global(.has-js) .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-height: 44px;
+      padding: 0.4rem 1rem;
+      background: transparent;
+      color: var(--fg);
+      border: 2px solid var(--fg-soft);
+      border-radius: 999px;
+      font: 600 1rem var(--font-body);
+      cursor: pointer;
+    }
+    .menu-icon,
+    .menu-icon::before,
+    .menu-icon::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      position: relative;
+    }
+    .menu-icon::before,
+    .menu-icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+    .menu-icon::before {
+      top: -6px;
+    }
+    .menu-icon::after {
+      top: 6px;
+    }
+    .nav {
+      width: 100%;
+    }
+    :global(.has-js) .nav:not(.is-open) {
+      display: none;
+    }
+    .nav ul {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding-block: 0.5rem 1rem;
+    }
+    .nav a:not(.btn) {
+      display: block;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--fg-soft);
+    }
+    .nav a[aria-current='page']:not(.btn) {
+      border-bottom-color: var(--fg-soft);
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.35em;
+    }
+    .nav-join {
+      margin-top: 1rem;
+    }
+    .nav .btn {
+      width: 100%;
+    }
+  }
+</style>

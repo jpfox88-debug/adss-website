@@ -1,0 +1,81 @@
+---
+// Compact photographic page header for inner pages: decorative Scottish photo under a navy
+// gradient, with the page title and a short intro. Deliberately shallow so content comes first.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  title: string;
+  image: ImageMetadata;
+  /** CSS object-position for the crop, e.g. "50% 40%". */
+  position?: string;
+}
+const { title, image, position = '50% 50%' } = Astro.props;
+---
+<header class="page-photo">
+  <Image
+    class="page-photo-img"
+    src={image}
+    alt=""
+    widths={[640, 1024, 1600, 2000]}
+    sizes="100vw"
+    quality={70}
+    loading="eager"
+    fetchpriority="high"
+    style={`object-position: ${position}`}
+  />
+  <div class="page-photo-shade" aria-hidden="true"></div>
+  <div class="wrap page-photo-copy">
+    <span class="accent-rule" aria-hidden="true"></span>
+    <h1>{title}</h1>
+    {Astro.slots.has('default') && <div class="page-photo-intro"><slot /></div>}
+  </div>
+</header>
+
+<style>
+  .page-photo {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(17rem, 34vh, 22rem);
+    background: var(--navy-deep);
+    color: var(--on-navy);
+    overflow: hidden;
+  }
+  .page-photo-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .page-photo-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10, 17, 34, 0.68) 0%, rgba(14, 24, 48, 0.58) 40%, rgba(14, 24, 48, 0.88) 100%);
+  }
+  .page-photo-copy {
+    position: relative;
+    padding-top: 6.5rem;
+    padding-bottom: var(--space-4);
+  }
+  h1 {
+    color: var(--on-navy);
+    font-size: var(--step-4);
+    margin-bottom: 0.4rem;
+  }
+  .page-photo-intro :global(p) {
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: var(--on-navy);
+    margin: 0;
+    max-width: 44rem;
+  }
+  .page-photo-intro :global(a) {
+    color: var(--on-navy);
+  }
+  .page-photo-intro :global(a:focus-visible) {
+    box-shadow: var(--focus-dark);
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+// Shown wherever Society event albums would appear but none exist yet. Never filled with stock photos.
+import { Image } from 'astro:assets';
+import thistle from '../assets/brand/logo-thistle.png';
+
+interface Props {
+  /** Pre-launch only: link to the placeholder album so reviewers can see the album layout. */
+  previewHref?: string | null;
+}
+const { previewHref } = Astro.props;
+---
+<div class="coming-soon">
+  <Image src={thistle} alt="" height={72} densities={[1, 2]} class="mark" />
+  <div>
+    <p class="cs-title">Society event photos coming soon</p>
+    <p>Albums from our Burns Supper, ceilidhs and the St Andrew's Ball will appear here once they've been approved for the website.</p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href="/events/">Upcoming Events</a>
+      <a class="btn btn--outline" href="/join/">Join the Society</a>
+    </div>
+    {previewHref && <p class="preview-note" data-preview-only>Pre-launch preview: <a href={previewHref}>see the album layout with placeholder photos</a>.</p>}
+  </div>
+</div>
+
+<style>
+  .coming-soon {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    box-shadow: 0 1px 0 var(--stone-deep);
+  }
+  .mark {
+    height: 72px;
+    width: auto;
+  }
+  .cs-title {
+    font: 600 var(--step-3) / 1.1 var(--font-display);
+    color: var(--navy);
+    margin-bottom: var(--space-1);
+  }
+  .preview-note {
+    margin: var(--space-3) 0 0;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  @media (max-width: 36rem) {
+    .coming-soon {
+      grid-template-columns: 1fr;
+      padding: var(--space-3);
+    }
+  }
+</style>

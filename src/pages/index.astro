@@ -1,32 +1,476 @@
 ---
-// Step 1 scaffold page: proves content collections, the image pipeline and CMS
-// edits end-to-end. Replaced by the full homepage in Section 16 step 3.
-import { getCollection, getEntry, render } from 'astro:content';
 import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Ph from '../components/Ph.astro';
+import BookingButton from '../components/BookingButton.astro';
+import Portrait from '../components/Portrait.astro';
+import PhotosComingSoon from '../components/PhotosComingSoon.astro';
+import logoStacked from '../assets/brand/logo-stacked-reversed.png';
+import bandPhoto from '../assets/stock/skye-heather-hillside.jpg';
+import { canBeNext, getAlbums, getCommittee, getEvents, getHome, getMembership, isGenuineAlbum, isPastAtBuild } from '../lib/content';
+import { formatDay, formatMonthYear, formatTimeRange, STATUS_LABEL } from '../lib/site';
 
-const home = (await getEntry('home', 'home'))!.data;
-const settings = (await getEntry('settings', 'site'))!.data;
-const events = await getCollection('events');
-const committee = (await getCollection('committee')).sort((a, b) => a.data.order - b.data.order);
-const documents = await getCollection('documents');
+const home = await getHome();
+const membership = await getMembership();
+const committee = await getCommittee();
+const allAlbums = await getAlbums();
+const albums = allAlbums.filter(isGenuineAlbum).slice(0, 3);
+const layoutPreview = process.env.SITE_LAUNCHED !== 'true' ? allAlbums.find((a) => !isGenuineAlbum(a)) : undefined;
+
+// Every event that could be "next" for a visitor at any time after this build.
+const candidates = (await getEvents()).filter((e) => canBeNext(e) && !isPastAtBuild(e));
+const nextAtBuild = candidates[0];
+
+const firstOption = membership.options[0];
 ---
-<html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="robots" content="noindex" />
-    <title>{settings.site_name} — build scaffold</title>
-  </head>
-  <body style="font-family: system-ui, sans-serif; max-width: 60rem; margin: 2rem auto; padding: 0 1rem;">
-    <p><strong>Build scaffold</strong> — not the finished site.</p>
-    {home.hero_image && <Image src={home.hero_image} alt={home.hero_alt ?? ''} widths={[640, 1280]} sizes="100vw" loading="eager" fetchpriority="high" style="width:100%;height:auto" />}
-    <h1>{home.hero_heading}</h1>
-    <p>{home.hero_intro}</p>
-    <h2>Events</h2>
-    <ul>{events.map((e) => <li>{e.data.title} — {e.data.start} ({e.data.status})</li>)}</ul>
-    <h2>Committee ({settings.committee_term})</h2>
-    <ul>{committee.map((c) => <li>{c.data.name}, {c.data.role}</li>)}</ul>
-    <h2>Documents</h2>
-    <ul>{documents.map((d) => <li><a href={d.data.file}>{d.data.title}</a></li>)}</ul>
-  </body>
-</html>
+<Base
+  title="Home"
+  description="The Scottish Society Abu Dhabi brings together Scots in Abu Dhabi, their families and anyone who loves Scotland — Burns Supper, ceilidhs, the St Andrew's Ball and more."
+  image={home.hero_image}
+  imageAlt={home.hero_alt}
+  overlayHeader
+  headerMarkOnly
+>
+  <section class="hero" aria-labelledby="hero-title">
+    {home.hero_image && (
+      <Image
+        class="hero-img"
+        src={home.hero_image}
+        alt={home.hero_alt ?? ''}
+        widths={[640, 960, 1280, 1600, 2000]}
+        sizes="100vw"
+        quality={70}
+        loading="eager"
+        fetchpriority="high"
+      />
+    )}
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-copy">
+      <Image class="hero-logo" src={logoStacked} alt="" width={420} densities={[1, 2]} loading="eager" />
+      <h1 id="hero-title">{home.hero_heading}</h1>
+      <p class="hero-intro"><Ph text={home.hero_intro} /></p>
+      <div class="hero-actions">
+        <a class="btn btn--light" href="/join/">Join the Society</a>
+        <a class="btn btn--outline-light" href="/events/">Upcoming Events</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="invite-band" aria-labelledby="next-title">
+    <Image class="band-img" src={bandPhoto} alt="" widths={[640, 1280, 1920]} sizes="100vw" quality={60} loading="lazy" />
+    <div class="band-shade" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="card">
+        <h2 id="next-title" class="card-kicker"><span class="accent-rule" aria-hidden="true"></span>Next event</h2>
+        <ul class="plain" id="next-event" data-event-list="next">
+          {candidates.map((e, i) => (
+            <li data-event data-end={e.end.toISOString()} data-status={e.data.status} hidden={i !== 0}>
+              <p class="card-title"><a href={`/events/${e.id}/`}><Ph text={e.data.title} /></a></p>
+              <p class="card-date">{formatDay(e.start)}</p>
+              <p class="card-time">{formatTimeRange(e.start, e.end)}</p>
+              <p class="card-venue"><Ph text={e.data.venue} /></p>
+              {e.data.status !== 'open' && <p><span class={`status status--${e.data.status}`}>{STATUS_LABEL[e.data.status]}</span></p>}
+              <div class="card-actions">
+                <BookingButton event={e} />
+                <a href={`/events/${e.id}/`}>Event details<span class="visually-hidden">: {e.data.title}</span></a>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div data-event-empty="next-event" hidden={!!nextAtBuild}>
+          <p class="card-title">No events are currently scheduled — follow us or join to hear first.</p>
+          <div class="card-actions">
+            <a class="btn btn--primary" href="/join/">Join the Society</a>
+            <a href="/events/archive/">See past events</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" aria-labelledby="about-title">
+    <div class="wrap about-grid">
+      <div>
+        <span class="accent-rule" aria-hidden="true"></span>
+        <h2 id="about-title">{home.about_heading}</h2>
+        <p class="about-lead"><Ph text={home.about_intro} /></p>
+      </div>
+      <ul class="objectives">
+        {home.objectives.map((o) => <li><Ph text={o} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="join" aria-labelledby="join-title">
+    <div class="wrap">
+      <div class="join-panel">
+        <div>
+          <h2 id="join-title">Why join?</h2>
+          <ul class="benefits">
+            {membership.benefits.map((b) => (
+              <li>
+                <strong><Ph text={b.title} /></strong>
+                {b.description && <span><Ph text={b.description} /></span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="join-aside">
+          {firstOption && (
+            <p class="price">
+              <span class="price-value"><Ph text={firstOption.price_aed} /></span>
+              <span class="price-label"><Ph text={firstOption.name} /></span>
+            </p>
+          )}
+          <p class="join-note">Membership is arranged directly with the Society through WhatsApp.</p>
+          <a class="btn btn--primary" href="/join/">Join the Society</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights" aria-labelledby="photos-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="photos-title">Recent highlights</h2>
+        {albums.length > 0 && <a href="/photos/">All photos and videos</a>}
+      </div>
+      {albums.length > 0 ? (
+        <ul class="cards">
+          {albums.map((a) => (
+            <li>
+              <a href={`/photos/${a.id}/`} class="photo-card">
+                <Image src={a.data.cover} alt="" widths={[400, 800]} sizes="(min-width: 60rem) 22rem, (min-width: 40rem) 45vw, 92vw" quality={72} />
+                <span class="caption-panel">
+                  <span class="caption-title"><Ph text={a.data.title} /></span>
+                  <span class="caption-sub">{formatMonthYear(a.date)}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <PhotosComingSoon previewHref={layoutPreview ? `/photos/${layoutPreview.id}/` : null} />
+      )}
+    </div>
+  </section>
+
+  <section class="committee" aria-labelledby="committee-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="committee-title">Meet the committee</h2>
+        <a href="/committee/">The full committee</a>
+      </div>
+      <p class="committee-intro"><Ph text={home.committee_intro} /></p>
+      {committee.length > 0 && (
+        <ul class="people">
+          {committee.slice(0, 4).map((c) => (
+            <li>
+              <a class="photo-card" href="/committee/">
+                <Portrait photo={c.data.photo} name={c.data.name} alt={c.data.photo_alt} sizes="(min-width: 60rem) 16rem, 45vw" />
+                <span class="caption-panel">
+                  <span class="caption-title"><Ph text={c.data.name} /></span>
+                  <span class="caption-sub"><Ph text={c.data.role} /></span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/event-visibility';
+</script>
+
+<style>
+  /* ── Hero: full-bleed Scottish photo under a navy gradient ── */
+  .hero {
+    position: relative;
+    min-height: min(80vh, 46rem);
+    display: grid;
+    place-items: center;
+    background: var(--navy-deep);
+    color: var(--on-navy);
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 58% 48%;
+  }
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 46rem 30rem at 50% 52%, rgba(14, 24, 48, 0.62), rgba(14, 24, 48, 0) 70%),
+      linear-gradient(180deg, rgba(10, 17, 34, 0.55) 0%, rgba(14, 24, 48, 0.35) 38%, rgba(14, 24, 48, 0.7) 100%);
+  }
+  .hero-copy {
+    position: relative;
+    padding-block: 7.5rem var(--space-5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-logo {
+    width: min(380px, 80vw);
+    height: auto;
+    margin-bottom: var(--space-3);
+    filter: drop-shadow(0 2px 10px rgba(10, 17, 34, 0.55));
+  }
+  .hero h1 {
+    color: var(--on-navy);
+    font-size: var(--step-4);
+    line-height: 1.05;
+    max-width: 22ch;
+    margin-bottom: var(--space-2);
+    text-shadow: 0 2px 18px rgba(10, 17, 34, 0.55);
+  }
+  .hero-intro {
+    font-size: var(--step-1);
+    line-height: 1.5;
+    max-width: 38rem;
+    color: var(--on-navy);
+    margin: 0 auto var(--space-4);
+    text-shadow: 0 1px 12px rgba(10, 17, 34, 0.6);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+  .hero :focus-visible {
+    box-shadow: var(--focus-dark);
+  }
+
+  /* ── Next event: a straight invitation card on a subdued photographic band ── */
+  .invite-band {
+    position: relative;
+    padding-block: var(--space-5);
+    background: var(--navy);
+    overflow: hidden;
+  }
+  .band-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 70%;
+  }
+  .band-shade {
+    position: absolute;
+    inset: 0;
+    background: rgba(14, 24, 48, 0.82);
+  }
+  .card {
+    position: relative;
+    max-width: 40rem;
+    margin-inline: auto;
+    padding: var(--space-4) var(--space-4) var(--space-4);
+    background: var(--paper);
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.65);
+    outline: 1px solid var(--navy);
+    outline-offset: -12px;
+  }
+  .card-kicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font: 700 var(--step--1) / 1.2 var(--font-body);
+    letter-spacing: 0.06em;
+    color: var(--red-text);
+    margin-bottom: var(--space-2);
+  }
+  .card-kicker .accent-rule {
+    margin-bottom: 0.6rem;
+  }
+  .plain {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .card li,
+  .card p {
+    max-width: none;
+  }
+  .card-title {
+    font: 600 var(--step-4) / 1.02 var(--font-display);
+    color: var(--navy);
+    margin-bottom: var(--space-2);
+    text-wrap: balance;
+  }
+  .card-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .card-title a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+  .card-date {
+    font-size: var(--step-1);
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.1rem;
+  }
+  .card-time {
+    color: var(--ink-soft);
+    margin-bottom: 0.1rem;
+  }
+  .card-venue {
+    color: var(--ink);
+    margin-bottom: var(--space-3);
+  }
+  .card-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  /* ── About ── */
+  .about {
+    padding-block: var(--space-6) var(--space-5);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: var(--space-4) var(--space-5);
+  }
+  .about-lead {
+    font: 500 var(--step-2) / 1.3 var(--font-display);
+    color: var(--navy);
+  }
+  .objectives {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .objectives li {
+    position: relative;
+    padding: 0 0 var(--space-3) 1.6rem;
+    line-height: 1.55;
+  }
+  .objectives li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  /* ── Why join: a paper panel on cream ── */
+  .join {
+    padding-bottom: var(--space-6);
+  }
+  .join-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 1fr);
+    gap: var(--space-4);
+    align-items: center;
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: var(--space-5) clamp(1.5rem, 5vw, 4rem);
+    box-shadow: 0 1px 0 var(--stone-deep);
+    border-top: 4px solid var(--green);
+  }
+  .benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .benefits li {
+    display: flex;
+    flex-direction: column;
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--stone);
+  }
+  .benefits span {
+    color: var(--ink-soft);
+  }
+  .join-aside {
+    text-align: center;
+  }
+  .price {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--space-1);
+    max-width: none;
+  }
+  .price-value {
+    /* Prices in Source Sans: Cormorant's "1" reads as "I". */
+    font: 700 var(--step-3) / 1.1 var(--font-body);
+    color: var(--navy);
+  }
+  .price-label,
+  .join-note {
+    color: var(--ink-soft);
+  }
+  .join-note {
+    margin-bottom: var(--space-3);
+  }
+
+  /* ── Highlights and committee: image-led cards with caption panels ── */
+  .highlights {
+    padding-bottom: var(--space-6);
+  }
+  .committee {
+    background: var(--stone);
+    padding-block: var(--space-6);
+  }
+  .cards,
+  .people {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4) var(--space-3);
+  }
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  }
+  .cards img {
+    aspect-ratio: 4 / 3;
+  }
+  .people {
+    grid-template-columns: repeat(auto-fill, minmax(min(46%, 13rem), 1fr));
+  }
+  .cards li,
+  .people li {
+    max-width: none;
+  }
+  .committee-intro {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-4);
+  }
+
+  @media (max-width: 48rem) {
+    .hero {
+      min-height: auto;
+    }
+    .hero-copy {
+      padding-block: 6.5rem var(--space-5);
+    }
+    .card {
+      padding: var(--space-4) var(--space-3);
+    }
+    .join-panel {
+      grid-template-columns: 1fr;
+      padding: var(--space-4) var(--space-3);
+    }
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Portrait from '../components/Portrait.astro';
+import Ph from '../components/Ph.astro';
+import headerPhoto from '../assets/stock/skye-stone-bridge.jpg';
+import { getCommittee, getSettings } from '../lib/content';
+import { safeUrl } from '../lib/site';
+
+const settings = await getSettings();
+const members = await Promise.all(
+  (await getCommittee()).map(async (m) => ({ ...m, Bio: (await render(m)).Content })),
+);
+---
+<Base
+  title="The Committee"
+  description="Meet the volunteer committee who run the Scottish Society Abu Dhabi and organise its events."
+  overlayHeader
+>
+  <PageHeader title="The Committee" image={headerPhoto} position="50% 46%">
+    <p>Volunteers elected by the members. Committee for <Ph text={settings.committee_term} />.</p>
+  </PageHeader>
+
+  <div class="wrap content">
+    {members.length === 0 ? (
+      <p>Committee details will be published soon.</p>
+    ) : (
+      <ul class="people">
+        {members.map((m) => {
+          const contact = safeUrl(m.data.contact_url);
+          return (
+            <li class="person">
+              <div class="photo-card">
+                <Portrait photo={m.data.photo} name={m.data.name} alt={m.data.photo_alt} />
+                <div class="caption-panel">
+                  <h2 class="caption-title"><Ph text={m.data.name} /></h2>
+                  <p class="caption-sub role"><Ph text={m.data.role} /></p>
+                </div>
+              </div>
+              <div class="bio"><m.Bio /></div>
+              {contact && m.data.contact_label && <p class="contact"><a href={contact}>{m.data.contact_label}</a></p>}
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </div>
+</Base>
+
+<style>
+  .content {
+    padding-block: var(--space-5) var(--space-6);
+  }
+  .people {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(45%, 15.5rem), 1fr));
+    gap: var(--space-5) var(--space-3);
+  }
+  .person {
+    max-width: none;
+  }
+  .caption-title {
+    margin: 0;
+    font-size: var(--step-1);
+  }
+  .role {
+    margin: 0;
+    font-weight: 600;
+    color: var(--green-deep);
+  }
+  .bio {
+    margin-top: var(--space-2);
+    padding-inline: 0.25rem;
+  }
+  @media (max-width: 36rem) {
+    .people {
+      gap: var(--space-4) var(--space-2);
+    }
+    .people :global(.caption-panel) {
+      margin-inline: 0.4rem;
+      padding: 0.6rem 0.7rem;
+    }
+    .caption-title {
+      font-size: 1.15rem;
+    }
+  }
+  .bio :global(p) {
+    margin-bottom: 0.6rem;
+  }
+  .contact {
+    padding-inline: 0.25rem;
+  }
+</style>

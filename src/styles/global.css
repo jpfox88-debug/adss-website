@@ -1,0 +1,353 @@
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-600-italic.css';
+@import '@fontsource/source-sans-3/latin-400.css';
+@import '@fontsource/source-sans-3/latin-400-italic.css';
+@import '@fontsource/source-sans-3/latin-600.css';
+@import '@fontsource/source-sans-3/latin-700.css';
+
+:root {
+  /* Palette: warm cream dominant; navy for the hero overlay, event band, footer and calls to action;
+     the logo's green and red as restrained accents (the logo's blue stays inside the logo). */
+  --cream: #f5f0e8;
+  --paper: #fbf8f2;
+  --stone: #ebe3d4;
+  --stone-deep: #d8ccb6;
+  --navy: #14213d;
+  --navy-deep: #0e1830;
+  --ink: #1d2333;
+  --ink-soft: #4a5063;
+  --on-navy: #f5f0e8;
+  --on-navy-soft: #cfd5e2;
+  --green: #2e7d32; /* logo green: small marks and rules */
+  --green-deep: #25692a; /* text links on cream */
+  --red: #e8363a; /* logo red: decorative only (fails text contrast on cream) */
+  --red-text: #c62d33; /* red when it must be read */
+  --sky: #7fb2ff; /* reversed logo blue on navy */
+  --placeholder-bg: #fff3c4;
+  --placeholder-ink: #5c4500;
+
+  /* Older name still used by some page styles. */
+  --warm-white: var(--cream);
+
+  --font-display: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+
+  /* Type scale. Cormorant has a small x-height, so display sizes run large. */
+  --step--1: 0.9rem;
+  --step-0: 1.125rem;
+  --step-1: 1.35rem;
+  --step-2: clamp(1.6rem, 1.4rem + 0.8vw, 2rem);
+  --step-3: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+  --step-4: clamp(2.4rem, 1.8rem + 2.6vw, 3.6rem);
+  --step-5: clamp(2.8rem, 2rem + 3.6vw, 4.6rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+
+  --measure: 66ch;
+  --page: 72rem;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --radius: 4px;
+  --shadow-card: 0 18px 40px -24px rgba(14, 24, 48, 0.45);
+  --focus: 0 0 0 3px var(--cream), 0 0 0 6px var(--green-deep);
+  --focus-dark: 0 0 0 3px var(--navy-deep), 0 0 0 6px var(--cream);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* The event-visibility script toggles [hidden]; component display rules must never override it. */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  /* Cormorant's old-style figures make "1" read as "I" in dates; use lining figures everywhere. */
+  font-variant-numeric: lining-nums;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: break-word;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.08;
+  margin: 0 0 var(--space-2);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-4);
+  letter-spacing: -0.01em;
+}
+h2 {
+  font-size: var(--step-3);
+}
+h3 {
+  font-size: var(--step-2);
+}
+
+p,
+ul,
+ol,
+dl {
+  margin: 0 0 var(--space-2);
+}
+
+p,
+li {
+  max-width: var(--measure);
+}
+
+a {
+  color: var(--green-deep);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+  border-radius: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-5);
+}
+
+.section--stone {
+  background: var(--stone);
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* Plain page heading for pages without a photographic header (event and album pages). */
+.page-head {
+  padding-block: var(--space-4) var(--space-3);
+}
+.page-head p {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* A short red rule: the one recurring red accent. */
+.accent-rule {
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  background: var(--red);
+  border-radius: 2px;
+  margin-bottom: var(--space-2);
+}
+
+/* Section headings with a link at the right. */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  margin-bottom: var(--space-4);
+}
+.section-head h2 {
+  margin: 0;
+}
+
+/* Image-led card with an overlapping caption panel (albums, committee). */
+.photo-card {
+  display: flex;
+  flex-direction: column;
+  color: var(--navy);
+  text-decoration: none;
+}
+.photo-card img,
+.photo-card .tile {
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+.caption-panel {
+  position: relative;
+  margin: -2.25rem 0.85rem 0;
+  background: var(--paper);
+  padding: 0.85rem 1rem 0.95rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.caption-title {
+  font: 600 var(--step-1) / 1.15 var(--font-display);
+  color: var(--navy);
+}
+.caption-sub {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+a.photo-card:hover .caption-title {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* Buttons: one shape everywhere. Main actions are navy (cream on dark backgrounds);
+   secondary actions are cream or outlined. Green and red are never button colours. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 48px;
+  padding: 0.6em 1.6em;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  font: 600 var(--step-0) / 1.2 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+.btn--primary {
+  background: var(--navy);
+  color: var(--cream);
+}
+.btn--primary:hover {
+  background: var(--navy-deep);
+}
+.btn--light {
+  background: var(--cream);
+  color: var(--navy);
+}
+.btn--light:hover {
+  background: #fff;
+}
+.btn--outline {
+  border-color: var(--navy);
+  color: var(--navy);
+  background: transparent;
+}
+.btn--outline:hover {
+  background: rgba(20, 33, 61, 0.06);
+}
+.btn--outline-light {
+  border-color: var(--cream);
+  color: var(--cream);
+  background: transparent;
+}
+.btn--outline-light:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.btn[aria-disabled='true'] {
+  background: var(--stone);
+  color: var(--ink-soft);
+  border: 2px dashed var(--stone-deep);
+  cursor: not-allowed;
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Unconfirmed content is always visibly marked, never presented as fact. */
+.ph {
+  background: var(--placeholder-bg);
+  color: var(--placeholder-ink);
+  padding: 0 0.25em;
+  border-radius: 2px;
+  outline: 1px dashed #c9a400;
+  font-style: normal;
+}
+
+.status {
+  display: inline-block;
+  font-weight: 700;
+  font-size: var(--step--1);
+  padding: 0.15em 0.7em;
+  border-radius: 999px;
+  background: var(--stone);
+  color: var(--navy);
+}
+.status--sold-out {
+  background: #ece3cf;
+  color: #5b4510;
+}
+.status--postponed {
+  background: #e7e0ef;
+  color: #45306b;
+}
+.status--cancelled {
+  background: #f6dcdd;
+  color: #8a1c2c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

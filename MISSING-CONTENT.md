@@ -1,76 +1,59 @@
-# Missing content and launch decisions
+# Missing content: launch handover checklist
 
-The single list of every placeholder, missing asset and launch decision. Each item is marked **must resolve before launch** or **can follow later**. Nothing listed here is confirmed content.
+One line per piece of information. Where the same detail appears in several places on the site, it is listed once, with every place it fills. Nothing in square brackets on the preview is confirmed content.
 
-## Launch decisions
+The launch build checks this automatically: `npm run build:launch` fails while any placeholder text, demonstration entry, test file or preview-only link is left, while there is no committee member or no current constitution, or while addresses still point at Netlify instead of the Society's domain.
 
-| Item | Status |
-|---|---|
-| Target launch date (`[INSERT DATE]` in the brief) | must resolve before launch |
-| Production domain and Cloudflare DNS switch (currently www.adscottishsociety.com) | must resolve before launch |
-| Society-owned GitHub account to own the repo and the CMS OAuth App (the repo currently lives under `jpfox88-debug`) | must resolve before launch |
-| At least two committee members with Netlify and GitHub access | must resolve before launch |
-| Editors' GitHub usernames to invite as collaborators | must resolve before launch |
-| CMS proof (login → edit → preview → publish, photo upload, PDF upload) repeated with an **ordinary non-admin editor account** (write-only collaborator). The first proof used the owner account `jpfox88-debug`; see docs/DECISIONS.md D7 | must resolve before launch |
+## A. Launch essentials — information the committee must supply
 
-## Brand and media
+### Membership (CMS: Site pages & settings → Membership & joining)
 
-| Item | Where | Status |
-|---|---|---|
-| Higher-resolution logo needed (current file is 424 × 330 px PNG from the old site) | `src/assets/brand/adss-logo.png` | can follow later |
-| Approved homepage opening photo from a real society event | Homepage → Opening photo | must resolve before launch |
-| Approved event photos and albums (placeholder album seeded) | Photos & videos | must resolve before launch |
+- [ ] **Membership WhatsApp number**, international format (e.g. +971 50 123 4567). Turns on the **Join via WhatsApp** button, which stays disabled until then. *Replaces* `[MEMBERSHIP WHATSAPP NUMBER]`.
+- [ ] **Membership email address.** *Replaces* `[MEMBERSHIP EMAIL ADDRESS]`.
+- [ ] **Membership options and prices in AED**: each option's name, price and one-line description, e.g. individual, family, student. Shown on Join and in the homepage "Why join" panel. *Replaces* `[MEMBERSHIP OPTIONS]`, `[PRICES IN AED]`, `[OPTION DESCRIPTION]`.
+- [ ] **Membership period and renewals**: calendar year or rolling, and how renewal works. Shown on Join and in its questions and answers. *Replaces* `[MEMBERSHIP PERIOD]`, `[RENEWAL ARRANGEMENTS]`.
+- [ ] **Eligibility**: who can join. Shown on Join and in its questions and answers. *Replaces* `[ELIGIBILITY RULES]`.
+- [ ] **Confirmed member benefits**: each benefit's title and a short description. Shown on Join and on the homepage. *Replaces* `[CONFIRMED BENEFITS]`, `[BENEFIT DESCRIPTION]`.
 
-## Site settings (`src/content/settings/site.yaml`)
+### Committee (CMS: Committee, and Site pages & settings)
 
-| Placeholder | Status |
-|---|---|
-| `[GENERAL CONTACT EMAIL]` | must resolve before launch |
-| `[GENERAL WHATSAPP NUMBER]` | must resolve before launch |
-| `[GENERAL PHONE NUMBER — optional]` | can follow later (remove if not used) |
-| `[POSTAL ADDRESS — optional]` | can follow later (remove if not used) |
-| `[COMMITTEE TERM, e.g. 2026–27]` | must resolve before launch |
-| `[FACEBOOK URL]`, `[INSTAGRAM URL]` | must resolve before launch (or remove) |
-| `[TAGLINE — optional]` | can follow later (remove if not used) |
+- [ ] **Current committee**: for each member, name, role, sort order and a short approved biography. Replace the three demonstration profiles (president, secretary, treasurer); they are dropped from the launch build. Portraits can follow later. *Replaces* `[PRESIDENT NAME]`, `[SECRETARY NAME]`, `[TREASURER NAME]` and their biographies.
+- [ ] **Committee term**, e.g. 2026–27. Shown on The Committee page. *Replaces* `[COMMITTEE TERM]`.
+- [ ] **Committee introduction** for the homepage: one or two sentences. *Replaces* `[COMMITTEE INTRO — confirm wording]`.
 
-## Homepage (`src/content/home/home.yaml`)
+### General contact (CMS: Site pages & settings → Contacts, social links & committee term)
 
-| Placeholder | Status |
-|---|---|
-| `[COMMITTEE INTRO — confirm wording]` | must resolve before launch |
-| Welcome and about wording (drafted from the old site's objectives) — committee approval | must resolve before launch |
+- [ ] **General contact email.** Shown in the footer of every page and on Privacy. *Replaces* `[GENERAL CONTACT EMAIL]`.
+- [ ] **General WhatsApp number.** Shown in the footer of every page and on Privacy. *Replaces* `[GENERAL WHATSAPP NUMBER]`.
 
-## Membership (`src/content/membership/membership.yaml`)
+### Constitution (CMS: Downloads)
 
-| Placeholder | Status |
-|---|---|
-| `[MEMBERSHIP OPTIONS]` | must resolve before launch |
-| `[PRICES IN AED]` | must resolve before launch |
-| `[MEMBERSHIP PERIOD]` | must resolve before launch |
-| `[ELIGIBILITY RULES]` | must resolve before launch |
-| `[RENEWAL ARRANGEMENTS]` | must resolve before launch |
-| `[CONFIRMED BENEFITS]` | must resolve before launch |
-| `[MEMBERSHIP WHATSAPP NUMBER]` — the Join button stays disabled until set | must resolve before launch |
-| `[MEMBERSHIP EMAIL ADDRESS]` | must resolve before launch |
-| Partner names, logos and offers (must be current and approved) | can follow later |
+- [ ] **Approved current constitution** as a PDF, uploaded with **Current version** ticked. The demonstration constitution and its placeholder PDF are dropped from the launch build.
 
-## Committee (`src/content/committee/`)
+### Sign-off
 
-| Placeholder | Status |
-|---|---|
-| Placeholder profiles `[PRESIDENT NAME]`, `[SECRETARY NAME]`, `[TREASURER NAME]`: real names, roles, photos and approved bios for every member | must resolve before launch |
+- [ ] **Homepage welcome and about wording**, drafted from the old site's objectives: committee approval or edits.
 
-## Events (`src/content/events/`)
+## B. Launch essentials — setup by the website owner
 
-| Placeholder | Status |
-|---|---|
-| `[PLACEHOLDER EVENT — not a real event]` (its dates are layout placeholders only) | must resolve before launch (remove) |
-| First confirmed real events with venue, prices and booking method | must resolve before launch |
+- [ ] **Ordinary-editor CMS test.** Repeat login → edit → preview → publish, plus a photo upload and a PDF upload, with a committee editor's GitHub account that has write access but no owner or admin rights. The first test used the owner account (docs/DECISIONS.md D7). Needs the editor's GitHub username so they can be invited as a collaborator.
+- [ ] **Launch date.** (`[INSERT DATE]` in the brief.)
+- [ ] **Domain**: the production domain and the Cloudflare DNS switch (currently www.adscottishsociety.com). Then set `site_url` and `display_url` in `public/admin/config.yml`.
+- [ ] **Netlify launch settings**: `SITE_LAUNCHED=true`, `EXCLUDE_PLACEHOLDERS=true`, `SITE_URL=<domain>`, and the build command `npm run build:launch` (docs/LAUNCH-CHECKLIST.md).
+- [ ] **Ownership and access**: a Society-owned GitHub account to own the repo and the CMS OAuth App (the repo is currently under `jpfox88-debug`), and at least two committee members with Netlify and GitHub access.
+- [ ] **Editors**: the GitHub usernames of everyone who will edit, to invite as collaborators.
+- [ ] **Netlify plan**. The Free plan pauses every site on the account when its 300 credits run out (docs/HANDOVER.md §10).
 
-## Downloads (`src/content/documents/`, `public/documents/`)
+## C. Can follow later
 
-| Placeholder | Status |
-|---|---|
-| `[PLACEHOLDER] Society constitution` + `placeholder-document.pdf` | must resolve before launch (replace) |
-| Approved current constitution | must resolve before launch |
-| Approved (redacted) committee and AGM minutes | can follow later |
+- [ ] **Committee portraits**: a head-and-shoulders photo of each actual member. Until then each member shows an initials tile.
+- [ ] **Confirmed events**: name, date and times, venue and address, member and non-member prices in AED, dress code, eligibility or age limits, and how to book. Until then, the homepage and Upcoming Events show "No events are currently scheduled", and the demonstration event is dropped from the launch build.
+- [ ] **Event photos or artwork**: any event without its own image shows an illustrative Scottish landscape captioned "Illustrative image".
+- [ ] **Approved Society photo albums**: actual photos from Society events, with approval to publish. Until then, Photos & Videos and the homepage show "Society event photos coming soon". The old site's albums (St Andrew's Ball 2025, May 2025 Ceilidh, Burns Supper 2025, Nov 2024 at The Club, Six Nations 2025, pre-Christmas drinks 2024) are possible sources; when they are added, point their redirects at them (docs/REDIRECTS.md).
+- [ ] **Approved, redacted committee and AGM minutes.**
+- [ ] **Partner names, logos and offers**, only if current and approved.
+- [ ] **Optional contact details**: general phone number, postal address, Facebook and Instagram links. Each is left out of the launch build automatically until it is supplied, so nothing needs to be done if the Society doesn't use them. *Replaces* `[GENERAL PHONE NUMBER — optional]`, `[POSTAL ADDRESS — optional]`, `[FACEBOOK URL]`, `[INSTAGRAM URL]`.
+- [ ] **Homepage opening photo**: currently a decorative landscape (Kilchurn Castle). Replace it with an approved Society photo if the committee prefers.
+- [ ] **Vector logo** (SVG or PDF) for print and very large display. The supplied JPEGs are fine on screen.
+
+Not used on the site, so no action is needed: the `tagline` setting (`[TAGLINE — optional]`).

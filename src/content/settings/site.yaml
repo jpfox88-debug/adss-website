@@ -1,12 +1,12 @@
-site_name: Abu Dhabi Scottish Society
-tagline: "[TAGLINE — optional]"
-committee_term: "[COMMITTEE TERM, e.g. 2026–27]"
-contact_email: "[GENERAL CONTACT EMAIL]"
-general_whatsapp: "[GENERAL WHATSAPP NUMBER]"
-phone: "[GENERAL PHONE NUMBER — optional]"
-address: "[POSTAL ADDRESS — optional]"
+site_name: Scottish Society Abu Dhabi
+tagline: '[TAGLINE — optional]'
+committee_term: '[COMMITTEE TERM, e.g. 2026–27]'
+contact_email: '[GENERAL CONTACT EMAIL]'
+general_whatsapp: '[GENERAL WHATSAPP NUMBER]'
+phone: '[GENERAL PHONE NUMBER — optional]'
+address: '[POSTAL ADDRESS — optional]'
 socials:
   - platform: Facebook
-    url: "[FACEBOOK URL]"
+    url: '[FACEBOOK URL]'
   - platform: Instagram
-    url: "[INSTAGRAM URL]"
+    url: '[INSTAGRAM URL]'
