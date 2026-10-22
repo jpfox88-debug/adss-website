@@ -1,0 +1,30 @@
+# Old adscottishsociety.com URLs → closest pages on the new site (see docs/REDIRECTS.md).
+# Unknown URLs are NOT redirected: they get the 404 page.
+
+/sitemap.xml                       /sitemap-index.xml   200
+
+/index.html                        /                    301
+/EventsList.html                   /events/             301
+/MemberDiscounts.html              /join/               301
+/Committee/Committee.html          /committee/          301
+/Committee                         /committee/          301
+/Constitution/constitution.html    /downloads/          301
+/Constitution                      /downloads/          301
+
+# Old event photo pages ("sheets"). Point these at specific albums once they exist.
+/2025StABall01/*                   /photos/             301
+/2025StABall02/*                   /photos/             301
+/2025StABall03/*                   /photos/             301
+/2025StABall04/*                   /photos/             301
+/2025StABall05/*                   /photos/             301
+/2025-05Ceilidh01/*                /photos/             301
+/2025-05Ceilidh02/*                /photos/             301
+/2025-05Ceilidh03/*                /photos/             301
+/2025-05Ceilidh04/*                /photos/             301
+/2025-05Ceilidh05/*                /photos/             301
+/2025-05Ceilidh06/*                /photos/             301
+/2025-05Ceilidh07/*                /photos/             301
+/Burns25Club/*                     /photos/             301
+/Nov24Club/*                       /photos/             301
+/SixNations25-Italy/*              /photos/             301
+/XmasDrinks24/*                    /photos/             301

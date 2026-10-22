@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check:placeholders": "node scripts/check-placeholders.mjs",
+    "build:launch": "SITE_LAUNCHED=true EXCLUDE_PLACEHOLDERS=true astro build && node scripts/check-placeholders.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.4",

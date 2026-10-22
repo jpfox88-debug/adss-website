@@ -17,6 +17,8 @@ interface Props {
 }
 
 const { title, description, image, imageAlt, noindex = false, type = 'website' } = Astro.props;
+// Pre-launch builds are never indexed; set SITE_LAUNCHED=true in Netlify at launch.
+const launched = process.env.SITE_LAUNCHED === 'true';
 const settings = await getSettings();
 const fullTitle = Astro.url.pathname === '/' ? settings.site_name : `${title} | ${settings.site_name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -34,7 +36,7 @@ const ogAlt = image ? imageAlt ?? '' : `${settings.site_name} logo on a navy tar
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {(noindex || !launched) && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#14213d" />

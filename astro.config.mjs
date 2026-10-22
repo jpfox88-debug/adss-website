@@ -8,6 +8,6 @@ export default defineConfig({
   site: process.env.SITE_URL || process.env.URL || 'https://adss-website.netlify.app',
   output: 'static',
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/admin/') })],
   markdown: { rehypePlugins: [rehypePlaceholders] },
 });
