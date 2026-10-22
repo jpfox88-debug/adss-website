@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import Ph from '../components/Ph.astro';
+import { DOCUMENT_CATEGORIES, getDocuments } from '../lib/content';
+import { formatDay } from '../lib/site';
+
+const docs = await getDocuments();
+const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEGORIES)[])
+  .map((key) => ({
+    key,
+    label: DOCUMENT_CATEGORIES[key],
+    // Current versions first, then newest first.
+    docs: docs.filter((d) => d.data.category === key).sort((a, b) => Number(b.data.current) - Number(a.data.current)),
+  }))
+  .filter((g) => g.docs.length > 0);
+---
+<Base
+  title="Downloads"
+  description="The Abu Dhabi Scottish Society constitution, approved meeting minutes, AGM reports and other society documents."
+>
+  <div class="wrap page-head">
+    <h1>Downloads</h1>
+    <p>The society's constitution and approved minutes, reports and other documents.</p>
+  </div>
+
+  <div class="wrap list-wrap">
+    {groups.length === 0 ? (
+      <p>Society documents will be published here soon.</p>
+    ) : (
+      <>
+        {groups.length > 1 && (
+          <nav aria-label="Document categories" class="jump">
+            <ul>{groups.map((g) => <li><a href={`#${g.key}`}>{g.label}</a></li>)}</ul>
+          </nav>
+        )}
+        {groups.map((g) => (
+          <section aria-labelledby={g.key} class="group">
+            <h2 id={g.key}>{g.label}</h2>
+            <ul class="docs">
+              {g.docs.map((d) => {
+                const superseded = g.key === 'constitution' && !d.data.current;
+                return (
+                  <li class:list={['doc', { superseded }]}>
+                    <div class="doc-main">
+                      <h3 class="doc-title"><Ph text={d.data.title} /></h3>
+                      <p class="doc-meta">
+                        {g.key === 'committee-minutes' || g.key === 'agm' ? 'Meeting date' : 'Version date'}: {formatDay(d.date)}
+                        {d.data.current && <span class="status current">Current version</span>}
+                        {superseded && <span class="status">Superseded — older version</span>}
+                      </p>
+                      {d.data.summary && <p class="doc-summary"><Ph text={d.data.summary} /></p>}
+                    </div>
+                    <a class="btn btn--outline doc-link" href={d.data.file}>
+                      View or download<span class="visually-hidden">: {d.data.title}</span>
+                      <span class="doc-type">({d.type}{d.size && `, ${d.size}`})</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+      </>
+    )}
+  </div>
+</Base>
+
+<style>
+  .list-wrap {
+    padding-bottom: var(--space-5);
+  }
+  .jump ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    padding: 0;
+    margin: 0 0 var(--space-4);
+  }
+  .group {
+    margin-bottom: var(--space-4);
+  }
+  .docs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .doc {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-3);
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--stone-deep);
+    max-width: none;
+  }
+  .doc-main {
+    flex: 1 1 22rem;
+  }
+  .doc-title {
+    font-size: var(--step-1);
+    margin-bottom: 0.3rem;
+  }
+  .doc-meta {
+    color: var(--ink-soft);
+    margin-bottom: 0.3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .current {
+    background: #dcebe3;
+    color: var(--forest-deep);
+  }
+  .superseded .doc-title {
+    color: var(--ink-soft);
+  }
+  .doc-summary {
+    margin: 0;
+  }
+  .doc-link {
+    flex-direction: column;
+    gap: 0;
+    font-size: var(--step-0);
+  }
+  .doc-type {
+    font-weight: 400;
+    font-size: var(--step--1);
+  }
+</style>
