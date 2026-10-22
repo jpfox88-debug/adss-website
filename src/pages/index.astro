@@ -1,32 +1,395 @@
 ---
-// Step 1 scaffold page: proves content collections, the image pipeline and CMS
-// edits end-to-end. Replaced by the full homepage in Section 16 step 3.
-import { getCollection, getEntry, render } from 'astro:content';
 import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Ph from '../components/Ph.astro';
+import BookingButton from '../components/BookingButton.astro';
+import { canBeNext, getAlbums, getCommittee, getEvents, getHome, getMembership, isPastAtBuild } from '../lib/content';
+import { formatDay, formatMonthYear, formatTimeRange, isPlaceholder, STATUS_LABEL } from '../lib/site';
 
-const home = (await getEntry('home', 'home'))!.data;
-const settings = (await getEntry('settings', 'site'))!.data;
-const events = await getCollection('events');
-const committee = (await getCollection('committee')).sort((a, b) => a.data.order - b.data.order);
-const documents = await getCollection('documents');
+const home = await getHome();
+const membership = await getMembership();
+const committee = await getCommittee();
+const albums = (await getAlbums()).slice(0, 3);
+
+// Every event that could be "next" for a visitor at any time after this build.
+const candidates = (await getEvents()).filter((e) => canBeNext(e) && !isPastAtBuild(e));
+const nextAtBuild = candidates[0];
+
+const firstOption = membership.options[0];
 ---
-<html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="robots" content="noindex" />
-    <title>{settings.site_name} — build scaffold</title>
-  </head>
-  <body style="font-family: system-ui, sans-serif; max-width: 60rem; margin: 2rem auto; padding: 0 1rem;">
-    <p><strong>Build scaffold</strong> — not the finished site.</p>
-    {home.hero_image && <Image src={home.hero_image} alt={home.hero_alt ?? ''} widths={[640, 1280]} sizes="100vw" loading="eager" fetchpriority="high" style="width:100%;height:auto" />}
-    <h1>{home.hero_heading}</h1>
-    <p>{home.hero_intro}</p>
-    <h2>Events</h2>
-    <ul>{events.map((e) => <li>{e.data.title} — {e.data.start} ({e.data.status})</li>)}</ul>
-    <h2>Committee ({settings.committee_term})</h2>
-    <ul>{committee.map((c) => <li>{c.data.name}, {c.data.role}</li>)}</ul>
-    <h2>Documents</h2>
-    <ul>{documents.map((d) => <li><a href={d.data.file}>{d.data.title}</a></li>)}</ul>
-  </body>
-</html>
+<Base
+  title="Home"
+  description="The Abu Dhabi Scottish Society brings together Scots in Abu Dhabi, their families and anyone who loves Scotland — Burns Supper, ceilidhs, the St Andrew's Ball and more."
+  image={home.hero_image}
+  imageAlt={home.hero_alt}
+>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-media">
+      {home.hero_image ? (
+        <Image
+          src={home.hero_image}
+          alt={home.hero_alt ?? ''}
+          widths={[640, 960, 1280, 1920]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      ) : <div class="hero-fallback" aria-hidden="true"></div>}
+    </div>
+    <div class="hero-panel wrap">
+      <div class="hero-copy">
+        <h1 id="hero-title">{home.hero_heading}</h1>
+        <p><Ph text={home.hero_intro} /></p>
+        <div class="btn-row">
+          <a class="btn btn--light" href="/events/">Upcoming Events</a>
+          <a class="btn btn--outline-light" href="/join/">Join the Society</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="next wrap" aria-labelledby="next-title">
+    <div class="next-card">
+      <h2 id="next-title" class="next-label">Next event</h2>
+      <ul class="plain" id="next-event" data-event-list="next">
+        {candidates.map((e, i) => (
+          <li data-event data-end={e.end.toISOString()} data-status={e.data.status} hidden={i !== 0} class="next-item">
+            <div class="next-main">
+              <p class="next-title"><a href={`/events/${e.id}/`}><Ph text={e.data.title} /></a></p>
+              <p class="next-when">
+                <strong>{formatDay(e.start)}</strong><br />
+                {formatTimeRange(e.start, e.end)} · <Ph text={e.data.venue} />
+              </p>
+              {e.data.status !== 'open' && <p><span class={`status status--${e.data.status}`}>{STATUS_LABEL[e.data.status]}</span></p>}
+            </div>
+            <div class="next-actions">
+              <BookingButton event={e} />
+              <a href={`/events/${e.id}/`}>Event details<span class="visually-hidden">: {e.data.title}</span></a>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div data-event-empty="next-event" hidden={!!nextAtBuild} class="next-empty">
+        <p>No events are currently scheduled — follow us or join to hear first.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/join/">Join the Society</a>
+          <a class="btn btn--outline" href="/events/archive/">See past events</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about wrap" aria-labelledby="about-title">
+    <div class="about-grid">
+      <div>
+        <h2 id="about-title">{home.about_heading}</h2>
+        <p class="lede"><Ph text={home.about_intro} /></p>
+      </div>
+      <ul class="objectives">
+        {home.objectives.map((o) => <li><Ph text={o} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--stone" aria-labelledby="join-title">
+    <div class="wrap join">
+      <div>
+        <h2 id="join-title">Why join?</h2>
+        <ul class="benefits">
+          {membership.benefits.map((b) => (
+            <li>
+              <strong><Ph text={b.title} /></strong>
+              {b.description && <> — <Ph text={b.description} /></>}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="join-aside">
+        {firstOption && (
+          <p class="price">
+            <span class="price-label"><Ph text={firstOption.name} /></span>
+            <span class="price-value"><Ph text={firstOption.price_aed} /></span>
+          </p>
+        )}
+        <p>Joining is arranged directly with the society through WhatsApp.</p>
+        <a class="btn btn--accent" href="/join/">Join the Society</a>
+      </div>
+    </div>
+  </section>
+
+  {albums.length > 0 && (
+    <section class="section wrap" aria-labelledby="photos-title">
+      <div class="section-head">
+        <h2 id="photos-title">Recent highlights</h2>
+        <a href="/photos/">All photos and videos</a>
+      </div>
+      <ul class="highlights">
+        {albums.map((a) => (
+          <li>
+            <a href={`/photos/${a.id}/`}>
+              <Image src={a.data.cover} alt="" widths={[400, 800]} sizes="(min-width: 60rem) 33vw, (min-width: 40rem) 50vw, 100vw" />
+              <span class="hl-title"><Ph text={a.data.title} /></span>
+              <span class="hl-date">{formatMonthYear(a.date)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="section section--stone" aria-labelledby="committee-title">
+    <div class="wrap committee">
+      <div>
+        <h2 id="committee-title">Meet the committee</h2>
+        <p><Ph text={home.committee_intro} /></p>
+        <a class="btn btn--primary" href="/committee/">Meet the committee</a>
+      </div>
+      {committee.length > 0 && (
+        <ul class="faces" aria-label="Committee members">
+          {committee.slice(0, 4).map((c) =>
+            c.data.photo ? (
+              <li><Image src={c.data.photo} alt={isPlaceholder(c.data.name) ? 'Committee photo placeholder' : c.data.name} width={160} height={200} fit="cover" /></li>
+            ) : null,
+          )}
+        </ul>
+      )}
+    </div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/event-visibility';
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    background: var(--navy);
+    color: var(--warm-white);
+    display: grid;
+  }
+  .hero-media,
+  .hero-panel {
+    grid-area: 1 / 1;
+  }
+  .hero-media img,
+  .hero-fallback {
+    width: 100%;
+    height: clamp(26rem, 72vh, 44rem);
+    object-fit: cover;
+  }
+  .hero-fallback {
+    background: var(--tartan);
+    background-size: 46px 46px;
+  }
+  .hero-panel {
+    align-self: end;
+    padding-bottom: calc(var(--space-6) + 2rem);
+  }
+  .hero-copy {
+    background: rgba(20, 33, 61, 0.92);
+    padding: var(--space-4);
+    max-width: 38rem;
+    border-radius: var(--radius);
+  }
+  .hero-copy h1 {
+    color: var(--warm-white);
+  }
+  .hero-copy p {
+    font-size: var(--step-1);
+    line-height: 1.45;
+    margin-bottom: var(--space-3);
+  }
+  .hero-copy .btn:focus-visible {
+    box-shadow: 0 0 0 3px var(--navy), 0 0 0 6px var(--warm-white);
+  }
+
+  /* Next event: the tartan sash overlapping the hero. */
+  .next {
+    position: relative;
+    margin-top: calc(-1 * var(--space-6));
+  }
+  .next-card {
+    background: var(--warm-white);
+    border-left: 14px solid transparent;
+    border-image: var(--tartan) 1;
+    box-shadow: 0 1px 0 var(--stone-deep), 0 18px 40px -24px rgba(20, 33, 61, 0.45);
+    padding: var(--space-3) var(--space-4);
+  }
+  .next-label {
+    font: 700 var(--step-0) / 1.2 var(--font-body);
+    color: var(--forest-deep);
+    margin-bottom: 0.25rem;
+  }
+  .plain {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .next-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    max-width: none;
+  }
+  .next-title {
+    font: 700 var(--step-3) / 1.15 var(--font-display);
+    margin-bottom: 0.4rem;
+  }
+  .next-title a {
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .next-title a:hover {
+    text-decoration: underline;
+  }
+  .next-when {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .next-when strong {
+    color: var(--ink);
+  }
+  .next-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .next-empty p {
+    font: 500 var(--step-2) / 1.25 var(--font-display);
+    color: var(--navy);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .objectives {
+    padding-left: 1.2rem;
+    margin: 0;
+  }
+  .objectives li {
+    margin-bottom: var(--space-2);
+    padding-left: 0.3rem;
+  }
+  .objectives li::marker {
+    color: var(--tartan-red);
+  }
+
+  .join {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .benefits {
+    padding-left: 1.2rem;
+  }
+  .benefits li {
+    margin-bottom: 0.6rem;
+  }
+  .join-aside {
+    background: var(--warm-white);
+    padding: var(--space-3);
+    border-radius: var(--radius);
+  }
+  .price {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--space-2);
+  }
+  .price-label {
+    color: var(--ink-soft);
+  }
+  .price-value {
+    font: 700 var(--step-3) / 1.1 var(--font-display);
+    color: var(--navy);
+  }
+
+  .section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+  .highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-3);
+  }
+  .highlights li {
+    max-width: none;
+  }
+  .highlights a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .highlights img {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    width: 100%;
+    border-radius: var(--radius);
+    margin-bottom: 0.4rem;
+  }
+  .hl-title {
+    font: 700 var(--step-1) / 1.2 var(--font-display);
+    color: var(--navy);
+  }
+  .highlights a:hover .hl-title {
+    text-decoration: underline;
+  }
+  .hl-date {
+    color: var(--ink-soft);
+  }
+
+  .committee {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-4);
+    align-items: center;
+  }
+  .faces {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.6rem;
+  }
+  .faces li {
+    flex: 1;
+    max-width: 9rem;
+  }
+  .faces img {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  @media (max-width: 40rem) {
+    .hero-panel {
+      padding-inline: 0;
+      padding-bottom: var(--space-5);
+    }
+    .hero-copy {
+      border-radius: 0;
+      padding: var(--space-3) var(--gutter);
+    }
+    .next-card {
+      padding: var(--space-3);
+      border-left-width: 10px;
+    }
+  }
+</style>
