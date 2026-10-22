@@ -16,9 +16,11 @@ interface Props {
   type?: 'website' | 'article';
   /** Lay the header over the first section (full-bleed hero). */
   overlayHeader?: boolean;
+  /** Show only the thistle in the header (homepage, where the hero carries the full logo). */
+  headerMarkOnly?: boolean;
 }
 
-const { title, description, image, imageAlt, noindex = false, type = 'website', overlayHeader = false } = Astro.props;
+const { title, description, image, imageAlt, noindex = false, type = 'website', overlayHeader = false, headerMarkOnly = false } = Astro.props;
 // Pre-launch builds are never indexed; set SITE_LAUNCHED=true in Netlify at launch.
 const launched = process.env.SITE_LAUNCHED === 'true';
 const settings = await getSettings();
@@ -56,7 +58,7 @@ const ogAlt = image ? imageAlt ?? '' : `${settings.site_name} logo: a thistle wi
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
-    <Header overlay={overlayHeader} />
+    <Header overlay={overlayHeader} markOnly={headerMarkOnly} />
     <main id="main" tabindex="-1">
       <slot />
     </main>

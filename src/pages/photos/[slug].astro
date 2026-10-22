@@ -28,7 +28,7 @@ const description = `Photos${videos.length ? ' and videos' : ''} from ${d.title}
     <p class="crumb"><a href="/photos/">Photos & Videos</a></p>
     <span class="accent-rule" aria-hidden="true"></span>
     <h1><Ph text={d.title} /></h1>
-    {d.placeholder && <p class="layout-note">Layout preview with placeholder images — not a Society album. It isn't listed on the site and is left out of the launch build.</p>}
+    {d.placeholder && <p class="layout-note" data-preview-only>Layout preview with placeholder images — not a Society album. It isn't listed on the site and is left out of the launch build.</p>}
     <p>
       {formatDay(album.date)}
       {event && <> · <a href={`/events/${event.id}/`}>Event details</a></>}

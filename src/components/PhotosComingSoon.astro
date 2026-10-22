@@ -18,7 +18,7 @@ const { previewHref } = Astro.props;
       <a class="btn btn--primary" href="/events/">Upcoming Events</a>
       <a class="btn btn--outline" href="/join/">Join the Society</a>
     </div>
-    {previewHref && <p class="preview-note">Pre-launch preview: <a href={previewHref}>see the album layout with placeholder photos</a>.</p>}
+    {previewHref && <p class="preview-note" data-preview-only>Pre-launch preview: <a href={previewHref}>see the album layout with placeholder photos</a>.</p>}
   </div>
 </div>
 

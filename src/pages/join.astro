@@ -79,7 +79,7 @@ const email = mailLink(m.email, 'Joining the Scottish Society Abu Dhabi');
       <h2 id="how">How to join</h2>
       <p><Ph text={m.how_to_join} /></p>
       {whatsapp ? (
-        <a class="btn btn--accent wa" href={whatsapp} rel="noopener">Join via WhatsApp</a>
+        <a class="btn btn--primary wa" href={whatsapp} rel="noopener">Join via WhatsApp</a>
       ) : (
         <span class="btn wa" aria-disabled="true">WhatsApp contact to be confirmed</span>
       )}
@@ -93,7 +93,7 @@ const email = mailLink(m.email, 'Joining the Scottish Society Abu Dhabi');
           <dd>{email ? <a href={email}>{m.email}</a> : <Ph text={m.email} />}</dd>
         </div>
       </dl>
-      <p class="note">Membership is arranged directly with the society through WhatsApp. Booking a place at an event is separate — see <a href="/events/">Upcoming Events</a>.</p>
+      <p class="note">Booking a place at an event is separate — see <a href="/events/">Upcoming Events</a>.</p>
     </aside>
   </div>
 </Base>
@@ -129,7 +129,7 @@ const email = mailLink(m.email, 'Joining the Scottish Society Abu Dhabi');
     font-weight: 700;
   }
   .opt-price {
-    font: 700 var(--step-1) / 1.2 var(--font-display);
+    font: 700 var(--step-1) / 1.2 var(--font-body);
     color: var(--navy);
     text-align: right;
   }

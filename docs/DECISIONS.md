@@ -76,6 +76,13 @@ As BRIEF §6 specifies, every list renders all the events it might need, with `d
 - **Photography:** decorative Scottish stock (nine Unsplash photos, credited in IMAGE-CREDITS.md) appears only in the homepage hero, the next-event band, compact inner-page headers, and as the illustrative fallback for events without an image, which carries an "Illustrative image" caption. Albums and committee portraits are always genuine Society photos, never stock. Without them the site shows a "coming soon" state and initials tiles.
 - **Bug fixed:** component `display` rules were overriding the `hidden` attribute, so ended or future events could still be visible on the wrong list. The global rule `[hidden] { display: none !important }` fixes this. It was re-verified with computed visibility, not just the attribute.
 
+## D14 — Review tidy-ups and stricter launch gate — 2026-10-22
+
+- **Header logo:** the homepage header shows the thistle alone at every width, because the hero already carries the stacked logo. Inner pages keep the horizontal logo (thistle alone on phones).
+- **Buttons:** the main action is navy on light backgrounds. On the navy photo overlays (hero, transparent header) it becomes cream with navy text, because a navy button would disappear there. Secondary actions are outlined. Green and red are no longer button colours; they stay as small accents (rules, bullets, panel edges, the current-page underline).
+- **Numerals:** dates in the event tiles and membership prices use Source Sans 3, because Cormorant's "1" reads as "I".
+- **Launch gate:** `npm run build:launch` now also removes the demonstration files and fails on bracketed text anywhere in a page, demonstration or test entries and files, preview-only notes (`data-preview-only`), deploy-preview links, noindex tags, Netlify addresses instead of the Society domain, no committee members, or no current constitution. Optional phone, postal address and social links are dropped from the launch build while they are unsupplied.
+
 ## CMS demonstration (BRIEF Section 0 / Section 16 step 2)
 
 **D7 — Proof run with the owner account (2026-10-22).** On the owner's instruction, the first end-to-end proof uses `jpfox88-debug`, the repo **owner/admin** account, because no ordinary editor account is available yet. This **does not satisfy** the brief's requirement for an ordinary (non-admin) editor account. **A repeat of the proof with a non-admin collaborator (write access only) is still required before launch.** It is tracked in MISSING-CONTENT.md as must resolve before launch.

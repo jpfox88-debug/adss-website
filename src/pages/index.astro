@@ -29,6 +29,7 @@ const firstOption = membership.options[0];
   image={home.hero_image}
   imageAlt={home.hero_alt}
   overlayHeader
+  headerMarkOnly
 >
   <section class="hero" aria-labelledby="hero-title">
     {home.hero_image && (
@@ -49,8 +50,8 @@ const firstOption = membership.options[0];
       <h1 id="hero-title">{home.hero_heading}</h1>
       <p class="hero-intro"><Ph text={home.hero_intro} /></p>
       <div class="hero-actions">
-        <a class="btn btn--light" href="/events/">Upcoming Events</a>
-        <a class="btn btn--accent" href="/join/">Join the Society</a>
+        <a class="btn btn--light" href="/join/">Join the Society</a>
+        <a class="btn btn--outline-light" href="/events/">Upcoming Events</a>
       </div>
     </div>
   </section>
@@ -122,7 +123,7 @@ const firstOption = membership.options[0];
             </p>
           )}
           <p class="join-note">Membership is arranged directly with the Society through WhatsApp.</p>
-          <a class="btn btn--accent" href="/join/">Join the Society</a>
+          <a class="btn btn--primary" href="/join/">Join the Society</a>
         </div>
       </div>
     </div>
@@ -411,7 +412,8 @@ const firstOption = membership.options[0];
     max-width: none;
   }
   .price-value {
-    font: 600 var(--step-4) / 1.1 var(--font-display);
+    /* Prices in Source Sans: Cormorant's "1" reads as "I". */
+    font: 700 var(--step-3) / 1.1 var(--font-body);
     color: var(--navy);
   }
   .price-label,

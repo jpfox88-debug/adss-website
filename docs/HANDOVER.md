@@ -5,6 +5,10 @@ A plain-English guide for committee members who update the website. You don't ne
 - **The website:** https://adss-website.netlify.app (moves to the society's own domain at launch)
 - **The editor:** add `/admin` to the end of the website address, for example https://adss-website.netlify.app/admin
 
+![The homepage: a Scottish landscape with the Society's logo, welcome and Join button](images/site-home.jpg)
+
+Screenshots of the website show the pre-launch preview, so anything still to be confirmed appears as highlighted **[SQUARE BRACKET]** text.
+
 ---
 
 ## 1. Getting access (once)
@@ -35,6 +39,14 @@ Nothing you type goes live until you publish it. Every change goes through three
 
 ## 3. Events
 
+On the website, the next event appears on the homepage on a cream card, and every upcoming event is listed on **Upcoming Events**.
+
+![The next-event card on the homepage](images/site-next-event.jpg)
+
+![The Upcoming Events page](images/site-events.jpg)
+
+In the editor:
+
 ![The events list](images/cms-events-list.jpg)
 
 Go to **Events**, then click **New** (or click an existing event to edit it).
@@ -51,6 +63,7 @@ Go to **Events**, then click **New** (or click an existing event to edit it).
 
 ## 4. Committee
 
+![The Committee page, with a tile for each member until their photo is added](images/site-committee.jpg)
 
 Go to **Committee**. Each person has their own entry.
 
@@ -65,6 +78,8 @@ Go to **Committee**. Each person has their own entry.
 
 Go to **Photos & videos**, then **New** to create an album for an event.
 
+![Photos & Videos before the first album is published](images/site-photos.jpg)
+
 - Choose a **Cover photo**, then add photos one at a time under **Photos**, each with a short **Description** for people who can't see it.
 - **Only upload actual photos from that Society event, with approval to publish them.** Never use stock or internet photos in albums.
 - Until the first real album is published, Photos & Videos shows a "Society event photos coming soon" message.
@@ -75,6 +90,8 @@ Go to **Photos & videos**, then **New** to create an album for an event.
 
 Go to **Site pages & settings → Membership & joining**.
 
+![The Join page: membership details on the left, How to join on the right](images/site-join.jpg)
+
 ![Editing the membership page](images/cms-membership.jpg)
 
 - Edit who can join, the options and prices in AED, the membership period, renewals, benefits and the questions and answers.
@@ -84,6 +101,8 @@ Go to **Site pages & settings → Membership & joining**.
 ## 7. Downloads (constitution, minutes, reports)
 
 Go to **Downloads**, then **New**.
+
+![The Downloads page](images/site-downloads.jpg)
 
 ![The Downloads section with the reminder about personal details](images/cms-downloads-note.jpg)
 

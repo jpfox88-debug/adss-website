@@ -5,7 +5,7 @@ Mirrors BRIEF.md Section 13B. The site is **not ready to launch** while any "mus
 ## Content (committee sign-off)
 
 - [ ] Membership WhatsApp number, membership email, prices and eligibility confirmed and entered. The **Join via WhatsApp** button is live and opens the right chat on a phone and on a desktop.
-- [ ] Every public page contains approved content and **no placeholder text remains**. `npm run build:launch` must pass: it fails while any `[PLACEHOLDER]` text is still on a public page.
+- [ ] Every public page contains approved content and **no placeholder text remains**. `npm run build:launch` must pass. It removes the demonstration files, then fails while any of these remain on the public site: placeholder text (including alt text and meta tags), a demonstration or test entry or file, a preview-only note or link, a noindex tag, a Netlify address instead of the Society's domain, no committee member, or no current constitution. Optional phone, postal address and social links that were never supplied are left out automatically.
 - [ ] Placeholder committee profiles, events and albums removed. With `EXCLUDE_PLACEHOLDERS=true` they are left out of the build anyway.
 - [ ] Documents and media approved for publication; minutes checked for personal details.
 - [ ] CMS proof repeated with a **non-admin editor account** (write-access collaborator), as recorded in DECISIONS.md.

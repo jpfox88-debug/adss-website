@@ -1,7 +1,7 @@
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { statSync } from 'node:fs';
 import path from 'node:path';
-import { dubaiDate, dubaiDay, formatBytes, isInactive } from './site';
+import { dubaiDate, dubaiDay, formatBytes, isInactive, isPlaceholder } from './site';
 
 // For the launch build set EXCLUDE_PLACEHOLDERS=true in Netlify so that entries
 // marked `placeholder: true` never reach the public site (BRIEF Section 13B).
@@ -9,7 +9,16 @@ const excludePlaceholders = process.env.EXCLUDE_PLACEHOLDERS === 'true';
 const keep = (e: { data: { placeholder?: boolean } }) => !(excludePlaceholders && e.data.placeholder);
 
 export async function getSettings() {
-  return (await getEntry('settings', 'site'))!.data;
+  const s = (await getEntry('settings', 'site'))!.data;
+  if (!excludePlaceholders) return s;
+  // Optional contact details are left out of the launch build until they are supplied.
+  // Required ones (email, WhatsApp, committee term) stay, so the launch gate reports them.
+  return {
+    ...s,
+    phone: isPlaceholder(s.phone) ? undefined : s.phone,
+    address: isPlaceholder(s.address) ? undefined : s.address,
+    socials: s.socials.filter((so) => !isPlaceholder(so.url)),
+  };
 }
 
 export async function getHome() {

@@ -16,16 +16,18 @@ const links = [
 interface Props {
   /** Transparent header laid over a photographic hero or page header (reversed logo). */
   overlay?: boolean;
+  /** Thistle only at every width (the homepage hero already shows the full logo). */
+  markOnly?: boolean;
 }
-const { overlay = false } = Astro.props;
+const { overlay = false, markOnly = false } = Astro.props;
 
 const path = Astro.url.pathname.replace(/\/?$/, '/');
 const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
-<header class:list={['site-header', overlay ? 'overlay' : 'solid']}>
+<header class:list={['site-header', overlay ? 'overlay' : 'solid', { 'mark-only': markOnly }]}>
   <div class="bar wrap">
     <a class="brand" href="/">
-      <Image class="logo-full" src={overlay ? logoHorizontalReversed : logoHorizontal} alt="Scottish Society Abu Dhabi — home" height={56} densities={[1, 2]} loading="eager" />
+      {!markOnly && <Image class="logo-full" src={overlay ? logoHorizontalReversed : logoHorizontal} alt="Scottish Society Abu Dhabi — home" height={56} densities={[1, 2]} loading="eager" />}
       <Image class="logo-mark" src={overlay ? thistleReversed : thistle} alt="Scottish Society Abu Dhabi — home" height={44} densities={[1, 2]} loading="eager" />
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
@@ -38,7 +40,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
           <li><a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a></li>
         ))}
         <li class="nav-join">
-          <a class="btn btn--accent" href="/join/" aria-current={isCurrent('/join/') ? 'page' : undefined}>Join the Society</a>
+          <a class:list={['btn', overlay ? 'btn--light' : 'btn--primary']} href="/join/" aria-current={isCurrent('/join/') ? 'page' : undefined}>Join the Society</a>
         </li>
       </ul>
     </nav>
@@ -144,6 +146,10 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
   }
   .menu-toggle {
     display: none;
+  }
+  .mark-only .logo-mark {
+    display: block;
+    height: 52px;
   }
 
   @media (max-width: 62rem) {

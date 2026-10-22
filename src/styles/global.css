@@ -19,7 +19,7 @@
   --ink-soft: #4a5063;
   --on-navy: #f5f0e8;
   --on-navy-soft: #cfd5e2;
-  --green: #2e7d32; /* logo green: buttons, marks */
+  --green: #2e7d32; /* logo green: small marks and rules */
   --green-deep: #25692a; /* text links on cream */
   --red: #e8363a; /* logo red: decorative only (fails text contrast on cream) */
   --red-text: #c62d33; /* red when it must be read */
@@ -252,7 +252,8 @@ a.photo-card:hover .caption-title {
   text-underline-offset: 0.2em;
 }
 
-/* Buttons: one shape everywhere. */
+/* Buttons: one shape everywhere. Main actions are navy (cream on dark backgrounds);
+   secondary actions are cream or outlined. Green and red are never button colours. */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -273,13 +274,6 @@ a.photo-card:hover .caption-title {
 }
 .btn--primary:hover {
   background: var(--navy-deep);
-}
-.btn--accent {
-  background: var(--green);
-  color: #fff;
-}
-.btn--accent:hover {
-  background: var(--green-deep);
 }
 .btn--light {
   background: var(--cream);
