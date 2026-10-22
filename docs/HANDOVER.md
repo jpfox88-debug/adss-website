@@ -1,4 +1,4 @@
-# Looking after the ADSS website
+# Looking after the Society's website
 
 A plain-English guide for committee members who update the website. You don't need to know any code.
 

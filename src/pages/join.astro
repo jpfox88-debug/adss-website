@@ -7,11 +7,11 @@ import { mailLink, waLink } from '../lib/site';
 const m = await getMembership();
 // Disabled, clearly labelled button until a real number is set (BRIEF §9).
 const whatsapp = waLink(m.whatsapp_number, m.whatsapp_message);
-const email = mailLink(m.email, 'Joining the Abu Dhabi Scottish Society');
+const email = mailLink(m.email, 'Joining the Scottish Society Abu Dhabi');
 ---
 <Base
   title="Join the Society"
-  description="How to join the Abu Dhabi Scottish Society: who can join, membership options and prices in AED, benefits, and joining through WhatsApp."
+  description="How to join the Scottish Society Abu Dhabi: who can join, membership options and prices in AED, benefits, and joining through WhatsApp."
 >
   <div class="wrap page-head">
     <h1>Join the Society</h1>

@@ -15,8 +15,8 @@ const card = await sharp(Buffer.from(tartan(1200, 630))).png().toBuffer();
 const logoSized = await sharp(logo).resize({ height: 300 }).toBuffer();
 const meta = await sharp(logoSized).metadata();
 const text = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="560" height="300">
-<text x="0" y="120" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#14213d">Abu Dhabi</text>
-<text x="0" y="190" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#14213d">Scottish Society</text></svg>`);
+<text x="0" y="120" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#14213d">Scottish Society</text>
+<text x="0" y="190" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#14213d">Abu Dhabi</text></svg>`);
 await sharp(card)
   .composite([
     { input: logoSized, left: 140, top: 165 },

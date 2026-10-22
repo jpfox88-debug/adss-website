@@ -1,4 +1,4 @@
-# ADSS website — CMS configuration (Sveltia CMS).
+# Scottish Society Abu Dhabi website — CMS configuration (Sveltia CMS).
 # Field names must match the schemas in src/content.config.ts.
 
 backend:

@@ -1,4 +1,4 @@
-# Abu Dhabi Scottish Society website
+# Scottish Society Abu Dhabi website
 
 Astro (static) site, hosted on Netlify, edited through Sveltia CMS at `/admin`.
 
