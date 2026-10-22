@@ -44,4 +44,6 @@ An older Netlify site, `lucent-strudel-b8c6cf` (created 2026-03-31), was also co
 
 ## CMS demonstration (BRIEF Section 0 / Section 16 step 2)
 
-_Not yet run. The result will be recorded here._
+**D7 — Proof run with the owner account (2026-10-22).** On the owner's instruction, the first end-to-end proof uses `jpfox88-debug`, the repo **owner/admin** account, because no ordinary editor account is available yet. This **does not satisfy** the brief's requirement for an ordinary (non-admin) editor account. **A repeat of the proof with a non-admin collaborator (write access only) is still required before launch.** It is tracked in MISSING-CONTENT.md as must resolve before launch.
+
+_Result: pending; recorded below once the run completes._
