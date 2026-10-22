@@ -22,68 +22,67 @@ const firstOption = membership.options[0];
   description="The Abu Dhabi Scottish Society brings together Scots in Abu Dhabi, their families and anyone who loves Scotland — Burns Supper, ceilidhs, the St Andrew's Ball and more."
   image={home.hero_image}
   imageAlt={home.hero_alt}
+  overlayHeader
 >
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-media">
-      {home.hero_image ? (
-        <Image
-          src={home.hero_image}
-          alt={home.hero_alt ?? ''}
-          widths={[640, 960, 1280, 1920]}
-          sizes="100vw"
-          loading="eager"
-          fetchpriority="high"
-        />
-      ) : <div class="hero-fallback" aria-hidden="true"></div>}
-    </div>
-    <div class="hero-panel wrap">
-      <div class="hero-copy">
-        <h1 id="hero-title">{home.hero_heading}</h1>
-        <p><Ph text={home.hero_intro} /></p>
-        <div class="btn-row">
-          <a class="btn btn--light" href="/events/">Upcoming Events</a>
-          <a class="btn btn--outline-light" href="/join/">Join the Society</a>
-        </div>
+    {home.hero_image && (
+      <Image
+        class="hero-img"
+        src={home.hero_image}
+        alt={home.hero_alt ?? ''}
+        widths={[640, 960, 1280, 1920, 2400]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    )}
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-copy">
+      <h1 id="hero-title">{home.hero_heading}</h1>
+      <p class="hero-intro"><Ph text={home.hero_intro} /></p>
+      <div class="hero-actions">
+        <a class="btn btn--light" href="/events/">Upcoming Events</a>
+        <a class="text-link" href="/join/">Join the Society</a>
       </div>
     </div>
   </section>
 
-  <section class="next wrap" aria-labelledby="next-title">
-    <div class="next-card">
-      <h2 id="next-title" class="next-label">Next event</h2>
-      <ul class="plain" id="next-event" data-event-list="next">
-        {candidates.map((e, i) => (
-          <li data-event data-end={e.end.toISOString()} data-status={e.data.status} hidden={i !== 0} class="next-item">
-            <div class="next-main">
-              <p class="next-title"><a href={`/events/${e.id}/`}><Ph text={e.data.title} /></a></p>
-              <p class="next-when">
-                <strong>{formatDay(e.start)}</strong><br />
-                {formatTimeRange(e.start, e.end)} · <Ph text={e.data.venue} />
-              </p>
+  <div class="sash" aria-hidden="true"></div>
+
+  <section class="invite-section" aria-labelledby="next-title">
+    <div class="wrap">
+      <div class="invite">
+        <h2 id="next-title" class="invite-kicker">Next event</h2>
+        <ul class="plain" id="next-event" data-event-list="next">
+          {candidates.map((e, i) => (
+            <li data-event data-end={e.end.toISOString()} data-status={e.data.status} hidden={i !== 0}>
+              <p class="invite-title"><a href={`/events/${e.id}/`}><Ph text={e.data.title} /></a></p>
+              <p class="invite-date">{formatDay(e.start)}</p>
+              <p class="invite-meta">{formatTimeRange(e.start, e.end)}<br /><Ph text={e.data.venue} /></p>
               {e.data.status !== 'open' && <p><span class={`status status--${e.data.status}`}>{STATUS_LABEL[e.data.status]}</span></p>}
-            </div>
-            <div class="next-actions">
-              <BookingButton event={e} />
-              <a href={`/events/${e.id}/`}>Event details<span class="visually-hidden">: {e.data.title}</span></a>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div data-event-empty="next-event" hidden={!!nextAtBuild} class="next-empty">
-        <p>No events are currently scheduled — follow us or join to hear first.</p>
-        <div class="btn-row">
-          <a class="btn btn--primary" href="/join/">Join the Society</a>
-          <a class="btn btn--outline" href="/events/archive/">See past events</a>
+              <div class="invite-actions">
+                <BookingButton event={e} />
+                <a href={`/events/${e.id}/`}>Event details<span class="visually-hidden">: {e.data.title}</span></a>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div data-event-empty="next-event" hidden={!!nextAtBuild} class="invite-empty">
+          <p class="invite-title">No events are currently scheduled — follow us or join to hear first.</p>
+          <div class="invite-actions">
+            <a class="btn btn--primary" href="/join/">Join the Society</a>
+            <a href="/events/archive/">See past events</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section about wrap" aria-labelledby="about-title">
-    <div class="about-grid">
+  <section class="about" aria-labelledby="about-title">
+    <div class="wrap about-grid">
       <div>
         <h2 id="about-title">{home.about_heading}</h2>
-        <p class="lede"><Ph text={home.about_intro} /></p>
+        <p class="about-lead"><Ph text={home.about_intro} /></p>
       </div>
       <ul class="objectives">
         {home.objectives.map((o) => <li><Ph text={o} /></li>)}
@@ -91,15 +90,15 @@ const firstOption = membership.options[0];
     </div>
   </section>
 
-  <section class="section section--stone" aria-labelledby="join-title">
-    <div class="wrap join">
+  <section class="join" aria-labelledby="join-title">
+    <div class="wrap join-grid">
       <div>
         <h2 id="join-title">Why join?</h2>
         <ul class="benefits">
           {membership.benefits.map((b) => (
             <li>
               <strong><Ph text={b.title} /></strong>
-              {b.description && <> — <Ph text={b.description} /></>}
+              {b.description && <span><Ph text={b.description} /></span>}
             </li>
           ))}
         </ul>
@@ -107,8 +106,8 @@ const firstOption = membership.options[0];
       <div class="join-aside">
         {firstOption && (
           <p class="price">
-            <span class="price-label"><Ph text={firstOption.name} /></span>
             <span class="price-value"><Ph text={firstOption.price_aed} /></span>
+            <span class="price-label"><Ph text={firstOption.name} /></span>
           </p>
         )}
         <p>Joining is arranged directly with the society through WhatsApp.</p>
@@ -118,39 +117,49 @@ const firstOption = membership.options[0];
   </section>
 
   {albums.length > 0 && (
-    <section class="section wrap" aria-labelledby="photos-title">
-      <div class="section-head">
-        <h2 id="photos-title">Recent highlights</h2>
-        <a href="/photos/">All photos and videos</a>
+    <section class="highlights" aria-labelledby="photos-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="photos-title">Recent highlights</h2>
+          <a href="/photos/">All photos and videos</a>
+        </div>
+        <ul class="mosaic">
+          {albums.map((a, i) => (
+            <li class:list={[{ feature: i === 0 }]}>
+              <a href={`/photos/${a.id}/`} class="photo-card">
+                <Image src={a.data.cover} alt="" widths={[480, 960, 1440]} sizes={i === 0 ? '(min-width: 60rem) 60vw, 100vw' : '(min-width: 60rem) 30vw, 100vw'} />
+                <span class="photo-caption">
+                  <span class="photo-title"><Ph text={a.data.title} /></span>
+                  <span class="photo-date">{formatMonthYear(a.date)}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul class="highlights">
-        {albums.map((a) => (
-          <li>
-            <a href={`/photos/${a.id}/`}>
-              <Image src={a.data.cover} alt="" widths={[400, 800]} sizes="(min-width: 60rem) 33vw, (min-width: 40rem) 50vw, 100vw" />
-              <span class="hl-title"><Ph text={a.data.title} /></span>
-              <span class="hl-date">{formatMonthYear(a.date)}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </section>
   )}
 
-  <section class="section section--stone" aria-labelledby="committee-title">
-    <div class="wrap committee">
-      <div>
+  <section class="committee" aria-labelledby="committee-title">
+    <div class="wrap">
+      <div class="section-head">
         <h2 id="committee-title">Meet the committee</h2>
-        <p><Ph text={home.committee_intro} /></p>
-        <a class="btn btn--primary" href="/committee/">Meet the committee</a>
+        <a href="/committee/">The full committee</a>
       </div>
+      <p class="committee-intro"><Ph text={home.committee_intro} /></p>
       {committee.length > 0 && (
-        <ul class="faces" aria-label="Committee members">
-          {committee.slice(0, 4).map((c) =>
-            c.data.photo ? (
-              <li><Image src={c.data.photo} alt={isPlaceholder(c.data.name) ? 'Committee photo placeholder' : c.data.name} width={160} height={200} fit="cover" /></li>
-            ) : null,
-          )}
+        <ul class="people">
+          {committee.slice(0, 4).map((c) => (
+            <li>
+              <a class="person-card" href="/committee/">
+                {c.data.photo && <Image src={c.data.photo} alt="" widths={[320, 640]} sizes="(min-width: 60rem) 22vw, 45vw" />}
+                <span class="person-caption">
+                  <span class="person-name"><Ph text={c.data.name} /></span>
+                  <span class="person-role"><Ph text={c.data.role} /></span>
+                </span>
+              </a>
+            </li>
+          ))}
         </ul>
       )}
     </div>
@@ -162,237 +171,328 @@ const firstOption = membership.options[0];
 </script>
 
 <style>
+  /* ── Hero: full-bleed photo, headline set directly on it ── */
   .hero {
     position: relative;
-    background: var(--navy);
+    min-height: min(92vh, 56rem);
+    display: flex;
+    align-items: flex-end;
+    background: var(--navy-deep);
     color: var(--warm-white);
-    display: grid;
+    overflow: hidden;
   }
-  .hero-media,
-  .hero-panel {
-    grid-area: 1 / 1;
-  }
-  .hero-media img,
-  .hero-fallback {
+  .hero-img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: clamp(26rem, 72vh, 44rem);
+    height: 100%;
     object-fit: cover;
   }
-  .hero-fallback {
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10, 17, 36, 0) 35%, rgba(10, 17, 36, 0.85) 100%),
+      linear-gradient(90deg, rgba(10, 17, 36, 0.55) 0%, rgba(10, 17, 36, 0) 60%);
+  }
+  .hero-copy {
+    position: relative;
+    padding-block: 10rem var(--space-6);
+  }
+  .hero h1 {
+    color: var(--warm-white);
+    font-size: var(--step-5);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    max-width: 16ch;
+    margin-bottom: var(--space-3);
+  }
+  .hero-intro {
+    font-size: var(--step-1);
+    line-height: 1.5;
+    max-width: 34rem;
+    color: #e9e2d2;
+    margin-bottom: var(--space-4);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+  }
+  .text-link {
+    color: var(--warm-white);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--brass);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+  .hero :focus-visible {
+    box-shadow: 0 0 0 3px var(--navy-deep), 0 0 0 6px var(--warm-white);
+  }
+
+  /* ── The one bold tartan band ── */
+  .sash {
+    height: 56px;
     background: var(--tartan);
     background-size: 46px 46px;
   }
-  .hero-panel {
-    align-self: end;
-    padding-bottom: calc(var(--space-6) + 2rem);
-  }
-  .hero-copy {
-    background: rgba(20, 33, 61, 0.92);
-    padding: var(--space-4);
-    max-width: 38rem;
-    border-radius: var(--radius);
-  }
-  .hero-copy h1 {
-    color: var(--warm-white);
-  }
-  .hero-copy p {
-    font-size: var(--step-1);
-    line-height: 1.45;
-    margin-bottom: var(--space-3);
-  }
-  .hero-copy .btn:focus-visible {
-    box-shadow: 0 0 0 3px var(--navy), 0 0 0 6px var(--warm-white);
-  }
 
-  /* Next event: the tartan sash overlapping the hero. */
-  .next {
-    position: relative;
-    margin-top: calc(-1 * var(--space-6));
+  /* ── Invitation card ── */
+  .invite-section {
+    background: var(--navy);
+    padding-block: var(--space-6);
   }
-  .next-card {
+  .invite {
+    max-width: 40rem;
+    margin-inline: auto;
     background: var(--warm-white);
-    border-left: 14px solid transparent;
-    border-image: var(--tartan) 1;
-    box-shadow: 0 1px 0 var(--stone-deep), 0 18px 40px -24px rgba(20, 33, 61, 0.45);
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-5) var(--space-4);
+    text-align: center;
+    outline: 1px solid var(--brass);
+    outline-offset: -14px;
+    box-shadow: inset 0 0 0 18px var(--warm-white), inset 0 0 0 19px var(--brass);
   }
-  .next-label {
-    font: 700 var(--step-0) / 1.2 var(--font-body);
-    color: var(--forest-deep);
-    margin-bottom: 0.25rem;
+  .invite-kicker {
+    font: italic 600 var(--step-1) / 1.2 var(--font-display);
+    color: var(--brass-deep);
+    margin-bottom: var(--space-2);
   }
   .plain {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .invite li,
+  .invite p {
+    max-width: none;
+  }
+  .invite-title {
+    font: 600 var(--step-3) / 1.05 var(--font-display);
+    color: var(--navy);
+    margin-bottom: var(--space-2);
+    text-wrap: balance;
+  }
+  .invite-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .invite-date {
+    font: 600 var(--step-1) / 1.3 var(--font-display);
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+  .invite-meta {
+    color: var(--ink-soft);
+    margin-bottom: var(--space-3);
+  }
+  .invite-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  /* ── About ── */
+  .about {
+    padding-block: var(--space-6);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: var(--space-5);
+  }
+  .about h2 {
+    font-size: var(--step-4);
+  }
+  .about-lead {
+    font: 500 var(--step-2) / 1.35 var(--font-display);
+    color: var(--ink);
+  }
+  .objectives {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-  .next-item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    max-width: none;
+  .objectives li {
+    position: relative;
+    padding: 0 0 var(--space-3) 1.75rem;
+    font-size: var(--step-1);
+    line-height: 1.5;
   }
-  .next-title {
-    font: 700 var(--step-3) / 1.15 var(--font-display);
-    margin-bottom: 0.4rem;
-  }
-  .next-title a {
-    color: var(--navy);
-    text-decoration: none;
-  }
-  .next-title a:hover {
-    text-decoration: underline;
-  }
-  .next-when {
-    color: var(--ink-soft);
-    margin: 0;
-  }
-  .next-when strong {
-    color: var(--ink);
-  }
-  .next-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.6rem;
-  }
-  .next-empty p {
-    font: 500 var(--step-2) / 1.25 var(--font-display);
-    color: var(--navy);
+  .objectives li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--brass);
+    transform: rotate(45deg);
   }
 
-  .about-grid {
+  /* ── Why join ── */
+  .join {
+    background: var(--navy);
+    color: var(--warm-white);
+    padding-block: var(--space-6);
+  }
+  .join h2 {
+    color: var(--warm-white);
+    font-size: var(--step-4);
+  }
+  .join-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: var(--space-4);
-    align-items: start;
-  }
-  .objectives {
-    padding-left: 1.2rem;
-    margin: 0;
-  }
-  .objectives li {
-    margin-bottom: var(--space-2);
-    padding-left: 0.3rem;
-  }
-  .objectives li::marker {
-    color: var(--tartan-red);
-  }
-
-  .join {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-    gap: var(--space-4);
-    align-items: start;
+    gap: var(--space-5);
+    align-items: end;
   }
   .benefits {
-    padding-left: 1.2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
   .benefits li {
-    margin-bottom: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--space-2);
+    font-size: var(--step-1);
   }
-  .join-aside {
-    background: var(--warm-white);
-    padding: var(--space-3);
-    border-radius: var(--radius);
+  .benefits span {
+    color: #d5d9e3;
+    font-size: var(--step-0);
   }
   .price {
     display: flex;
     flex-direction: column;
-    margin-bottom: var(--space-2);
-  }
-  .price-label {
-    color: var(--ink-soft);
+    margin-bottom: var(--space-3);
   }
   .price-value {
-    font: 700 var(--step-3) / 1.1 var(--font-display);
-    color: var(--navy);
+    font: 600 var(--step-4) / 1 var(--font-display);
+    color: var(--brass);
+  }
+  .price-label {
+    color: #d5d9e3;
+  }
+  .join :focus-visible {
+    box-shadow: 0 0 0 3px var(--navy), 0 0 0 6px var(--warm-white);
   }
 
+  /* ── Image-led cards ── */
+  .highlights,
+  .committee {
+    padding-block: var(--space-6);
+  }
+  .committee {
+    background: var(--stone);
+  }
   .section-head {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
     gap: var(--space-2);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
   }
-  .highlights {
-    list-style: none;
-    padding: 0;
+  .section-head h2 {
+    font-size: var(--step-4);
     margin: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
-    gap: var(--space-3);
   }
-  .highlights li {
+  .mosaic {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-auto-rows: minmax(14rem, 1fr);
+    gap: var(--space-2);
+  }
+  .mosaic li {
     max-width: none;
   }
-  .highlights a {
+  .mosaic .feature {
+    grid-row: span 2;
+  }
+  .mosaic li:only-child {
+    grid-column: 1 / -1;
+  }
+  .photo-card,
+  .person-card {
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    color: var(--warm-white);
+    text-decoration: none;
+    background: var(--navy);
+  }
+  .photo-card img,
+  .person-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .photo-card:hover img,
+  .person-card:hover img {
+    transform: scale(1.03);
+  }
+  .photo-caption,
+  .person-caption {
+    position: absolute;
+    inset: auto 0 0;
+    padding: var(--space-4) var(--space-3) var(--space-3);
+    background: linear-gradient(transparent, rgba(10, 17, 36, 0.9));
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    color: var(--ink);
-    text-decoration: none;
+    gap: 0.2rem;
   }
-  .highlights img {
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    width: 100%;
-    border-radius: var(--radius);
-    margin-bottom: 0.4rem;
+  .photo-title,
+  .person-name {
+    font: 600 var(--step-2) / 1.1 var(--font-display);
   }
-  .hl-title {
-    font: 700 var(--step-1) / 1.2 var(--font-display);
-    color: var(--navy);
+  .photo-date,
+  .person-role {
+    color: #e3d7b8;
   }
-  .highlights a:hover .hl-title {
-    text-decoration: underline;
+  .committee-intro {
+    font-size: var(--step-1);
+    margin-bottom: var(--space-4);
   }
-  .hl-date {
-    color: var(--ink-soft);
-  }
-
-  .committee {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-    gap: var(--space-4);
-    align-items: center;
-  }
-  .faces {
+  .people {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    gap: 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(46%, 15rem), 1fr));
+    gap: var(--space-2);
   }
-  .faces li {
-    flex: 1;
-    max-width: 9rem;
-  }
-  .faces img {
+  .people li {
+    max-width: none;
     aspect-ratio: 4 / 5;
-    object-fit: cover;
-    border-radius: var(--radius);
+  }
+  .person-name {
+    font-size: var(--step-1);
   }
 
-  @media (max-width: 40rem) {
-    .hero-panel {
-      padding-inline: 0;
-      padding-bottom: var(--space-5);
-    }
+  @media (max-width: 48rem) {
     .hero-copy {
-      border-radius: 0;
-      padding: var(--space-3) var(--gutter);
+      padding-block: 8rem var(--space-5);
     }
-    .next {
-      margin-top: calc(-1 * var(--space-4));
+    .sash {
+      height: 32px;
     }
-    .next-card {
-      padding: var(--space-3);
-      border-left-width: 10px;
+    .invite {
+      padding: var(--space-4) var(--space-3);
+    }
+    .mosaic {
+      grid-template-columns: 1fr;
+      grid-auto-rows: 16rem;
+    }
+    .mosaic .feature {
+      grid-row: span 1;
     }
   }
 </style>

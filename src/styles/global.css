@@ -1,22 +1,25 @@
-@import '@fontsource/alegreya/latin-500.css';
-@import '@fontsource/alegreya/latin-700.css';
-@import '@fontsource/alegreya-sans/latin-400.css';
-@import '@fontsource/alegreya-sans/latin-400-italic.css';
-@import '@fontsource/alegreya-sans/latin-500.css';
-@import '@fontsource/alegreya-sans/latin-700.css';
+@import '@fontsource/cormorant-garamond/latin-500.css';
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-600-italic.css';
+@import '@fontsource/source-sans-3/latin-400.css';
+@import '@fontsource/source-sans-3/latin-400-italic.css';
+@import '@fontsource/source-sans-3/latin-600.css';
+@import '@fontsource/source-sans-3/latin-700.css';
 
 :root {
   /* Palette (BRIEF §2): deep navy, warm white, restrained accents. */
-  --navy: #14213d;
-  --navy-deep: #0e1830;
-  --warm-white: #faf8f3;
+  --navy: #101a33;
+  --navy-deep: #0a1124;
+  --warm-white: #f7f2e7;
   --ink: #1d2333;
   --ink-soft: #4a5063;
   --forest: #2f5d4a;
   --forest-deep: #24493a;
   --tartan-red: #b3263a;
-  --stone: #e8e4da;
+  --stone: #ede5d3;
   --stone-deep: #d6d0c2;
+  --brass: #c9a35a;
+  --brass-deep: #8a6a2c;
   --placeholder-bg: #fff3c4;
   --placeholder-ink: #5c4500;
 
@@ -28,16 +31,17 @@
     repeating-linear-gradient(0deg, rgba(47, 93, 74, 0.75) 0 12px, transparent 12px 34px, rgba(47, 93, 74, 0.75) 34px 46px),
     var(--navy);
 
-  --font-display: 'Alegreya', Georgia, 'Times New Roman', serif;
-  --font-body: 'Alegreya Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
 
   /* Type scale: 1.25 ratio on an 18px base. */
   --step--1: 0.889rem;
   --step-0: 1.125rem;
   --step-1: 1.406rem;
   --step-2: 1.758rem;
-  --step-3: clamp(1.9rem, 1.6rem + 1.4vw, 2.6rem);
-  --step-4: clamp(2.3rem, 1.8rem + 2.6vw, 3.6rem);
+  --step-3: clamp(2.2rem, 1.8rem + 1.8vw, 3.2rem);
+  --step-4: clamp(2.8rem, 2rem + 3.6vw, 4.6rem);
+  --step-5: clamp(3.4rem, 2.2rem + 6vw, 7rem);
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -49,7 +53,7 @@
   --measure: 66ch;
   --page: 72rem;
   --gutter: clamp(1rem, 4vw, 2.5rem);
-  --radius: 4px;
+  --radius: 2px;
   --focus: 0 0 0 3px var(--warm-white), 0 0 0 6px var(--forest);
 }
 
@@ -86,9 +90,9 @@ h3,
 h4 {
   overflow-wrap: break-word;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--navy);
-  line-height: 1.15;
+  line-height: 1.05;
   margin: 0 0 var(--space-2);
   text-wrap: balance;
 }
@@ -189,7 +193,8 @@ img {
   padding: 0.65em 1.4em;
   border-radius: var(--radius);
   border: 2px solid transparent;
-  font: 700 var(--step-0) / 1.2 var(--font-body);
+  font: 600 var(--step-0) / 1.2 var(--font-body);
+  letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
   text-align: center;
@@ -202,11 +207,11 @@ img {
   background: var(--navy-deep);
 }
 .btn--accent {
-  background: var(--forest);
-  color: #fff;
+  background: var(--brass);
+  color: var(--navy-deep);
 }
 .btn--accent:hover {
-  background: var(--forest-deep);
+  background: #d8b673;
 }
 .btn--light {
   background: var(--warm-white);
