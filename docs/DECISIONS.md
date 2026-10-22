@@ -40,7 +40,7 @@ Every repeatable entry (committee, events, albums, documents) has a `placeholder
 
 A new site, **`adss-website`** (`https://adss-website.netlify.app`, site ID `5bafe88b-9964-4401-93c1-f52529aa8efb`), was created in team "jpfox88's team" (Free plan). It builds `main` through the Netlify GitHub App, and deploy previews are on for pull requests. It is not linked to any existing site.
 
-Note: an older Netlify site, `lucent-strudel-b8c6cf` (created 2026-03-31), is also connected to this repo and builds on every push. It's left untouched pending the owner's decision. See MISSING-CONTENT.md.
+An older Netlify site, `lucent-strudel-b8c6cf` (created 2026-03-31), was also connected to this repo. On 2026-10-22 the owner asked for it to be deleted. When `netlify sites:delete` ran, the site was already gone: the API returned "no project with that ID" and its URL returns 404. `adss-website` is now the only Netlify site in the team.
 
 ## CMS demonstration (BRIEF Section 0 / Section 16 step 2)
 

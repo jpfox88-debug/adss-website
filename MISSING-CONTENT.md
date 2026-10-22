@@ -11,7 +11,6 @@ The single list of every placeholder, missing asset and launch decision. Each it
 | Society-owned GitHub account to own the repo and the CMS OAuth App (the repo currently lives under `jpfox88-debug`) | must resolve before launch |
 | At least two committee members with Netlify and GitHub access | must resolve before launch |
 | Editors' GitHub usernames to invite as collaborators | must resolve before launch |
-| Old Netlify site `lucent-strudel-b8c6cf` is also connected to this repo. It doubles build-credit use and posts duplicate deploy-preview statuses on PRs; unlink it or delete it | must resolve before launch |
 
 ## Brand and media
 
