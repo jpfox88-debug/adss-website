@@ -1,0 +1,288 @@
+@import '@fontsource/alegreya/latin-500.css';
+@import '@fontsource/alegreya/latin-700.css';
+@import '@fontsource/alegreya-sans/latin-400.css';
+@import '@fontsource/alegreya-sans/latin-400-italic.css';
+@import '@fontsource/alegreya-sans/latin-500.css';
+@import '@fontsource/alegreya-sans/latin-700.css';
+
+:root {
+  /* Palette (BRIEF §2): deep navy, warm white, restrained accents. */
+  --navy: #14213d;
+  --navy-deep: #0e1830;
+  --warm-white: #faf8f3;
+  --ink: #1d2333;
+  --ink-soft: #4a5063;
+  --forest: #2f5d4a;
+  --forest-deep: #24493a;
+  --tartan-red: #b3263a;
+  --stone: #e8e4da;
+  --stone-deep: #d6d0c2;
+  --placeholder-bg: #fff3c4;
+  --placeholder-ink: #5c4500;
+
+  /* Generic navy/green sett with a thin red over-check — not a clan tartan. */
+  --tartan:
+    repeating-linear-gradient(90deg, transparent 0 22px, rgba(179, 38, 58, 0.85) 22px 24px, transparent 24px 46px),
+    repeating-linear-gradient(0deg, transparent 0 22px, rgba(179, 38, 58, 0.85) 22px 24px, transparent 24px 46px),
+    repeating-linear-gradient(90deg, rgba(47, 93, 74, 0.75) 0 12px, transparent 12px 34px, rgba(47, 93, 74, 0.75) 34px 46px),
+    repeating-linear-gradient(0deg, rgba(47, 93, 74, 0.75) 0 12px, transparent 12px 34px, rgba(47, 93, 74, 0.75) 34px 46px),
+    var(--navy);
+
+  --font-display: 'Alegreya', Georgia, 'Times New Roman', serif;
+  --font-body: 'Alegreya Sans', 'Segoe UI', system-ui, sans-serif;
+
+  /* Type scale: 1.25 ratio on an 18px base. */
+  --step--1: 0.889rem;
+  --step-0: 1.125rem;
+  --step-1: 1.406rem;
+  --step-2: 1.758rem;
+  --step-3: clamp(1.9rem, 1.6rem + 1.4vw, 2.6rem);
+  --step-4: clamp(2.3rem, 1.8rem + 2.6vw, 3.6rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+
+  --measure: 66ch;
+  --page: 72rem;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --radius: 4px;
+  --focus: 0 0 0 3px var(--warm-white), 0 0 0 6px var(--forest);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--warm-white);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.15;
+  margin: 0 0 var(--space-2);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-4);
+  letter-spacing: -0.01em;
+}
+h2 {
+  font-size: var(--step-3);
+}
+h3 {
+  font-size: var(--step-1);
+}
+
+p,
+ul,
+ol,
+dl {
+  margin: 0 0 var(--space-2);
+}
+
+p,
+li {
+  max-width: var(--measure);
+}
+
+a {
+  color: var(--forest-deep);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+  border-radius: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-5);
+}
+
+.section--stone {
+  background: var(--stone);
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.page-head {
+  padding-block: var(--space-5) var(--space-4);
+}
+.page-head p {
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 48px;
+  padding: 0.65em 1.4em;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  font: 700 var(--step-0) / 1.2 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+.btn--primary {
+  background: var(--navy);
+  color: var(--warm-white);
+}
+.btn--primary:hover {
+  background: var(--navy-deep);
+}
+.btn--accent {
+  background: var(--forest);
+  color: #fff;
+}
+.btn--accent:hover {
+  background: var(--forest-deep);
+}
+.btn--light {
+  background: var(--warm-white);
+  color: var(--navy);
+}
+.btn--light:hover {
+  background: #fff;
+}
+.btn--outline {
+  border-color: currentColor;
+  color: var(--navy);
+  background: transparent;
+}
+.btn--outline-light {
+  border-color: var(--warm-white);
+  color: var(--warm-white);
+  background: transparent;
+}
+.btn--outline-light:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.btn[aria-disabled='true'] {
+  background: var(--stone);
+  color: var(--ink-soft);
+  border: 2px dashed var(--stone-deep);
+  cursor: not-allowed;
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Unconfirmed content is always visibly marked, never presented as fact. */
+.ph {
+  background: var(--placeholder-bg);
+  color: var(--placeholder-ink);
+  padding: 0 0.25em;
+  border-radius: 2px;
+  outline: 1px dashed #c9a400;
+  font-style: normal;
+}
+
+.tartan-band {
+  height: 10px;
+  background: var(--tartan);
+  background-size: 46px 46px;
+}
+
+.status {
+  display: inline-block;
+  font-weight: 700;
+  font-size: var(--step--1);
+  padding: 0.15em 0.6em;
+  border-radius: var(--radius);
+  background: var(--stone);
+  color: var(--navy);
+}
+.status--sold-out {
+  background: #ece3cf;
+  color: #5b4510;
+}
+.status--postponed {
+  background: #e7e0ef;
+  color: #45306b;
+}
+.status--cancelled {
+  background: #f4dcdf;
+  color: #8a1c2c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

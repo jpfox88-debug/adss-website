@@ -1,0 +1,45 @@
+---
+// One clear booking or enquiry action per event (BRIEF §6). Never a live-looking button that goes nowhere.
+import type { EventEntry } from '../lib/content';
+import { formatDay, isPlaceholder, mailLink, safeUrl, waLink } from '../lib/site';
+
+interface Props {
+  event: EventEntry;
+  variant?: 'primary' | 'light';
+}
+const { event, variant = 'primary' } = Astro.props;
+const d = event.data;
+const day = formatDay(event.start);
+
+let href: string | null = null;
+let label = d.booking_label && !isPlaceholder(d.booking_label) ? d.booking_label : null;
+let external = false;
+
+if (d.status === 'open') {
+  if (d.booking_method === 'url') {
+    href = safeUrl(d.booking_url);
+    label ??= 'Book tickets';
+    external = true;
+  } else if (d.booking_method === 'whatsapp') {
+    href = waLink(d.booking_whatsapp, `Hi, I'd like to book for ${d.title} on ${day}.`);
+    label ??= 'Book via WhatsApp';
+    external = true;
+  } else if (d.booking_method === 'email') {
+    href = mailLink(d.booking_email, `Booking: ${d.title} (${day})`);
+    label ??= 'Book by email';
+  }
+}
+
+const unavailable =
+  d.status === 'sold-out' ? 'Sold out' :
+  d.status === 'cancelled' ? 'This event is cancelled' :
+  d.status === 'postponed' ? 'Postponed — new date to follow' :
+  'Booking details to be confirmed';
+---
+{href ? (
+  <a class={`btn ${variant === 'light' ? 'btn--light' : 'btn--primary'}`} href={href} rel={external ? 'noopener' : undefined}>
+    {label}<span class="visually-hidden">: {d.title}</span>
+  </a>
+) : (
+  <span class="btn" aria-disabled="true">{unavailable}</span>
+)}

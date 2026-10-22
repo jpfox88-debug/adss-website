@@ -1,0 +1,192 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/adss-logo.png';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/committee/', label: 'The Committee' },
+  { href: '/events/', label: 'Upcoming Events' },
+  { href: '/photos/', label: 'Photos & Videos' },
+  { href: '/downloads/', label: 'Downloads' },
+];
+
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class="site-header">
+  <div class="tartan-band" aria-hidden="true"></div>
+  <div class="bar wrap">
+    <a class="brand" href="/">
+      <Image src={logo} alt="" width={64} height={50} loading="eager" />
+      <span>Abu Dhabi <br class="brand-break" />Scottish Society</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu-icon" aria-hidden="true"></span>
+      Menu
+    </button>
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        {links.map((l) => (
+          <li><a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+        <li class="nav-join">
+          <a class="btn btn--accent" href="/join/" aria-current={isCurrent('/join/') ? 'page' : undefined}>Join the Society</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.getElementById('site-nav');
+  if (toggle && nav) {
+    document.documentElement.classList.add('has-js');
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      nav.classList.toggle('is-open', open);
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    background: var(--navy);
+    color: var(--warm-white);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-block: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--warm-white);
+    text-decoration: none;
+    font: 700 1.2rem/1.1 var(--font-display);
+  }
+  .brand img {
+    width: 64px;
+    height: auto;
+    background: var(--warm-white);
+    border-radius: 3px;
+    padding: 3px;
+  }
+  .nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+  }
+  .nav li {
+    max-width: none;
+  }
+  .nav a:not(.btn) {
+    color: var(--warm-white);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.6rem 0.1rem;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+  }
+  .nav a:not(.btn):hover,
+  .nav a[aria-current='page']:not(.btn) {
+    border-bottom-color: var(--warm-white);
+  }
+  .nav .btn {
+    min-height: 44px;
+    padding-block: 0.5em;
+  }
+  .nav .btn:focus-visible,
+  .nav a:focus-visible,
+  .brand:focus-visible,
+  .menu-toggle:focus-visible {
+    box-shadow: 0 0 0 3px var(--navy), 0 0 0 6px var(--warm-white);
+  }
+  .menu-toggle {
+    display: none;
+  }
+
+  @media (max-width: 60rem) {
+    .brand-break {
+      display: block;
+    }
+    :global(.has-js) .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-height: 44px;
+      padding: 0.4rem 0.9rem;
+      background: transparent;
+      color: var(--warm-white);
+      border: 2px solid rgba(250, 248, 243, 0.6);
+      border-radius: var(--radius);
+      font: 700 1rem var(--font-body);
+      cursor: pointer;
+    }
+    .menu-icon,
+    .menu-icon::before,
+    .menu-icon::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      position: relative;
+    }
+    .menu-icon::before,
+    .menu-icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+    .menu-icon::before {
+      top: -6px;
+    }
+    .menu-icon::after {
+      top: 6px;
+    }
+    .nav {
+      width: 100%;
+    }
+    :global(.has-js) .nav:not(.is-open) {
+      display: none;
+    }
+    .nav ul {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding-block: 0.5rem 1rem;
+    }
+    .nav a:not(.btn) {
+      display: block;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(250, 248, 243, 0.15);
+    }
+    .nav a[aria-current='page']:not(.btn) {
+      border-bottom-color: rgba(250, 248, 243, 0.15);
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+    }
+    .nav-join {
+      margin-top: 1rem;
+    }
+    .nav .btn {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,10 @@
+---
+// Renders text, highlighting any [PLACEHOLDER] segments so unconfirmed content is never mistaken for fact.
+interface Props {
+  text?: string | null;
+  as?: string;
+}
+const { text = '', as: Tag = 'span' } = Astro.props;
+const parts = (text ?? '').split(/(\[[^\]]+\])/g).filter(Boolean);
+---
+<Tag>{parts.map((p) => (/^\[[^\]]+\]$/.test(p) ? <mark class="ph" title="Placeholder — to be confirmed">{p}</mark> : p))}</Tag>

@@ -1,0 +1,109 @@
+---
+import { getSettings } from '../lib/content';
+import { mailLink, safeUrl, waLink, waNumber } from '../lib/site';
+import Ph from './Ph.astro';
+
+const s = await getSettings();
+const email = mailLink(s.contact_email);
+const whatsapp = waLink(s.general_whatsapp);
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="tartan-band" aria-hidden="true"></div>
+  <div class="wrap grid">
+    <section aria-labelledby="footer-contact">
+      <h2 id="footer-contact">Get in touch</h2>
+      <dl>
+        <dt>Email</dt>
+        <dd>{email ? <a href={email}>{s.contact_email}</a> : <Ph text={s.contact_email} />}</dd>
+        <dt>WhatsApp</dt>
+        <dd>
+          {whatsapp ? <a href={whatsapp} rel="noopener">Message us on WhatsApp ({s.general_whatsapp})</a> : <Ph text={s.general_whatsapp} />}
+        </dd>
+        {s.phone && (
+          <>
+            <dt>Phone</dt>
+            <dd>{waNumber(s.phone) ? <a href={`tel:+${waNumber(s.phone)}`}>{s.phone}</a> : <Ph text={s.phone} />}</dd>
+          </>
+        )}
+        {s.address && (
+          <>
+            <dt>Post</dt>
+            <dd><Ph text={s.address} /></dd>
+          </>
+        )}
+      </dl>
+    </section>
+    {s.socials.length > 0 && (
+      <section aria-labelledby="footer-social">
+        <h2 id="footer-social">Follow us</h2>
+        <ul class="plain">
+          {s.socials.map((so) => {
+            const url = safeUrl(so.url);
+            return <li>{url ? <a href={url} rel="noopener">{so.platform}</a> : <>{so.platform}: <Ph text={so.url} /></>}</li>;
+          })}
+        </ul>
+      </section>
+    )}
+    <section aria-labelledby="footer-more">
+      <h2 id="footer-more">The society</h2>
+      <ul class="plain">
+        <li><a href="/join/">Join the Society</a></li>
+        <li><a href="/events/">Upcoming Events</a></li>
+        <li><a href="/events/archive/">Past events</a></li>
+        <li><a href="/downloads/">Downloads</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+      </ul>
+    </section>
+  </div>
+  <p class="wrap small">© {year} {s.site_name}</p>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy);
+    color: var(--warm-white);
+    margin-top: auto;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-4);
+    padding-block: var(--space-5) var(--space-3);
+  }
+  h2 {
+    color: var(--warm-white);
+    font-size: var(--step-1);
+  }
+  a {
+    color: var(--warm-white);
+  }
+  a:focus-visible {
+    box-shadow: 0 0 0 3px var(--navy), 0 0 0 6px var(--warm-white);
+  }
+  dl {
+    margin: 0;
+  }
+  dt {
+    font-size: var(--step--1);
+    color: #c9cedb;
+  }
+  dd {
+    margin: 0 0 0.75rem;
+    overflow-wrap: anywhere;
+  }
+  .plain {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .plain li {
+    margin-bottom: 0.4rem;
+  }
+  .small {
+    font-size: var(--step--1);
+    color: #c9cedb;
+    padding-block: var(--space-2) var(--space-4);
+    margin: 0;
+  }
+</style>
