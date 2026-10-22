@@ -36,6 +36,12 @@ Event start and end are stored as `YYYY-MM-DDTHH:mm` **Abu Dhabi local time with
 
 Every repeatable entry (committee, events, albums, documents) has a `placeholder` boolean. It makes placeholder scaffolding machine-identifiable, so it can be excluded from the launch build (BRIEF Section 13B).
 
+## D6 — Netlify site — 2026-10-22
+
+A new site, **`adss-website`** (`https://adss-website.netlify.app`, site ID `5bafe88b-9964-4401-93c1-f52529aa8efb`), was created in team "jpfox88's team" (Free plan). It builds `main` through the Netlify GitHub App, and deploy previews are on for pull requests. It is not linked to any existing site.
+
+Note: an older Netlify site, `lucent-strudel-b8c6cf` (created 2026-03-31), is also connected to this repo and builds on every push. It's left untouched pending the owner's decision. See MISSING-CONTENT.md.
+
 ## CMS demonstration (BRIEF Section 0 / Section 16 step 2)
 
 _Not yet run. The result will be recorded here._
