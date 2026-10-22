@@ -18,7 +18,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 ### Committee (CMS: Committee, and Site pages & settings)
 
 - [ ] **Current committee**: the seven members and vacant Secretary post listed on the old site (February 2025) have been imported with their roles, role email addresses and six portraits. The committee has changed since — confirm who is current, remove or add people, and supply a short approved biography for each. *Replaces* `[BIOGRAPHY — short, approved biography to follow]` on each profile. Jane Taylor has no portrait.
-- [ ] **Committee term**, e.g. 2026–27. Shown on The Committee page; currently reads "as listed February 2025 — to be confirmed".
+- [ ] **Committee term**, e.g. 2026–27. Shown on The Committee page. *Replaces* `[COMMITTEE TERM — confirm, e.g. 2026–27]`.
 - [ ] **Committee introduction** for the homepage: one or two sentences. *Replaces* `[COMMITTEE INTRO — confirm wording]`.
 
 ### General contact (CMS: Site pages & settings → Contacts, social links & committee term)
