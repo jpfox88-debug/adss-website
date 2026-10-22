@@ -42,6 +42,10 @@ A new site, **`adss-website`** (`https://adss-website.netlify.app`, site ID `5ba
 
 An older Netlify site, `lucent-strudel-b8c6cf` (created 2026-03-31), was also connected to this repo. On 2026-10-22 the owner asked for it to be deleted. When `netlify sites:delete` ran, the site was already gone: the API returned "no project with that ID" and its URL returns 404. `adss-website` is now the only Netlify site in the team.
 
+## D8 — Netlify deploy notifications added by API — 2026-10-22
+
+Because the site was created through the Netlify API, it had **no deploy notifications**, so Netlify posted no commit status on PRs. Deploy previews were built, but GitHub and the CMS couldn't see them. The standard notifications the Netlify dashboard creates for Git-linked sites were added: `github_app_commit_status` and `github_app_checks` for `deploy_building`, `deploy_created` and `deploy_failed`. After a retry, both PRs showed `netlify/adss-website/deploy-preview: success`, and Sveltia's **View Preview** button opened the right preview.
+
 ## CMS demonstration (BRIEF Section 0 / Section 16 step 2)
 
 **D7 — Proof run with the owner account (2026-10-22).** On the owner's instruction, the first end-to-end proof uses `jpfox88-debug`, the repo **owner/admin** account, because no ordinary editor account is available yet. This **does not satisfy** the brief's requirement for an ordinary (non-admin) editor account. **A repeat of the proof with a non-admin collaborator (write access only) is still required before launch.** It is tracked in MISSING-CONTENT.md as must resolve before launch.
