@@ -13,6 +13,10 @@ The single list of every placeholder, missing asset and launch decision. Each it
 | Editors' GitHub usernames to invite as collaborators | must resolve before launch |
 | CMS proof (login → edit → preview → publish, photo upload, PDF upload) repeated with an **ordinary non-admin editor account** (write-only collaborator). The first proof used the owner account `jpfox88-debug`; see docs/DECISIONS.md D7 | must resolve before launch |
 
+| Netlify environment variables `SITE_LAUNCHED=true`, `EXCLUDE_PLACEHOLDERS=true`, `SITE_URL=<domain>` and build command `npm run build:launch` (see docs/LAUNCH-CHECKLIST.md) | must resolve before launch |
+| Update `site_url` / `display_url` in `public/admin/config.yml` to the production domain | must resolve before launch |
+| Netlify plan choice (Free pauses every site when its 300 credits run out; see docs/HANDOVER.md §10) | must resolve before launch |
+
 ## Brand and media
 
 | Item | Where | Status |
@@ -20,6 +24,7 @@ The single list of every placeholder, missing asset and launch decision. Each it
 | Higher-resolution logo needed (current file is 424 × 330 px PNG from the old site) | `src/assets/brand/adss-logo.png` | can follow later |
 | Approved homepage opening photo from a real society event | Homepage → Opening photo | must resolve before launch |
 | Approved event photos and albums (placeholder album seeded) | Photos & videos | must resolve before launch |
+| The old site has photo pages for St Andrew's Ball 2025, May 2025 Ceilidh, Burns Supper 2025, Nov 2024 at The Club, Six Nations 2025 (Italy) and pre-Christmas drinks 2024. They are candidate sources for approved albums; once albums exist, point their redirects at them (docs/REDIRECTS.md) | Photos & videos | can follow later |
 
 ## Site settings (`src/content/settings/site.yaml`)
 
