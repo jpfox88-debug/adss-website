@@ -34,6 +34,10 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 - [ ] **Homepage welcome and about wording**, drafted from the old site's objectives: committee approval or edits.
 
+### Photo albums (repository: `src/content/albums/`)
+
+- [ ] **St Andrew's Ball 2025 date.** The old website gives no date for this album; the entry uses 29 November 2025 as a placeholder and carries a `[DATE TO CONFIRM]` note in its description, which the launch build rejects. Confirm the actual date, set `date` in `src/content/albums/2025-st-andrews-ball.md` and remove the bracketed note. *Replaces* `[DATE TO CONFIRM …]`.
+
 ## B. Launch essentials — setup by the website owner
 
 - [ ] **Ordinary-editor CMS test.** Repeat login → edit → preview → publish, plus a photo upload and a PDF upload, with a committee editor's GitHub account that has write access but no owner or admin rights. The first test used the owner account (docs/DECISIONS.md D7). Needs the editor's GitHub username so they can be invited as a collaborator.
@@ -49,7 +53,11 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 - [ ] **Committee portraits**: a head-and-shoulders photo of each actual member. Until then each member shows an initials tile.
 - [ ] **Confirmed events**: name, date and times, venue and address, member and non-member prices in AED, dress code, eligibility or age limits, and how to book. Until then, the homepage and Upcoming Events show "No events are currently scheduled", and the demonstration event is dropped from the launch build.
 - [ ] **Event photos or artwork**: any event without its own image shows an illustrative Scottish landscape captioned "Illustrative image".
-- [ ] **Approved Society photo albums**: actual photos from Society events, with approval to publish. Until then, Photos & Videos and the homepage show "Society event photos coming soon". The old site's albums (St Andrew's Ball 2025, May 2025 Ceilidh, Burns Supper 2025, Nov 2024 at The Club, Six Nations 2025, pre-Christmas drinks 2024) are possible sources; when they are added, point their redirects at them (docs/REDIRECTS.md).
+- [ ] **Old-site redirects to the imported albums.** The old site's five albums (St Andrew's Ball 2025, May 2025 Ceilidh, Six Nations February 2025, Burns Supper 2025, St Andrew's Gathering November 2024) are now on the site under `/photos/`. Point each old photo-page redirect at its album rather than `/photos/` (docs/REDIRECTS.md). The pre-Christmas drinks 2024 album is gone from the old server; if someone still has the photos they can be added as a new album.
+- [ ] **Old-site videos** (seven, MP4 on the old server, not downloaded): re-host each on YouTube or Vimeo (unlisted is fine) and add the link under **Videos** in the matching album.
+  - Six Nations, February 2025: `https://adscottishsociety.com/SixNations25-Italy/Videos/SixNats-SnB.mp4`, `https://adscottishsociety.com/SixNations25-Italy/Videos/Slideshow.mp4`
+  - Burns Supper 2025: `https://adscottishsociety.com/Burns25Club/Videos/Burns%20Video%20Clip%202025-01-25.mp4`, `https://adscottishsociety.com/Burns25Club/Videos/SeanVideo.mp4`, `https://adscottishsociety.com/Burns25Club/Videos/Burns25Slideshow.mp4`
+  - St Andrew's Gathering, November 2024: `https://adscottishsociety.com/Nov24Club/Videos/Nov24VideoClip-01.mp4`, `https://adscottishsociety.com/Nov24Club/Videos/WhatsApp%20Video%202024-11-25.mp4`
 - [ ] **Approved, redacted committee and AGM minutes.**
 - [ ] **Partner names, logos and offers**, only if current and approved.
 - [ ] **Optional contact details**: general phone number, postal address, Facebook and Instagram links. Each is left out of the launch build automatically until it is supplied, so nothing needs to be done if the Society doesn't use them. *Replaces* `[GENERAL PHONE NUMBER — optional]`, `[POSTAL ADDRESS — optional]`, `[FACEBOOK URL]`, `[INSTAGRAM URL]`.

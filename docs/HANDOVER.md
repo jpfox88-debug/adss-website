@@ -82,9 +82,17 @@ Go to **Photos & videos**, then **New** to create an album for an event.
 
 - Choose a **Cover photo**, then add photos one at a time under **Photos**, each with a short **Description** for people who can't see it.
 - **Only upload actual photos from that Society event, with approval to publish them.** Never use stock or internet photos in albums.
-- Until the first real album is published, Photos & Videos shows a "Society event photos coming soon" message.
+- If no real album were published, Photos & Videos would show a "Society event photos coming soon" message; the imported albums below mean this no longer applies.
 - **Photo size:** aim for **2 MB or less per photo**. The editor shrinks very large photos before saving them, and the website makes smaller versions for phones automatically.
 - **Videos:** upload them to YouTube or Vimeo first (unlisted is fine), then paste the link under **Videos**. Videos never play automatically.
+
+### Albums imported from the old website
+
+The five 2024–2025 albums (St Andrew's Ball 2025, May Ceilidh 2025, Six Nations February 2025, Burns Supper 2025 and the St Andrew's Gathering, November 2024) were copied from the old website. Their photos are **not** uploaded through the CMS: they live in the repository under `public/albums/<album>/full/` (large) and `public/albums/<album>/thumb/` (small), already resized, and each album's entry in `src/content/albums/<album>.md` lists them in order with their sizes. Long albums are split into pages of 60 photos on the website.
+
+- These albums can't be edited in the CMS photo list. The title, date and description can.
+- **To remove a photo:** delete its two files (`full/NNN.jpg` and `thumb/NNN.jpg`) and the five-line block in the album's `.md` file that points at them (`src`, `thumb`, `width`, `height`, `alt`). Nothing else needs renumbering.
+- **To add a photo:** easiest is to ask the website owner, or create a new album in the CMS instead.
 
 ## 6. Membership and joining
 

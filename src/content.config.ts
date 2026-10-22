@@ -121,6 +121,15 @@ const events = defineCollection({
     }),
 });
 
+// Album photos come in two shapes (docs/DECISIONS.md D15):
+//  - pipeline photos: `{ image, alt, caption? }`, uploaded through the CMS to src/assets/uploads
+//    and resized by Astro at build time;
+//  - pre-sized photos: `{ src, thumb, width, height, alt, caption? }`, already resized and stored
+//    unchanged in public/albums/<slug>/ (full/ max 2000px, thumb/ max 640px). Used for the
+//    albums imported from the old site, which would otherwise put 600+ images through the
+//    pipeline on every build. These are managed in the repo, not the CMS.
+const staticAlbumPath = z.string().regex(/^\/albums\/[^\s]+\.(jpe?g|png|webp|avif)$/i, 'Use a path under /albums/');
+
 const albums = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/albums' }),
   schema: ({ image }) =>
@@ -128,10 +137,22 @@ const albums = defineCollection({
       title: z.string(),
       date: localDate,
       event: optionalText,
-      cover: image(),
+      cover: z.union([staticAlbumPath, image()]),
       cover_alt: z.string(),
       photos: z
-        .array(z.object({ image: image(), alt: z.string(), caption: optionalText }))
+        .array(
+          z.union([
+            z.object({
+              src: staticAlbumPath,
+              thumb: staticAlbumPath,
+              width: z.number().int().positive(),
+              height: z.number().int().positive(),
+              alt: z.string(),
+              caption: optionalText,
+            }),
+            z.object({ image: image(), alt: z.string(), caption: optionalText }),
+          ]),
+        )
         .default([]),
       videos: z.array(z.object({ url: z.string(), title: z.string() })).default([]),
       placeholder,
