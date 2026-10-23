@@ -2,8 +2,9 @@
 
 A plain-English guide for committee members who update the website. You don't need to know any code.
 
-- **The website:** https://adss-website.netlify.app (moves to the society's own domain at launch)
-- **The editor:** add `/admin` to the end of the website address, for example https://adss-website.netlify.app/admin
+- **The website:** https://adss-website.pages.dev (moves to the society's own domain at launch)
+- **The editor:** add `/admin` to the end of the website address, for example https://adss-website.pages.dev/admin
+- **Hosting:** Cloudflare Pages (free). Editors need only a free GitHub account; no Cloudflare or other accounts.
 
 ![The homepage: a Scottish landscape with the Society's logo, welcome and Join button](images/site-home.jpg)
 
@@ -16,7 +17,7 @@ Screenshots of the website show the pre-launch preview, so anything still to be 
 1. Create a free GitHub account at https://github.com/signup if you don't have one.
 2. Send your GitHub username to the website owner. They will invite you to the `adss-website` project.
 3. Accept the invitation from the email GitHub sends you, or from https://github.com/notifications.
-4. Go to the editor (`/admin`), click **Sign in with GitHub**, and approve the request the first time.
+4. Go to the editor (`/admin`), click **Sign in with GitHub**. The first time, GitHub asks you to **Authorize** the Society's sign-in app; click **Authorize**. After that, signing in is one click.
 
 > **The website's project on GitHub is public.** Anyone can read it, including **drafts that haven't been published yet** and the full history of every change. Never put anything in a draft that you wouldn't publish on the website: no personal phone numbers or home addresses, no private email addresses, no unapproved photos, no draft minutes, no passwords or discount codes. If something like that is saved by mistake, tell the website owner straight away, because deleting the draft doesn't remove it from the history.
 
@@ -32,12 +33,12 @@ Nothing you type goes live until you publish it. Every change goes through three
 
 ![The editorial workflow board with three drafts waiting, and the In Review and Ready columns](images/cms-workflow.jpg)
 
-- Click **Save** to create or update a draft.
-- About two minutes after saving, **View Preview** at the top of the page opens a private preview of the whole website with your change in it. Check it there before publishing.
-- Use the **Status** menu to move the change to *In review* or *Ready*, then click **Publish**. The live website updates about two minutes later.
+- Click **Save** to create or update a draft. Behind the scenes each draft is kept on its own branch of the GitHub project, and Cloudflare builds a **preview** of the whole website with that draft in it.
+- About one to two minutes after saving, **View Preview** at the top of the page opens that preview. Check it there before publishing. Preview addresses end in `.adss-website.pages.dev` and are hidden from search engines.
+- Use the **Status** menu to move the change to *In review* or *Ready*, then click **Publish**. Publishing adds the change to the main version of the project, which tells Cloudflare to rebuild the live website; it updates about one to two minutes later.
 - The **Workflow** button (the third icon, top left) shows every unpublished change.
 
-**Please publish in batches.** Each publish rebuilds the website, and the hosting allowance covers a limited number of rebuilds each month (see section 10). Save several changes as drafts and publish them together.
+**Builds happen one at a time.** Every save and every publish starts a build, and the free hosting builds one at a time (see section 10). If several people save at once, the later previews simply wait their turn.
 
 ## 3. Events
 
@@ -131,48 +132,28 @@ Go to **Downloads**, then **New**.
 
 Anything in **[SQUARE BRACKETS]** is a placeholder and appears highlighted in yellow on the website. Replace each one with confirmed information. [MISSING-CONTENT.md](../MISSING-CONTENT.md) lists all of them.
 
-## 10. Hosting costs and when to upgrade
+## 10. Hosting costs and limits
 
-Checked against Netlify's documentation on 22 October 2026: [How credits work](https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/how-credits-work/), last updated 12 August 2026.
+The website is hosted on **Cloudflare Pages, free plan**, and editors sign in through a small Cloudflare **Worker** (also free). Checked against Cloudflare's documentation on 23 October 2026: [Pages limits](https://developers.cloudflare.com/pages/platform/limits/) and [Workers limits](https://developers.cloudflare.com/workers/platform/limits/).
 
-**How Netlify charges:** each month comes with a number of credits.
-
-| Item | Credits |
-|---|---|
-| Each **publish** from the editor (a production deploy) | 15 |
-| Previews (drafts) | free |
-| Visitor bandwidth | 20 per GB |
-| Visitor page requests | 2 per 10,000 |
-
-| Plan | Monthly credits | Price | When the credits run out |
-|---|---|---|---|
-| Free | 300 | $0 | **Every site on the account is paused** until the next month |
-| Personal | 1,000 | $9/month | Extra credits can be bought |
-| Pro | 3,000+ | $20/month | Extra credits can be bought |
-
-**Estimate for this site.** A typical first visit downloads roughly 0.3–1 MB, depending on photos; return visits are smaller.
-
-| | Quiet month | Busy month (e.g. Burns Supper, St Andrew's Ball) |
+| Free-plan limit | Allowance | What it means here |
 |---|---|---|
-| Publishes | 6 → 90 credits | 15 → 225 credits |
-| Visitors | ~1,500 page views, ~1 GB → ~25 credits | ~5,000 page views, ~5 GB → ~115 credits |
-| **Total** | **~115 of 300** | **~340: over the Free limit, so the site would pause** |
+| Builds | **500 a month** | Every draft save and every publish is one build. A busy month (say 40 saves and 15 publishes) uses about 55. |
+| Builds at once | **1** | Builds queue rather than fail. |
+| Build time | **20 minutes** per build | A full build takes about 30 seconds of build time (about one minute end to end). |
+| Files | **20,000** per deployment | About 1,400 today, including every photo and resized image. Each new album photo adds two files (full size and thumbnail); each uploaded image adds a few resized copies. |
+| File size | **25 MiB** per file | The largest file today is about 0.5 MB. Keep photos under 2 MB, as the editor already advises. |
+| Visitor traffic | No bandwidth charge | Unlimited requests for the site's pages and photos. |
+| Sign-in Worker | **100,000 requests a day**, 10 ms of CPU each | Each sign-in uses a handful of requests, so this will never be reached. |
 
-**Recommendation:** start on the Free plan, publish in batches, and check usage at Netlify → Team → Usage & billing. Upgrade to **Personal ($9/month)** if any of these happen:
+**There is no monthly bill and nothing pauses the site.** If the 500 builds ran out in a month, the website would stay online and new changes would wait until the next month; that would take hundreds of saves.
 
-- the committee expects **more than about 12 publishes in a month**;
-- usage passes **200 credits** in any month;
-- the account hosts other sites, which share the same credits;
-- big event weeks bring heavy traffic.
-
-This has already happened once: during the build, in October 2026, the account used up its 300 credits and Netlify stopped publishing until the month reset. Published changes were saved safely but did not appear on the website until then.
-
-GitHub and Cloudflare DNS are free. The domain renewal is the society's only other cost.
+GitHub and Cloudflare are free. The domain renewal is the society's only cost.
 
 ## 11. If something goes wrong
 
 - **A published change looks wrong:** edit it again and publish the fix. Every change is kept in GitHub's history, so the website owner can restore any earlier version.
-- **The website shows "Site not available":** the Netlify credits have run out (see section 10). Upgrade the plan or wait for the new month.
 - **Sign-in fails:** check that you accepted the GitHub invitation, then ask the website owner.
-- **You published, but the website hasn't changed after five minutes:** the month's Netlify credits have probably run out, so Netlify is skipping builds. The change is safe and will appear when builds resume. Tell the website owner.
-- **Technical owner tasks** (domain, plan, new editors, launch settings) are in [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) and [DECISIONS.md](DECISIONS.md).
+- **You published, but the website hasn't changed after five minutes:** the build may be queued behind others, or it failed. The change is saved safely in GitHub either way. Tell the website owner, who can see each build in the Cloudflare dashboard (Workers & Pages → adss-website → Deployments).
+- **View Preview doesn't appear:** the preview is still building. Wait a minute and reload the editor.
+- **Technical owner tasks** (domain, new editors, launch settings) are in [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) and [DECISIONS.md](DECISIONS.md).

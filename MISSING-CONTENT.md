@@ -2,7 +2,7 @@
 
 One line per piece of information. Where the same detail appears in several places on the site, it is listed once, with every place it fills. Nothing in square brackets on the preview is confirmed content.
 
-The launch build checks this automatically: `npm run build:launch` fails while any placeholder text, demonstration entry, test file or preview-only link is left, while there is no committee member or no current constitution, or while addresses still point at Netlify instead of the Society's domain.
+The launch build checks this automatically: `npm run build:launch` fails while any placeholder text, demonstration entry, test file or preview-only link is left, while there is no committee member or no current constitution, or while addresses still use a hosting address (pages.dev or netlify.app) instead of the Society's domain.
 
 ## A. Launch essentials — information the committee must supply
 
@@ -40,13 +40,12 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ## B. Launch essentials — setup by the website owner
 
-- [ ] **Ordinary-editor CMS test: confirm the live result.** Done with ADSS2026 (Write access, not admin) on 22–23 October 2026: login, edit, preview, publish, photo upload and PDF upload all worked, and every change was authored and published by ADSS2026 (docs/DECISIONS.md D16). Still to confirm: that the published changes appear on the live site. Netlify skipped those production builds because the month's credits had run out, so this needs one more publish after the credits reset on 31 October (or after an upgrade).
+- [ ] **Ordinary-editor CMS test: confirm the live result on Cloudflare.** Done with ADSS2026 (Write access, not admin) on 22–23 October 2026: login, edit, preview, publish, photo upload and PDF upload all worked, and every change was authored and published by ADSS2026 (docs/DECISIONS.md D16). Still to confirm, now that hosting has moved to Cloudflare Pages (D17): sign-in through the new Worker, then one small edit → preview → publish → appears on https://adss-website.pages.dev.
 - [ ] **Launch date.** (`[INSERT DATE]` in the brief.)
-- [ ] **Domain**: the production domain and the Cloudflare DNS switch (currently www.adscottishsociety.com). Then set `site_url` and `display_url` in `public/admin/config.yml`.
-- [ ] **Netlify launch settings**: `SITE_LAUNCHED=true`, `EXCLUDE_PLACEHOLDERS=true`, `SITE_URL=<domain>`, and the build command `npm run build:launch` (docs/LAUNCH-CHECKLIST.md).
-- [ ] **Ownership and access**: a Society-owned GitHub account to own the repo and the CMS OAuth App (the repo is currently under `jpfox88-debug`), and at least two committee members with Netlify and GitHub access.
+- [ ] **Domain**: the production domain, added to the Cloudflare Pages project as a custom domain (currently www.adscottishsociety.com, whose DNS is still served by the old host). Then set `site_url` and `display_url` in `public/admin/config.yml`.
+- [ ] **Cloudflare Pages launch settings**: in the production environment `SITE_LAUNCHED=true`, `EXCLUDE_PLACEHOLDERS=true`, `SITE_URL=<domain>`, and the build command `npm run build:launch`, all before the domain switch (docs/LAUNCH-CHECKLIST.md).
+- [ ] **Ownership and access**: a Society-owned GitHub account to own the repo and the CMS OAuth App (the repo is currently under `jpfox88-debug`), and at least two committee members with Cloudflare and GitHub access. The CMS sign-in OAuth App and the Cloudflare account are currently the owner's personal ones.
 - [ ] **Editors**: the GitHub usernames of everyone who will edit, to invite as collaborators.
-- [ ] **Netlify plan**. The Free plan's 300 credits for October 2026 are used up, so production builds are skipped until 31 October. The Free plan pauses every site on the account when its credits run out (docs/HANDOVER.md §10); decide on staying Free or moving to Personal ($9/month) before launch.
 
 ## C. Can follow later
 

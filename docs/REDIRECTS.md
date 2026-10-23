@@ -4,7 +4,7 @@ The old URLs were found in the old site's menu scripts (`Scripts_CSS/menu_items.
 
 | Old URL | New URL | Note |
 |---|---|---|
-| `/index.html` | `/` | Netlify serves the new homepage at this path directly, because the file exists; its canonical tag points to `/`. |
+| `/index.html` | `/` | Cloudflare Pages redirects `/index.html` to `/` (301). |
 | `/EventsList.html` | `/events/` | Upcoming Events |
 | `/MemberDiscounts.html` | `/join/` | Confirmed benefits now sit on the joining page; redemption details are for the future members' area. |
 | `/Committee/Committee.html`, `/Committee` | `/committee/` | |
