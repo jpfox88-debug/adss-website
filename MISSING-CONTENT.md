@@ -40,7 +40,6 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ## B. Launch essentials — setup by the website owner
 
-- [ ] **Ordinary-editor CMS test: confirm the live result on Cloudflare.** Done with ADSS2026 (Write access, not admin) on 22–23 October 2026: login, edit, preview, publish, photo upload and PDF upload all worked, and every change was authored and published by ADSS2026 (docs/DECISIONS.md D16). Still to confirm, now that hosting has moved to Cloudflare Pages (D17): sign-in through the new Worker, then one small edit → preview → publish → appears on https://adss-website.pages.dev.
 - [ ] **Launch date.** (`[INSERT DATE]` in the brief.)
 - [ ] **Domain**: the production domain, added to the Cloudflare Pages project as a custom domain (currently www.adscottishsociety.com, whose DNS is still served by the old host). Then set `site_url` and `display_url` in `public/admin/config.yml`.
 - [ ] **Cloudflare Pages launch settings**: in the production environment `SITE_LAUNCHED=true`, `EXCLUDE_PLACEHOLDERS=true`, `SITE_URL=<domain>`, and the build command `npm run build:launch`, all before the domain switch (docs/LAUNCH-CHECKLIST.md).
