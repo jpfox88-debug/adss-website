@@ -1,14 +1,12 @@
 # Cloudflare Pages response headers (copied into dist/ by the build).
-# scripts/write-headers.mjs appends a site-wide "X-Robots-Tag: noindex" to dist/_headers
-# until SITE_LAUNCHED=true, so pre-launch builds are never indexed.
+# scripts/write-headers.mjs adds "X-Robots-Tag: noindex" to the /* rule until SITE_LAUNCHED=true,
+# so pre-launch builds are never indexed. Cloudflare combines the headers of every matching rule,
+# so a header is set in only one rule.
 
 /*
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
-  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
 
-# The CMS admin page must never be indexed or framed by other sites.
+# The CMS admin page is never indexed, even after launch. SAMEORIGIN (above) stops other sites framing it.
 /admin/*
   X-Robots-Tag: noindex
-  X-Frame-Options: DENY

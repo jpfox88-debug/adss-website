@@ -1,10 +1,15 @@
 // Runs after `astro build`. Until launch (SITE_LAUNCHED=true in the Cloudflare Pages
 // production environment), every response carries "X-Robots-Tag: noindex", alongside the
 // noindex meta tag and the Disallow-all robots.txt.
-import { appendFileSync, existsSync } from 'node:fs';
+// Cloudflare applies only one rule per identical path, so the header is added inside the existing
+// "/*" rule rather than as a second "/*" rule.
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-if (!existsSync('dist/_headers')) throw new Error('dist/_headers is missing: public/_headers was not copied.');
+const file = 'dist/_headers';
+if (!existsSync(file)) throw new Error('dist/_headers is missing: public/_headers was not copied.');
 if (process.env.SITE_LAUNCHED !== 'true') {
-  appendFileSync('dist/_headers', '\n# Pre-launch (added by scripts/write-headers.mjs)\n/*\n  X-Robots-Tag: noindex\n');
-  console.log('Pre-launch: added X-Robots-Tag: noindex to dist/_headers');
+  const headers = readFileSync(file, 'utf8');
+  if (!/^\/\*$/m.test(headers)) throw new Error('dist/_headers has no "/*" rule to add noindex to.');
+  writeFileSync(file, headers.replace(/^\/\*$/m, '/*\n  X-Robots-Tag: noindex'));
+  console.log('Pre-launch: added X-Robots-Tag: noindex to the /* rule in dist/_headers');
 }
