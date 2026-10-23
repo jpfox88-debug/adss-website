@@ -34,7 +34,7 @@ for (const file of globSync('dist/**/*.html').filter(isPublic)) {
 
 // At launch every absolute address (canonical, share image, sitemap, robots) must use the Society's domain.
 for (const file of globSync('dist/{**/*.html,sitemap-*.xml,robots.txt}').filter(isPublic)) {
-  report(file, 'Netlify address instead of the Society domain (set SITE_URL)', readFileSync(file, 'utf8').match(/https?:\/\/[^"'\s<]*netlify\.app[^"'\s<]*/g) ?? []);
+  report(file, 'hosting address instead of the Society domain (set SITE_URL)', readFileSync(file, 'utf8').match(/https?:\/\/[^"'\s<]*(netlify\.app|pages\.dev)[^"'\s<]*/g) ?? []);
 }
 
 // Launch essentials that must be present, not merely free of placeholders.

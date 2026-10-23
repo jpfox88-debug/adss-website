@@ -5,8 +5,10 @@ backend:
   name: github
   repo: jpfox88-debug/adss-website
   branch: main
-  # No base_url: sign-in goes through Netlify's GitHub OAuth provider
-  # (Netlify > Site configuration > Access & security > OAuth).
+  # Sign-in goes through the Society's GitHub OAuth proxy, a Cloudflare Worker (cms-auth/ in this repo).
+  base_url: https://adss-cms-auth.jpfox88.workers.dev
+  # Preview links come from the check run that Cloudflare Pages posts on each draft's pull request.
+  preview_context: Cloudflare Pages
   commit_messages:
     create: "Create {{collection}} “{{slug}}” via CMS ({{author-login}})"
     update: "Update {{collection}} “{{slug}}” via CMS ({{author-login}})"
@@ -14,11 +16,11 @@ backend:
     uploadMedia: "Upload “{{path}}” via CMS ({{author-login}})"
     deleteMedia: "Delete “{{path}}” via CMS ({{author-login}})"
 
-# Draft → In review → Ready → Publish. Each draft is a pull request with its own Netlify deploy preview.
+# Draft → In review → Ready → Publish. Each draft is a pull request with its own Cloudflare Pages preview.
 publish_mode: editorial_workflow
 
-site_url: https://adss-website.netlify.app
-display_url: https://adss-website.netlify.app
+site_url: https://adss-website.pages.dev
+display_url: https://adss-website.pages.dev
 
 # Photos go into the repo so Astro resizes them at build time.
 media_folder: /src/assets/uploads

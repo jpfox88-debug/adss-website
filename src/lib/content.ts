@@ -3,7 +3,7 @@ import { statSync } from 'node:fs';
 import path from 'node:path';
 import { dubaiDate, dubaiDay, formatBytes, isInactive, isPlaceholder } from './site';
 
-// For the launch build set EXCLUDE_PLACEHOLDERS=true in Netlify so that entries
+// For the launch build set EXCLUDE_PLACEHOLDERS=true in Cloudflare Pages so that entries
 // marked `placeholder: true` never reach the public site (BRIEF Section 13B).
 const excludePlaceholders = process.env.EXCLUDE_PLACEHOLDERS === 'true';
 const keep = (e: { data: { placeholder?: boolean } }) => !(excludePlaceholders && e.data.placeholder);

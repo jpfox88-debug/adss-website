@@ -21,7 +21,7 @@ interface Props {
 }
 
 const { title, description, image, imageAlt, noindex = false, type = 'website', overlayHeader = false, headerMarkOnly = false } = Astro.props;
-// Pre-launch builds are never indexed; set SITE_LAUNCHED=true in Netlify at launch.
+// Pre-launch builds are never indexed; set SITE_LAUNCHED=true in Cloudflare Pages at launch.
 const launched = process.env.SITE_LAUNCHED === 'true';
 const settings = await getSettings();
 const fullTitle = Astro.url.pathname === '/' ? settings.site_name : `${title} | ${settings.site_name}`;

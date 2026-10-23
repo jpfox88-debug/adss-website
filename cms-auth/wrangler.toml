@@ -1,0 +1,15 @@
+# GitHub OAuth proxy for the CMS (/admin), deployed as a Cloudflare Worker.
+# Source: https://github.com/sveltia/sveltia-cms-auth (MIT), copied at commit
+# 5623041efafa3984ad5d9fd7820c63a05403b863. Deploy with: npx wrangler deploy (from this folder).
+#
+# GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET are encrypted Worker secrets, set with
+# `npx wrangler secret put <NAME>`. They are never stored in this repository.
+name = "adss-cms-auth"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+# Only pages served from these hostnames may sign in through this Worker: the Pages project's
+# production and preview hostnames, and the Society's domain for after launch.
+ALLOWED_DOMAINS = "adss-website.pages.dev, *.adss-website.pages.dev, adscottishsociety.com, www.adscottishsociety.com"

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-// Until launch (SITE_LAUNCHED=true in Netlify), ask search engines not to index the
+// Until launch (SITE_LAUNCHED=true in Cloudflare Pages), ask search engines not to index the
 // placeholder site. After launch, allow everything except the CMS.
 export const GET: APIRoute = ({ site }) => {
   const launched = process.env.SITE_LAUNCHED === 'true';
