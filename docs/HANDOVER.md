@@ -18,6 +18,8 @@ Screenshots of the website show the pre-launch preview, so anything still to be 
 3. Accept the invitation from the email GitHub sends you, or from https://github.com/notifications.
 4. Go to the editor (`/admin`), click **Sign in with GitHub**, and approve the request the first time.
 
+> **The website's project on GitHub is public.** Anyone can read it, including **drafts that haven't been published yet** and the full history of every change. Never put anything in a draft that you wouldn't publish on the website: no personal phone numbers or home addresses, no private email addresses, no unapproved photos, no draft minutes, no passwords or discount codes. If something like that is saved by mistake, tell the website owner straight away, because deleting the draft doesn't remove it from the history.
+
 ## 2. How publishing works
 
 Nothing you type goes live until you publish it. Every change goes through three steps:
@@ -28,7 +30,7 @@ Nothing you type goes live until you publish it. Every change goes through three
 | **In review** | Ready for another committee member to check. |
 | **Ready** | Approved. The **Publish** button appears. |
 
-![The editorial workflow board with Drafts, In Review and Ready columns](images/cms-workflow.jpg)
+![The editorial workflow board with three drafts waiting, and the In Review and Ready columns](images/cms-workflow.jpg)
 
 - Click **Save** to create or update a draft.
 - About two minutes after saving, **View Preview** at the top of the page opens a private preview of the whole website with your change in it. Check it there before publishing.
@@ -163,6 +165,8 @@ Checked against Netlify's documentation on 22 October 2026: [How credits work](h
 - the account hosts other sites, which share the same credits;
 - big event weeks bring heavy traffic.
 
+This has already happened once: during the build, in October 2026, the account used up its 300 credits and Netlify stopped publishing until the month reset. Published changes were saved safely but did not appear on the website until then.
+
 GitHub and Cloudflare DNS are free. The domain renewal is the society's only other cost.
 
 ## 11. If something goes wrong
@@ -170,4 +174,5 @@ GitHub and Cloudflare DNS are free. The domain renewal is the society's only oth
 - **A published change looks wrong:** edit it again and publish the fix. Every change is kept in GitHub's history, so the website owner can restore any earlier version.
 - **The website shows "Site not available":** the Netlify credits have run out (see section 10). Upgrade the plan or wait for the new month.
 - **Sign-in fails:** check that you accepted the GitHub invitation, then ask the website owner.
+- **You published, but the website hasn't changed after five minutes:** the month's Netlify credits have probably run out, so Netlify is skipping builds. The change is safe and will appear when builds resume. Tell the website owner.
 - **Technical owner tasks** (domain, plan, new editors, launch settings) are in [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) and [DECISIONS.md](DECISIONS.md).

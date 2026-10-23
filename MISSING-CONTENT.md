@@ -40,13 +40,13 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ## B. Launch essentials — setup by the website owner
 
-- [ ] **Ordinary-editor CMS test.** Repeat login → edit → preview → publish, plus a photo upload and a PDF upload, with a committee editor's GitHub account that has write access but no owner or admin rights. The first test used the owner account (docs/DECISIONS.md D7). Needs the editor's GitHub username so they can be invited as a collaborator.
+- [ ] **Ordinary-editor CMS test: confirm the live result.** Done with ADSS2026 (Write access, not admin) on 22–23 October 2026: login, edit, preview, publish, photo upload and PDF upload all worked, and every change was authored and published by ADSS2026 (docs/DECISIONS.md D16). Still to confirm: that the published changes appear on the live site. Netlify skipped those production builds because the month's credits had run out, so this needs one more publish after the credits reset on 31 October (or after an upgrade).
 - [ ] **Launch date.** (`[INSERT DATE]` in the brief.)
 - [ ] **Domain**: the production domain and the Cloudflare DNS switch (currently www.adscottishsociety.com). Then set `site_url` and `display_url` in `public/admin/config.yml`.
 - [ ] **Netlify launch settings**: `SITE_LAUNCHED=true`, `EXCLUDE_PLACEHOLDERS=true`, `SITE_URL=<domain>`, and the build command `npm run build:launch` (docs/LAUNCH-CHECKLIST.md).
 - [ ] **Ownership and access**: a Society-owned GitHub account to own the repo and the CMS OAuth App (the repo is currently under `jpfox88-debug`), and at least two committee members with Netlify and GitHub access.
 - [ ] **Editors**: the GitHub usernames of everyone who will edit, to invite as collaborators.
-- [ ] **Netlify plan**. The Free plan pauses every site on the account when its 300 credits run out (docs/HANDOVER.md §10).
+- [ ] **Netlify plan**. The Free plan's 300 credits for October 2026 are used up, so production builds are skipped until 31 October. The Free plan pauses every site on the account when its credits run out (docs/HANDOVER.md §10); decide on staying Free or moving to Personal ($9/month) before launch.
 
 ## C. Can follow later
 
