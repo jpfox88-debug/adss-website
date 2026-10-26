@@ -15,6 +15,15 @@ const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEG
     docs: docs.filter((d) => d.data.category === key).sort((a, b) => Number(b.data.current) - Number(a.data.current)),
   }))
   .filter((g) => g.docs.length > 0);
+
+// Committee minutes are shown as a carousel per year, oldest meeting first, newest year selected.
+const minuteYears = [...new Set(docs.filter((d) => d.data.category === 'committee-minutes').map((d) => d.date.getFullYear()))].sort((a, b) => b - a);
+const minutesByYear = minuteYears.map((year) => ({
+  year,
+  docs: docs
+    .filter((d) => d.data.category === 'committee-minutes' && d.date.getFullYear() === year)
+    .sort((a, b) => a.date.getTime() - b.date.getTime()),
+}));
 ---
 <Base
   title="Downloads"
@@ -35,7 +44,43 @@ const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEG
             <ul>{groups.map((g) => <li><a href={`#${g.key}`}>{g.label}</a></li>)}</ul>
           </nav>
         )}
-        {groups.map((g) => (
+        {groups.map((g) => g.key === 'committee-minutes' ? (
+          <section aria-labelledby={g.key} class="group minutes" data-minutes>
+            <h2 id={g.key}>{g.label}</h2>
+            <p class="minutes-intro">Approved minutes of the committee's meetings. Choose a year, then scroll through the meetings in date order.</p>
+            <div class="year-tabs" role="tablist" aria-label="Minutes by year">
+              {minuteYears.map((y, i) => (
+                <button type="button" role="tab" id={`tab-${y}`} aria-selected={i === 0} aria-controls={`minutes-${y}`} data-year-tab={y} class="year-tab">{y}</button>
+              ))}
+            </div>
+            {minutesByYear.map(({ year, docs: yd }, i) => (
+              <div class="year-panel" role="tabpanel" id={`minutes-${year}`} aria-labelledby={`tab-${year}`} data-year-panel={year} hidden={i !== 0}>
+                <div class="minutes-slider" data-slider>
+                  <button type="button" class="slider-btn slider-prev" data-slider-prev aria-label={`Earlier ${year} meetings`}>&#8249;</button>
+                  <ol class="minutes-track" data-slider-track aria-label={`Committee minutes ${year}`}>
+                    {yd.map((d) => (
+                      <li class="minute-card">
+                        <a href={d.data.file} class="minute-link">
+                          <span class="minute-date">
+                            <span class="minute-day">{d.date.toLocaleDateString('en-GB', { day: 'numeric', timeZone: 'Asia/Dubai' })}</span>
+                            <span class="minute-month">{d.date.toLocaleDateString('en-GB', { month: 'short', timeZone: 'Asia/Dubai' })}</span>
+                          </span>
+                          <span class="minute-body">
+                            <span class="minute-title">Committee meeting</span>
+                            <span class="minute-full">{formatDay(d.date)}</span>
+                            {d.data.summary && <span class="minute-summary"><Ph text={d.data.summary} /></span>}
+                            <span class="minute-cta">View PDF{d.size && ` (${d.size})`}</span>
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                  <button type="button" class="slider-btn slider-next" data-slider-next aria-label={`Later ${year} meetings`}>&#8250;</button>
+                </div>
+              </div>
+            ))}
+          </section>
+        ) : (
           <section aria-labelledby={g.key} class="group">
             <h2 id={g.key}>{g.label}</h2>
             <ul class="docs">
@@ -131,4 +176,176 @@ const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEG
     font-weight: 400;
     font-size: var(--step--1);
   }
+
+  /* ── Committee minutes: year tabs and a sideways-scrolling row of meetings ── */
+  .minutes-intro {
+    color: var(--ink-soft);
+    margin-bottom: var(--space-3);
+  }
+  .year-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: var(--space-3);
+  }
+  .year-tab {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--navy);
+    background: transparent;
+    color: var(--navy);
+    cursor: pointer;
+  }
+  .year-tab[aria-selected='true'] {
+    background: var(--navy);
+    color: var(--cream);
+  }
+  .minutes-slider {
+    position: relative;
+  }
+  .minutes-track {
+    list-style: none;
+    margin: 0;
+    padding: 0.25rem 0.25rem var(--space-2);
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0.25rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .minutes-track::-webkit-scrollbar {
+    display: none;
+  }
+  .minute-card {
+    flex: 0 0 clamp(15rem, 72vw, 19rem);
+    scroll-snap-align: start;
+    max-width: none;
+  }
+  .minute-link {
+    display: flex;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-3);
+    background: var(--paper);
+    border-radius: var(--radius);
+    border-top: 4px solid var(--navy);
+    box-shadow: var(--shadow-card);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .minute-link:hover,
+  .minute-link:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.45);
+  }
+  .minute-date {
+    flex: 0 0 3.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    padding: 0.4rem 0;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 3px;
+    line-height: 1;
+  }
+  .minute-day {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+  }
+  .minute-month {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.2rem;
+  }
+  .minute-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .minute-title {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.15;
+  }
+  .minute-full {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  .minute-summary {
+    font-size: var(--step--1);
+    margin-top: 0.25rem;
+  }
+  .minute-cta {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    font-weight: 600;
+    color: var(--green-deep);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+  .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: 1px solid rgba(20, 33, 61, 0.2);
+    background: var(--paper);
+    color: var(--navy);
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow-card);
+    display: none;
+  }
+  .slider-prev { left: -1.25rem; }
+  .slider-next { right: -1.25rem; }
+  .slider-btn[disabled] { opacity: 0.35; cursor: default; }
+  @media (hover: hover) and (min-width: 48rem) {
+    .slider-btn { display: grid; place-items: center; }
+  }
 </style>
+
+<script>
+  // Year tabs
+  for (const section of document.querySelectorAll<HTMLElement>('[data-minutes]')) {
+    const tabs = section.querySelectorAll<HTMLButtonElement>('[data-year-tab]');
+    const panels = section.querySelectorAll<HTMLElement>('[data-year-panel]');
+    tabs.forEach((tab) =>
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+        panels.forEach((p) => (p.hidden = p.dataset.yearPanel !== tab.dataset.yearTab));
+        window.dispatchEvent(new Event('resize'));
+      }),
+    );
+  }
+  // Sliders: scroll a screenful per click; disable arrows at the ends.
+  for (const slider of document.querySelectorAll<HTMLElement>('[data-slider]')) {
+    const track = slider.querySelector<HTMLElement>('[data-slider-track]');
+    const prev = slider.querySelector<HTMLButtonElement>('[data-slider-prev]');
+    const next = slider.querySelector<HTMLButtonElement>('[data-slider-next]');
+    if (!track || !prev || !next) continue;
+    const update = () => {
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+    };
+    const step = () => Math.max(track.clientWidth * 0.8, 200);
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+</script>

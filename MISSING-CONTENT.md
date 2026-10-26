@@ -56,7 +56,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
   - Six Nations, February 2025: `https://adscottishsociety.com/SixNations25-Italy/Videos/SixNats-SnB.mp4`, `https://adscottishsociety.com/SixNations25-Italy/Videos/Slideshow.mp4`
   - Burns Supper 2025: `https://adscottishsociety.com/Burns25Club/Videos/Burns%20Video%20Clip%202025-01-25.mp4`, `https://adscottishsociety.com/Burns25Club/Videos/SeanVideo.mp4`, `https://adscottishsociety.com/Burns25Club/Videos/Burns25Slideshow.mp4`
   - St Andrew's Gathering, November 2024: `https://adscottishsociety.com/Nov24Club/Videos/Nov24VideoClip-01.mp4`, `https://adscottishsociety.com/Nov24Club/Videos/WhatsApp%20Video%202024-11-25.mp4`
-- [ ] **Approved, redacted committee and AGM minutes.**
+- [x] **Committee minutes 2026**: eleven meetings (5 Jan – 21 Sep) are on Downloads in a by-year carousel; two personal email addresses in the 15 June minutes were redacted before publishing. Earlier years and AGM minutes can be added in the CMS when approved.
 - [ ] **Partner names, logos and offers**, only if current and approved.
 - [x] **Social links**: Facebook and Instagram set (26 Oct). Phone and postal address are not shown.
 - [x] **Homepage opening photo**: now a Society photo from the St Andrew's Ball 2025 dance floor (album photo 180), chosen by JP. Inner-page headers keep the Scottish landscapes.
