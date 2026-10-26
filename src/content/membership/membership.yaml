@@ -4,12 +4,20 @@ period: '[MEMBERSHIP PERIOD]'
 renewal: '[RENEWAL ARRANGEMENTS]'
 how_to_join: Tap 'Join via WhatsApp' to send us a message. We'll reply with the next steps.
 options:
-  - name: '[MEMBERSHIP OPTIONS]'
-    price_aed: '[PRICES IN AED]'
-    description: '[OPTION DESCRIPTION]'
+  - name: Society membership
+    price_aed: AED 100
+    description: '[OPTION DESCRIPTION — e.g. individual or family, and what the fee covers]'
 benefits:
-  - title: '[CONFIRMED BENEFITS]'
-    description: '[BENEFIT DESCRIPTION]'
+  - title: A warm Scottish welcome
+    description: "Become part of Abu Dhabi's vibrant Scottish community, where new faces become familiar friends. Whether Scotland is home or simply close to your heart, join us for friendship, shared traditions and good company."
+  - title: First access to events
+    description: "Be first to reserve your place at all Society events, with priority booking for members. From lively celebrations to relaxed social gatherings, there's plenty to look forward to and a friendly crowd to enjoy it with."
+  - title: Help keep our traditions thriving
+    description: "Your membership helps the Society bring people together and celebrate Scottish culture in Abu Dhabi. Be part of keeping those traditions alive and sharing them with the next generation."
+  - title: Member discounts
+    description: "Enjoy discounts with the retail, food and drink partners that support the Society, giving you more value from your membership while supporting our wider community."
+home_note: Discover more about membership and how to become part of the Scottish Society Abu Dhabi.
+home_button: Click here to find out more
 whatsapp_number: '[MEMBERSHIP WHATSAPP NUMBER]'
 whatsapp_message: Hi, I'd like to join the Scottish Society Abu Dhabi. Could you please let me know the next steps?
 email: '[MEMBERSHIP EMAIL ADDRESS]'
