@@ -59,7 +59,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 - [ ] **Approved, redacted committee and AGM minutes.**
 - [ ] **Partner names, logos and offers**, only if current and approved.
 - [ ] **Optional contact details**: general phone number, postal address, Facebook and Instagram links. Each is left out of the launch build automatically until it is supplied, so nothing needs to be done if the Society doesn't use them. *Replaces* `[GENERAL PHONE NUMBER — optional]`, `[POSTAL ADDRESS — optional]`, `[FACEBOOK URL]`, `[INSTAGRAM URL]`.
-- [ ] **Homepage opening photo**: currently a decorative landscape (Kilchurn Castle). Replace it with an approved Society photo if the committee prefers.
+- [x] **Homepage opening photo**: now a Society photo from the St Andrew's Ball 2025 dance floor (album photo 180), chosen by JP. Inner-page headers keep the Scottish landscapes.
 - [ ] **Vector logo** (SVG or PDF) for print and very large display. The supplied JPEGs are fine on screen.
 
 Not used on the site, so no action is needed: the `tagline` setting (`[TAGLINE — optional]`).
