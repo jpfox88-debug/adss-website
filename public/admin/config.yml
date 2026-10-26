@@ -133,7 +133,7 @@ collections:
       - { name: image_alt, label: Image description, widget: string, required: false }
       - { name: image_illustrative, label: Illustrative image (not a Society photo), widget: boolean, default: false, required: false, hint: "Tick if the image above is stock or artwork that could be mistaken for a photo of the Society. Adds a small 'Illustrative image' caption." }
       - { name: start, label: Starts (Abu Dhabi time), widget: datetime, format: "YYYY-MM-DDTHH:mm" }
-      - { name: end, label: Ends (Abu Dhabi time), widget: datetime, format: "YYYY-MM-DDTHH:mm", hint: "The event moves to the archive automatically once this time has passed." }
+      - { name: end, label: Ends (Abu Dhabi time), widget: datetime, format: "YYYY-MM-DDTHH:mm", hint: "The event moves to the archive automatically once this time has passed. Set 23:59 to show \"till late\"." }
       - { name: venue, label: Venue, widget: string }
       - { name: address, label: Address, widget: text, required: false }
       - { name: map_url, label: Map link, widget: string, required: false, hint: "Paste a Google Maps link." }

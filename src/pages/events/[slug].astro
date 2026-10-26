@@ -130,6 +130,17 @@ const description = !isPlaceholder(d.summary)
     aspect-ratio: 3 / 2;
     margin-bottom: var(--space-3);
   }
+  /* A portrait poster is shown in full, at a sensible width, rather than cropped. */
+  .main :global(.event-image.is-portrait) {
+    aspect-ratio: auto;
+    max-width: 26rem;
+  }
+  .main :global(.event-image.is-portrait img) {
+    height: auto;
+    object-fit: contain;
+    object-position: 50% 50%;
+    box-shadow: var(--shadow-card);
+  }
   .facts {
     background: var(--paper);
     padding: var(--space-3);

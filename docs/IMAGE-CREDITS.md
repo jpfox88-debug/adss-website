@@ -18,7 +18,7 @@ From 26 October 2026 the homepage hero, the band behind the next-event card, eve
 | File | Album photo | Used for |
 |---|---|---|
 | `hero-st-andrews-ball-2025.jpg` | St Andrew's Ball 2025 #180 | Homepage hero |
-| `band-burns-saltire.jpg` | Burns Supper 2025 #016 | Band behind the next-event card |
+| `band-ceilidh-hall.jpg` | May Ceilidh 2025 #127 | Band behind the next-event card |
 | `events-ceilidh-dancing.jpg` | May Ceilidh 2025 #335 | Upcoming Events and Past events headers |
 | `committee-ceilidh-group.jpg` | May Ceilidh 2025 #346 | The Committee header |
 | `photos-ball-ballroom.jpg` | St Andrew's Ball 2025 #004 | Photos & Videos header |

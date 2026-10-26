@@ -7,7 +7,7 @@ import Portrait from '../components/Portrait.astro';
 import PhotosComingSoon from '../components/PhotosComingSoon.astro';
 import AlbumCover from '../components/AlbumCover.astro';
 import logoStacked from '../assets/brand/logo-stacked-reversed.png';
-import bandPhoto from '../assets/uploads/headers/band-burns-saltire.jpg';
+import bandPhoto from '../assets/uploads/headers/band-ceilidh-hall.jpg';
 import { canBeNext, getAlbums, getCommittee, getEvents, getHome, getMembership, isGenuineAlbum, isPastAtBuild } from '../lib/content';
 import { formatDay, formatMonthYear, formatTimeRange, STATUS_LABEL } from '../lib/site';
 
@@ -263,9 +263,9 @@ const firstOption = membership.options[0];
   @media (min-width: 64rem) {
     .invite-band { padding-block: var(--space-6); }
     .invite-band .card { margin-inline: 0 auto; }
-    /* The saltire is right of centre in this photo, so the card sits left and the photo is
-       slightly oversized from the left edge to keep the flag in the clear right half. */
-    .band-img { width: 118%; left: 0; object-position: 0% 42%; }
+    /* The card sits left; the photo is slightly oversized from the left edge so the dancers
+       and the saltires on the far wall stay in the clear right half. */
+    .band-img { width: 118%; left: 0; object-position: 0% 30%; }
   }
   .band-img {
     position: absolute;
