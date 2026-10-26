@@ -30,9 +30,8 @@ const settings = defineCollection({
     tagline: optionalText,
     committee_term: z.string(),
     contact_email: z.string(),
-    general_whatsapp: z.string(),
-    phone: optionalText,
-    address: optionalText,
+    whatsapp_group_url: optionalText,
+    whatsapp_group_label: optionalText,
     socials: z
       .array(z.object({ platform: z.string(), url: z.string() }))
       .default([]),

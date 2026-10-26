@@ -1,12 +1,11 @@
 site_name: Scottish Society Abu Dhabi
 tagline: '[TAGLINE — optional]'
 committee_term: '2026–2027'
-contact_email: '[GENERAL CONTACT EMAIL]'
-general_whatsapp: '[GENERAL WHATSAPP NUMBER]'
-phone: '[GENERAL PHONE NUMBER — optional]'
-address: '[POSTAL ADDRESS — optional]'
+contact_email: 'committee@adscottishsociety.com'
+whatsapp_group_url: 'https://chat.whatsapp.com/FLAg5FtGjmnLXNzm7BzObl'
+whatsapp_group_label: 'Join our Updates WhatsApp group'
 socials:
   - platform: Facebook
-    url: '[FACEBOOK URL]'
+    url: 'https://www.facebook.com/share/g/1JB2czM7mU/'
   - platform: Instagram
-    url: '[INSTAGRAM URL]'
+    url: 'https://www.instagram.com/scottishsociety_abudhabi'

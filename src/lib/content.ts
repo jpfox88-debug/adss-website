@@ -12,11 +12,10 @@ export async function getSettings() {
   const s = (await getEntry('settings', 'site'))!.data;
   if (!excludePlaceholders) return s;
   // Optional contact details are left out of the launch build until they are supplied.
-  // Required ones (email, WhatsApp, committee term) stay, so the launch gate reports them.
+  // Required ones (email, committee term) stay, so the launch gate reports them.
   return {
     ...s,
-    phone: isPlaceholder(s.phone) ? undefined : s.phone,
-    address: isPlaceholder(s.address) ? undefined : s.address,
+    whatsapp_group_url: isPlaceholder(s.whatsapp_group_url) ? undefined : s.whatsapp_group_url,
     socials: s.socials.filter((so) => !isPlaceholder(so.url)),
   };
 }

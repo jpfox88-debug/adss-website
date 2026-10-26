@@ -2,12 +2,12 @@
 import { Image } from 'astro:assets';
 import logoReversed from '../assets/brand/logo-horizontal-reversed.png';
 import { getSettings } from '../lib/content';
-import { mailLink, safeUrl, waLink, waNumber } from '../lib/site';
+import { mailLink, safeUrl } from '../lib/site';
 import Ph from './Ph.astro';
 
 const s = await getSettings();
 const email = mailLink(s.contact_email);
-const whatsapp = waLink(s.general_whatsapp);
+const group = safeUrl(s.whatsapp_group_url);
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
@@ -23,20 +23,10 @@ const year = new Date().getFullYear();
       <dl>
         <dt>Email</dt>
         <dd>{email ? <a href={email}>{s.contact_email}</a> : <Ph text={s.contact_email} />}</dd>
-        <dt>WhatsApp</dt>
-        <dd>
-          {whatsapp ? <a href={whatsapp} rel="noopener">Message us on WhatsApp ({s.general_whatsapp})</a> : <Ph text={s.general_whatsapp} />}
-        </dd>
-        {s.phone && (
+        {s.whatsapp_group_url && (
           <>
-            <dt>Phone</dt>
-            <dd>{waNumber(s.phone) ? <a href={`tel:+${waNumber(s.phone)}`}>{s.phone}</a> : <Ph text={s.phone} />}</dd>
-          </>
-        )}
-        {s.address && (
-          <>
-            <dt>Post</dt>
-            <dd><Ph text={s.address} /></dd>
+            <dt>WhatsApp</dt>
+            <dd>{group ? <a href={group} rel="noopener">{s.whatsapp_group_label ?? 'Join our WhatsApp group'}</a> : <Ph text={s.whatsapp_group_url} />}</dd>
           </>
         )}
       </dl>

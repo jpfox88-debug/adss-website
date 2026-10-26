@@ -3,7 +3,5 @@ name: 'Seán Tierney'
 role: 'Honorary Treasurer'
 photo: /src/assets/uploads/committee/sean-tierney.jpg
 photo_alt: 'Portrait of Seán Tierney'
-contact_label: Email
-contact_url: 'mailto:Committee@ADScottishSociety.com'
 order: 30
 ---
