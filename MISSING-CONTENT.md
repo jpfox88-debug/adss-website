@@ -17,7 +17,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ### Committee (CMS: Committee, and Site pages & settings)
 
-- [ ] **Current committee**: the nine-member 2026 list is in (confirmed by JP, 26 Oct); biographies are deliberately not shown for now. Still needed: portraits for Jane Taylor, Kerry L Smith, Allan Smith and Heather Gorman (initials tiles until then), and confirmation that the role email addresses carried over from the old site are still live.
+- [ ] **Current committee**: the nine-member 2026 list is in (confirmed by JP, 26 Oct); biographies are deliberately not shown for now. Still needed: portraits for Jane Taylor and Heather Gorman (initials tiles until then), and confirmation that the role email addresses carried over from the old site are still live.
 - [x] **Committee term**: 2026–2027 (confirmed by JP).
 - [x] **Committee introduction** for the homepage: confirmed by JP.
 
@@ -48,7 +48,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ## C. Can follow later
 
-- [ ] **Committee portraits**: five carried over from the old site; Jane Taylor, Kerry L Smith, Allan Smith and Heather Gorman show an initials tile until a photo is supplied.
+- [ ] **Committee portraits**: five carried over from the old site; Jane Taylor and Heather Gorman show an initials tile until a photo is supplied.
 - [x] **Confirmed events**: the Cèilidh at The Club, Saturday 14 November 2026, is in with prices, dress code, age limit, menu link and email booking (from the poster supplied by JP). The demonstration event has been removed. Add further events in the CMS as they're confirmed.
 - [ ] **Event photos or artwork**: any event without its own image shows a Society photo (the Ceilidh saltire bar) captioned "Illustrative image".
 - [ ] **Old-site redirects to the imported albums.** The old site's five albums (St Andrew's Ball 2025, May 2025 Ceilidh, Six Nations February 2025, Burns Supper 2025, St Andrew's Gathering November 2024) are now on the site under `/photos/`. Point each old photo-page redirect at its album rather than `/photos/` (docs/REDIRECTS.md). The pre-Christmas drinks 2024 album is gone from the old server; if someone still has the photos they can be added as a new album.
@@ -56,7 +56,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
   - Six Nations, February 2025: `https://adscottishsociety.com/SixNations25-Italy/Videos/SixNats-SnB.mp4`, `https://adscottishsociety.com/SixNations25-Italy/Videos/Slideshow.mp4`
   - Burns Supper 2025: `https://adscottishsociety.com/Burns25Club/Videos/Burns%20Video%20Clip%202025-01-25.mp4`, `https://adscottishsociety.com/Burns25Club/Videos/SeanVideo.mp4`, `https://adscottishsociety.com/Burns25Club/Videos/Burns25Slideshow.mp4`
   - St Andrew's Gathering, November 2024: `https://adscottishsociety.com/Nov24Club/Videos/Nov24VideoClip-01.mp4`, `https://adscottishsociety.com/Nov24Club/Videos/WhatsApp%20Video%202024-11-25.mp4`
-- [x] **Committee minutes 2026**: eleven meetings (5 Jan – 21 Sep) are on Downloads in a by-year carousel; two personal email addresses in the 15 June minutes were redacted before publishing. Earlier years and AGM minutes can be added in the CMS when approved.
+- [x] **Committee minutes 2026**: twelve meetings (5 Jan – 5 Oct) are on Downloads in a by-year carousel; two personal email addresses in the 15 June minutes were redacted before publishing. Earlier years and AGM minutes can be added in the CMS when approved.
 - [ ] **Partner names, logos and offers**, only if current and approved.
 - [x] **Social links**: Facebook and Instagram set (26 Oct). Phone and postal address are not shown.
 - [x] **Homepage opening photo**: now a Society photo from the St Andrew's Ball 2025 dance floor (album photo 180), chosen by JP. Inner-page headers keep the Scottish landscapes.
