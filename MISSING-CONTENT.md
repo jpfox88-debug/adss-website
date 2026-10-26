@@ -28,7 +28,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ### Constitution (CMS: Downloads)
 
-- [ ] **Approved current constitution** as a PDF, uploaded with **Current version** ticked. The demonstration constitution and its placeholder PDF are dropped from the launch build.
+- [x] **Constitution**: v1.2 (revised 8 June 2026, SSAD001-02) is on the Downloads page as the current version (supplied by JP, 26 Oct).
 
 ### Sign-off
 
