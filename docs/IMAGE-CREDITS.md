@@ -29,7 +29,7 @@ From 26 October 2026 the homepage hero, the band behind the next-event card, eve
 
 ## Stock photography (no longer used)
 
-These decorative Scottish landscapes were used for the headers until 26 October 2026 and have been removed from the repository. The credits are kept for the record. **None of them showed a Society event or member.**
+These decorative Scottish landscapes were used for the hero and headers until 26 October 2026 and have all been removed from the repository. The credits are kept for the record. **None of them showed a Society event or member.**
 
 All are free to use under the [Unsplash License](https://unsplash.com/license): free for commercial and non-commercial use, with no permission or attribution required, though credit is given here. Each photo page was checked on 22 October 2026: "Free to use under the Unsplash License", not Unsplash+, not sponsored. The locations given are those stated on each photo page. All were downloaded on 22 October 2026 into `src/assets/stock/` and resized to at most 2400 px on the long side. Astro generates the smaller versions that visitors receive.
 

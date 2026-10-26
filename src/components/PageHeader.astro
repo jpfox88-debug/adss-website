@@ -38,6 +38,9 @@ const { title, image, position = '50% 50%' } = Astro.props;
     display: flex;
     align-items: flex-end;
     min-height: clamp(17rem, 34vh, 22rem);
+  }
+  @media (min-width: 64rem) {
+    .page-photo { min-height: clamp(24rem, 46vh, 34rem); }
     background: var(--navy-deep);
     color: var(--on-navy);
     overflow: hidden;
