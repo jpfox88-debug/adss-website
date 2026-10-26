@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Ph from '../components/Ph.astro';
 import PageHeader from '../components/PageHeader.astro';
-import headerPhoto from '../assets/stock/skye-cottage-stream.jpg';
+import headerPhoto from '../assets/uploads/headers/join-burns-piper.jpg';
 import { getMembership } from '../lib/content';
 import { mailLink, waLink } from '../lib/site';
 
@@ -16,7 +16,7 @@ const email = mailLink(m.email, 'Joining the Scottish Society Abu Dhabi');
   description="How to join the Scottish Society Abu Dhabi: who can join, membership options and prices in AED, benefits, and joining through WhatsApp."
   overlayHeader
 >
-  <PageHeader title="Join the Society" image={headerPhoto} position="50% 45%">
+  <PageHeader title="Join the Society" image={headerPhoto} position="50% 62%">
     <p><Ph text={m.intro} /></p>
   </PageHeader>
 

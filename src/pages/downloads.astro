@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Ph from '../components/Ph.astro';
 import PageHeader from '../components/PageHeader.astro';
-import headerPhoto from '../assets/stock/edinburgh-clock-tower.jpg';
+import headerPhoto from '../assets/uploads/headers/downloads-burns-table.jpg';
 import { DOCUMENT_CATEGORIES, getDocuments } from '../lib/content';
 import { formatDay } from '../lib/site';
 
@@ -21,7 +21,7 @@ const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEG
   description="The Scottish Society Abu Dhabi constitution, approved meeting minutes, AGM reports and other society documents."
   overlayHeader
 >
-  <PageHeader title="Downloads" image={headerPhoto} position="50% 22%">
+  <PageHeader title="Downloads" image={headerPhoto} position="50% 55%">
     <p>The Society's constitution and approved minutes, reports and other documents.</p>
   </PageHeader>
 

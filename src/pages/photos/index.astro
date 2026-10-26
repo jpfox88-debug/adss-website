@@ -4,7 +4,7 @@ import PageHeader from '../../components/PageHeader.astro';
 import PhotosComingSoon from '../../components/PhotosComingSoon.astro';
 import AlbumCover from '../../components/AlbumCover.astro';
 import Ph from '../../components/Ph.astro';
-import headerPhoto from '../../assets/stock/old-man-of-storr-skye.jpg';
+import headerPhoto from '../../assets/uploads/headers/photos-ball-ballroom.jpg';
 import { getAlbums, isGenuineAlbum } from '../../lib/content';
 import { formatDay } from '../../lib/site';
 
@@ -18,7 +18,7 @@ const layoutPreview = process.env.SITE_LAUNCHED !== 'true' ? allAlbums.find((a) 
   description="Photos and videos from Scottish Society Abu Dhabi events, organised by event."
   overlayHeader
 >
-  <PageHeader title="Photos & Videos" image={headerPhoto} position="50% 40%">
+  <PageHeader title="Photos & Videos" image={headerPhoto} position="50% 38%">
     <p>Albums from our events, most recent first.</p>
   </PageHeader>
 

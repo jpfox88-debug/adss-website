@@ -4,7 +4,7 @@ import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Portrait from '../components/Portrait.astro';
 import Ph from '../components/Ph.astro';
-import headerPhoto from '../assets/stock/skye-stone-bridge.jpg';
+import headerPhoto from '../assets/uploads/headers/committee-ceilidh-group.jpg';
 import { getCommittee, getSettings } from '../lib/content';
 import { safeUrl } from '../lib/site';
 
@@ -18,7 +18,7 @@ const members = await Promise.all(
   description="Meet the volunteer committee who run the Scottish Society Abu Dhabi and organise its events."
   overlayHeader
 >
-  <PageHeader title="The Committee" image={headerPhoto} position="50% 46%">
+  <PageHeader title="The Committee" image={headerPhoto} position="50% 44%">
     <p>Volunteers elected by the members. Committee for <Ph text={settings.committee_term} />.</p>
   </PageHeader>
 
