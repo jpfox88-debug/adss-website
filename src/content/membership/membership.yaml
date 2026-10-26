@@ -1,12 +1,12 @@
 intro: Membership is arranged directly with the society through WhatsApp. Message our membership contact and we'll guide you through the next steps.
-eligibility: '[ELIGIBILITY RULES]'
-period: '[MEMBERSHIP PERIOD]'
-renewal: '[RENEWAL ARRANGEMENTS]'
+eligibility: Anyone is welcome to join — you don't need to be Scottish, just to enjoy Scotland, its culture and good company.
+period: Membership runs for the calendar year, January to December.
+renewal: Renewals are due from 1 January each year.
 how_to_join: Tap 'Join via WhatsApp' to send us a message. We'll reply with the next steps.
 options:
   - name: Society membership
     price_aed: AED 100
-    description: '[OPTION DESCRIPTION — e.g. individual or family, and what the fee covers]'
+    description: ''
 benefits:
   - title: A warm Scottish welcome
     description: "Become part of Abu Dhabi's vibrant Scottish community, where new faces become familiar friends. Whether Scotland is home or simply close to your heart, join us for friendship, shared traditions and good company."
@@ -20,13 +20,13 @@ home_note: Discover more about membership and how to become part of the Scottish
 home_button: Click here to find out more
 whatsapp_number: '[MEMBERSHIP WHATSAPP NUMBER]'
 whatsapp_message: Hi, I'd like to join the Scottish Society Abu Dhabi. Could you please let me know the next steps?
-email: '[MEMBERSHIP EMAIL ADDRESS]'
+email: committee@adscottishsociety.com
 faq:
   - question: Who can join?
-    answer: '[ELIGIBILITY RULES]'
+    answer: Anyone — you don't need to be Scottish. Members include Scots, their families and friends, and plenty of people who simply love Scotland.
   - question: How long does membership last?
-    answer: '[MEMBERSHIP PERIOD]'
+    answer: Membership runs for the calendar year, January to December, and renews from 1 January.
   - question: How do I join?
     answer: Send us a message using the 'Join via WhatsApp' button and we'll take it from there.
   - question: How do I renew?
-    answer: '[RENEWAL ARRANGEMENTS]'
+    answer: Renewals are due from 1 January each year — message us on WhatsApp or email committee@adscottishsociety.com and we'll sort it out.
