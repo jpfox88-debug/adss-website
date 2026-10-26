@@ -11,9 +11,25 @@ Supplied by the Society (Scottish Society Abu Dhabi), 22 October 2026, as three 
 | `logo-*-reversed.png` | **Derived from the supplied logo for on-screen use on dark (navy) backgrounds.** Black lettering and the black thistle head are recoloured to cream `#F5F0E8`. The blue lettering is lifted to sky blue `#7FB2FF`, which gives 7.4:1 contrast on navy `#14213D` and passes WCAG AA. Green and red are unchanged. |
 | `public/og-default.jpg`, `public/favicon.png`, `public/apple-touch-icon.png` | Made from the arched logo (share image) and the thistle (icons) by `scripts/make-brand-images.mjs`. |
 
-## Stock photography
+## Page headers and bands (Society photographs)
 
-These are decorative Scottish landscapes and streets, used as part of the site's look. **None of them shows a Society event or member.**
+From 26 October 2026 the homepage hero, the band behind the next-event card, every inner-page header and the illustrative event cover use the Society's own event photographs, chosen by JP from the albums imported from the old website. They live in `src/assets/uploads/headers/` (and the hero in `src/assets/uploads/`) and are copies of album photos in `public/albums/`.
+
+| File | Album photo | Used for |
+|---|---|---|
+| `hero-st-andrews-ball-2025.jpg` | St Andrew's Ball 2025 #180 | Homepage hero |
+| `band-burns-saltire.jpg` | Burns Supper 2025 #016 | Band behind the next-event card |
+| `events-ceilidh-dancing.jpg` | May Ceilidh 2025 #335 | Upcoming Events and Past events headers |
+| `committee-ceilidh-group.jpg` | May Ceilidh 2025 #346 | The Committee header |
+| `photos-ball-ballroom.jpg` | St Andrew's Ball 2025 #004 | Photos & Videos header |
+| `join-burns-piper.jpg` | Burns Supper 2025 #012 | Join the Society header |
+| `downloads-burns-table.jpg` | Burns Supper 2025 #003 | Downloads header |
+| `event-fallback-saltire-bar.jpg` | May Ceilidh 2025 #004 | Illustrative cover for events without their own image (captioned) |
+| `utility-piper.jpg` | St Andrew's Gathering Nov 2024 #006 | Privacy and 404 headers |
+
+## Stock photography (no longer used)
+
+These decorative Scottish landscapes were used for the headers until 26 October 2026 and have been removed from the repository. The credits are kept for the record. **None of them showed a Society event or member.**
 
 All are free to use under the [Unsplash License](https://unsplash.com/license): free for commercial and non-commercial use, with no permission or attribution required, though credit is given here. Each photo page was checked on 22 October 2026: "Free to use under the Unsplash License", not Unsplash+, not sponsored. The locations given are those stated on each photo page. All were downloaded on 22 October 2026 into `src/assets/stock/` and resized to at most 2400 px on the long side. Astro generates the smaller versions that visitors receive.
 

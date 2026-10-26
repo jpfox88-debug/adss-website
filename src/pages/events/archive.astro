@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import EventCard from '../../components/EventCard.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import headerPhoto from '../../assets/stock/edinburgh-victoria-street.jpg';
+import headerPhoto from '../../assets/uploads/headers/events-ceilidh-dancing.jpg';
 import { getEvents, isPastAtBuild } from '../../lib/content';
 
 // Most recent first; the shared script hides any that haven't finished yet.
@@ -14,7 +14,7 @@ const anyPast = events.some((e) => isPastAtBuild(e));
   description="An archive of past Scottish Society Abu Dhabi events, with links to photos and videos."
   overlayHeader
 >
-  <PageHeader title="Past events" image={headerPhoto} position="50% 30%">
+  <PageHeader title="Past events" image={headerPhoto} position="50% 60%">
     <p>A record of what we've been up to. Photos and videos are in <a href="/photos/">Photos & Videos</a>.</p>
   </PageHeader>
 

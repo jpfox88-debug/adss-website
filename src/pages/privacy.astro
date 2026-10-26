@@ -4,7 +4,7 @@
 // CMS sign-in on /admin only. Re-check and update this page if any of that changes.
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import headerPhoto from '../assets/stock/skye-lighthouse-cliff.jpg';
+import headerPhoto from '../assets/uploads/headers/utility-piper.jpg';
 import Ph from '../components/Ph.astro';
 import { getSettings } from '../lib/content';
 import { mailLink } from '../lib/site';
@@ -13,7 +13,7 @@ const s = await getSettings();
 const email = mailLink(s.contact_email, 'Privacy question');
 ---
 <Base title="Privacy" description="How the Scottish Society Abu Dhabi website handles your information." overlayHeader>
-  <PageHeader title="Privacy" image={headerPhoto} position="50% 40%">
+  <PageHeader title="Privacy" image={headerPhoto} position="50% 30%">
     <p>This website is deliberately simple: it has no sign-up forms, no payments, no analytics and no advertising.</p>
   </PageHeader>
 
