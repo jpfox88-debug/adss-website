@@ -17,7 +17,8 @@ From 26 October 2026 the homepage hero, the band behind the next-event card, eve
 
 | File | Album photo | Used for |
 |---|---|---|
-| `hero-st-andrews-ball-2025.jpg` | St Andrew's Ball 2025 #180 | Homepage hero |
+| `hero-st-andrews-ball-2025.jpg` | St Andrew's Ball 2025 #180 | Homepage hero photo: shown on phones, as the first frame, and for reduced-motion visitors |
+| `public/video/hero-gala-2025.{mp4,webm}` | Gala Dinner highlights video supplied by the Society, 26 Oct 2026 | Homepage hero video: a 16.8 s silent loop of six moments, cropped to remove the old-logo watermark; the hotel exterior and sponsor screen are not used |
 | `band-ceilidh-hall.jpg` | May Ceilidh 2025 #127 | Band behind the next-event card |
 | `events-ceilidh-dancing.jpg` | May Ceilidh 2025 #335 | Upcoming Events and Past events headers |
 | `committee-ceilidh-group.jpg` | May Ceilidh 2025 #346 | Join the Society header |

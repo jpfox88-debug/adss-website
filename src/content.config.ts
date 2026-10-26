@@ -45,6 +45,9 @@ const home = defineCollection({
     z.object({
       hero_image: image().optional().nullable(),
       hero_alt: optionalText,
+      // Optional silent looping video behind the welcome text; the photo is the poster and the fallback.
+      hero_video_mp4: optionalText,
+      hero_video_webm: optionalText,
       hero_heading: z.string(),
       hero_intro: z.string(),
       about_heading: z.string(),

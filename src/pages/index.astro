@@ -45,6 +45,12 @@ const firstOption = membership.options[0];
         fetchpriority="high"
       />
     )}
+    {home.hero_video_mp4 && (
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+        {home.hero_video_webm && <source src={home.hero_video_webm} type="video/webm" />}
+        <source src={home.hero_video_mp4} type="video/mp4" />
+      </video>
+    )}
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="wrap hero-copy">
       <Image class="hero-logo" src={logoStacked} alt="" width={420} densities={[1, 2]} loading="eager" />
@@ -189,6 +195,14 @@ const firstOption = membership.options[0];
 <script>
   import '../scripts/event-visibility';
 
+  // Only fetch the hero video where it will actually be shown (see .hero-video CSS).
+  const heroVideo = document.querySelector<HTMLVideoElement>('.hero-video');
+  if (heroVideo && getComputedStyle(heroVideo).display === 'none') {
+    heroVideo.remove();
+  } else if (heroVideo) {
+    heroVideo.play().catch(() => heroVideo.remove());
+  }
+
   // Committee slider: scroll one viewport of cards per click; disable arrows at the ends.
   for (const slider of document.querySelectorAll<HTMLElement>('[data-slider]')) {
     const track = slider.querySelector<HTMLElement>('[data-slider-track]');
@@ -227,6 +241,20 @@ const firstOption = membership.options[0];
     height: 100%;
     object-fit: cover;
     object-position: 50% 18%;
+  }
+  /* The video sits over the photo; it only loads on screens 48rem and wider, and never when the
+     visitor prefers reduced motion — the photo shows instead in both cases. */
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 40%;
+    display: none;
+  }
+  @media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+    .hero-video { display: block; }
   }
   .hero-shade {
     position: absolute;

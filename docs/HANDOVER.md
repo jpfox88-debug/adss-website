@@ -157,3 +157,8 @@ GitHub and Cloudflare are free. The domain renewal is the society's only cost.
 - **You published, but the website hasn't changed after five minutes:** the build may be queued behind others, or it failed. The change is saved safely in GitHub either way. Tell the website owner, who can see each build in the Cloudflare dashboard (Workers & Pages → adss-website → Deployments).
 - **View Preview doesn't appear:** the preview is still building. Wait a minute and reload the editor.
 - **Technical owner tasks** (domain, new editors, launch settings) are in [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) and [DECISIONS.md](DECISIONS.md).
+
+
+## The homepage video
+
+The homepage plays a short silent video loop (`public/video/hero-gala-2025.mp4` and `.webm`) on screens wider than about 48rem; phones and anyone with "reduce motion" turned on see the opening photo instead. To change it, prepare a 15–20 second silent clip under ~6 MB (1440 px wide is plenty), put it in `public/video/`, and set the two "Opening video" fields under Site pages & settings → Homepage. Leave them blank to go back to a still photo.

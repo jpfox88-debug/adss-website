@@ -53,7 +53,9 @@ collections:
         file: src/content/home/home.yaml
         preview_path: /
         fields:
-          - { name: hero_image, label: Opening photo, widget: image, required: false, hint: "Currently a Scottish landscape (Kilchurn Castle, Loch Awe — Unsplash, see docs/IMAGE-CREDITS.md). Replace with a strong, approved Society photo when one is available. Landscape, ideally under 2 MB; the middle of the photo stays visible on phones." }
+          - { name: hero_image, label: Opening photo, widget: image, required: false, hint: "Shown on phones, as the first frame while the video loads, and for anyone who prefers reduced motion. Landscape, ideally under 2 MB; the middle of the photo stays visible on phones." }
+          - { name: hero_video_mp4, label: Opening video (MP4), widget: string, required: false, hint: "Path under /video/, e.g. /video/hero-gala-2025.mp4. A short silent loop (15–20 s, under ~6 MB) prepared by whoever maintains the site; leave blank for a still photo only." }
+          - { name: hero_video_webm, label: Opening video (WebM), widget: string, required: false, hint: "Optional smaller WebM version of the same loop." }
           - { name: hero_alt, label: Opening photo description, widget: string, required: false, hint: "Describe the photo for people using screen readers, e.g. “Members dancing at the St Andrew's Ball”." }
           - { name: hero_heading, label: Welcome heading, widget: string }
           - { name: hero_intro, label: Welcome text, widget: text, hint: "One or two short sentences." }
