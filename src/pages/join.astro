@@ -13,7 +13,7 @@ const email = mailLink(m.email, 'Joining the Scottish Society Abu Dhabi');
 ---
 <Base
   title="Join the Society"
-  description="How to join the Scottish Society Abu Dhabi: who can join, membership options and prices in AED, benefits, and joining through WhatsApp."
+  description="How to join the Scottish Society Abu Dhabi: AED 100 a year, open to anyone, with benefits and how to join through WhatsApp or email."
   overlayHeader
 >
   <PageHeader title="Join the Society" image={headerPhoto} position="50% 44%">
@@ -28,7 +28,7 @@ const email = mailLink(m.email, 'Joining the Scottish Society Abu Dhabi');
       </section>
 
       <section aria-labelledby="options">
-        <h2 id="options">Membership options</h2>
+        <h2 id="options">{m.options.length > 1 ? 'Membership options' : 'Membership'}</h2>
         <ul class="options">
           {m.options.map((o) => (
             <li>
