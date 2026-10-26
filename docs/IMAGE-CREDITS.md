@@ -20,9 +20,9 @@ From 26 October 2026 the homepage hero, the band behind the next-event card, eve
 | `hero-st-andrews-ball-2025.jpg` | St Andrew's Ball 2025 #180 | Homepage hero |
 | `band-ceilidh-hall.jpg` | May Ceilidh 2025 #127 | Band behind the next-event card |
 | `events-ceilidh-dancing.jpg` | May Ceilidh 2025 #335 | Upcoming Events and Past events headers |
-| `committee-ceilidh-group.jpg` | May Ceilidh 2025 #346 | The Committee header |
+| `committee-ceilidh-group.jpg` | May Ceilidh 2025 #346 | Join the Society header |
+| `committee-ball-stage.jpg` | St Andrew's Ball 2025 #079 | The Committee header |
 | `photos-ball-ballroom.jpg` | St Andrew's Ball 2025 #004 | Photos & Videos header |
-| `join-burns-piper.jpg` | Burns Supper 2025 #012 | Join the Society header |
 | `downloads-burns-table.jpg` | Burns Supper 2025 #003 | Downloads header |
 | `event-fallback-saltire-bar.jpg` | May Ceilidh 2025 #004 | Illustrative cover for events without their own image (captioned) |
 | `utility-piper.jpg` | St Andrew's Gathering Nov 2024 #006 | Privacy and 404 headers |
