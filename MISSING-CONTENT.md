@@ -17,7 +17,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ### Committee (CMS: Committee, and Site pages & settings)
 
-- [ ] **Current committee**: the nine-member 2026 list is in (confirmed by JP, 26 Oct). Still needed: a short approved biography for each member (*replaces* `[BIOGRAPHY — short, approved biography to follow]`); portraits for Jane Taylor, Kerry L Smith, Allan Smith and Heather Gorman (initials tiles until then); confirmation that the role email addresses carried over from the old site are still live; and confirmation of which Kerry the existing portrait belongs to (currently on Kerry Smith, Social Media Lead).
+- [ ] **Current committee**: the nine-member 2026 list is in (confirmed by JP, 26 Oct); biographies are deliberately not shown for now. Still needed: portraits for Jane Taylor, Kerry L Smith, Allan Smith and Heather Gorman (initials tiles until then), and confirmation that the role email addresses carried over from the old site are still live.
 - [ ] **Committee term**, e.g. 2026–27. Shown on The Committee page. *Replaces* `[COMMITTEE TERM — confirm, e.g. 2026–27]`.
 - [ ] **Committee introduction** for the homepage: one or two sentences. *Replaces* `[COMMITTEE INTRO — confirm wording]`.
 

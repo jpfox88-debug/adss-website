@@ -7,4 +7,3 @@ contact_label: Email
 contact_url: 'mailto:Membership@ADScottishSociety.com'
 order: 50
 ---
-[BIOGRAPHY — short, approved biography to follow]
