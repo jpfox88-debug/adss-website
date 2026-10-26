@@ -3,7 +3,7 @@
 // Illustrative images carry a discreet caption so they're never mistaken for Society photos.
 import { Image } from 'astro:assets';
 import type { EventEntry } from '../lib/content';
-import fallback from '../assets/stock/shetland-eshaness-coast.jpg';
+import fallback from '../assets/uploads/headers/event-fallback-saltire-bar.jpg';
 
 interface Props {
   event: EventEntry;
@@ -16,7 +16,7 @@ const { event, widths = [480, 960, 1440], sizes, eager = false, class: className
 const own = event.data.image;
 const src = own ?? fallback;
 const illustrative = !own || event.data.image_illustrative;
-const alt = own ? event.data.image_alt ?? '' : 'Illustrative image: sea stacks off the Eshaness coast, Shetland';
+const alt = own ? event.data.image_alt ?? '' : "Illustrative image: the saltire-draped bar at the Society's May 2025 Ceilidh";
 ---
 <figure class:list={['event-image', className]}>
   <Image src={src} alt={alt} widths={widths} sizes={sizes} quality={72} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} />
