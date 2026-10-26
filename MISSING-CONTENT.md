@@ -17,7 +17,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ### Committee (CMS: Committee, and Site pages & settings)
 
-- [ ] **Current committee**: the seven members and vacant Secretary post listed on the old site (February 2025) have been imported with their roles, role email addresses and six portraits. The committee has changed since — confirm who is current, remove or add people, and supply a short approved biography for each. *Replaces* `[BIOGRAPHY — short, approved biography to follow]` on each profile. Jane Taylor has no portrait.
+- [ ] **Current committee**: the nine-member 2026 list is in (confirmed by JP, 26 Oct); biographies are deliberately not shown for now. Still needed: portraits for Jane Taylor, Kerry L Smith, Allan Smith and Heather Gorman (initials tiles until then), and confirmation that the role email addresses carried over from the old site are still live.
 - [ ] **Committee term**, e.g. 2026–27. Shown on The Committee page. *Replaces* `[COMMITTEE TERM — confirm, e.g. 2026–27]`.
 - [ ] **Committee introduction** for the homepage: one or two sentences. *Replaces* `[COMMITTEE INTRO — confirm wording]`.
 
@@ -48,7 +48,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ## C. Can follow later
 
-- [ ] **Committee portraits**: six carried over from the old site; Jane Taylor and any new members show an initials tile until a photo is supplied.
+- [ ] **Committee portraits**: five carried over from the old site; Jane Taylor, Kerry L Smith, Allan Smith and Heather Gorman show an initials tile until a photo is supplied.
 - [ ] **Confirmed events**: name, date and times, venue and address, member and non-member prices in AED, dress code, eligibility or age limits, and how to book. Until then, the homepage and Upcoming Events show "No events are currently scheduled", and the demonstration event is dropped from the launch build.
 - [ ] **Event photos or artwork**: any event without its own image shows an illustrative Scottish landscape captioned "Illustrative image".
 - [ ] **Old-site redirects to the imported albums.** The old site's five albums (St Andrew's Ball 2025, May 2025 Ceilidh, Six Nations February 2025, Burns Supper 2025, St Andrew's Gathering November 2024) are now on the site under `/photos/`. Point each old photo-page redirect at its album rather than `/photos/` (docs/REDIRECTS.md). The pre-Christmas drinks 2024 album is gone from the old server; if someone still has the photos they can be added as a new album.
