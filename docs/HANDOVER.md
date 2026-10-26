@@ -161,4 +161,4 @@ GitHub and Cloudflare are free. The domain renewal is the society's only cost.
 
 ## The homepage video
 
-The homepage plays a short silent video loop (`public/video/hero-gala-2025.mp4` and `.webm`) on screens wider than about 48rem; phones and anyone with "reduce motion" turned on see the opening photo instead. To change it, prepare a 15–20 second silent clip under ~6 MB (1440 px wide is plenty), put it in `public/video/`, and set the two "Opening video" fields under Site pages & settings → Homepage. Leave them blank to go back to a still photo.
+The homepage plays a short silent video loop (`public/video/hero-gala-2025.mp4` and `.webm`) on every screen size; anyone with "reduce motion" turned on, or a phone in Low Power Mode that blocks autoplay, sees the opening photo instead. To change it, prepare a 15–20 second silent clip under ~6 MB (1440 px wide is plenty), put it in `public/video/`, and set the two "Opening video" fields under Site pages & settings → Homepage. Leave them blank to go back to a still photo.

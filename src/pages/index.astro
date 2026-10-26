@@ -195,7 +195,8 @@ const firstOption = membership.options[0];
 <script>
   import '../scripts/event-visibility';
 
-  // Only fetch the hero video where it will actually be shown (see .hero-video CSS).
+  // Don't fetch the hero video for visitors who prefer reduced motion; otherwise make sure it plays
+  // (Low Power Mode on iPhone can block autoplay — the photo shows if that happens).
   const heroVideo = document.querySelector<HTMLVideoElement>('.hero-video');
   if (heroVideo && getComputedStyle(heroVideo).display === 'none') {
     heroVideo.remove();
@@ -242,8 +243,8 @@ const firstOption = membership.options[0];
     object-fit: cover;
     object-position: 50% 18%;
   }
-  /* The video sits over the photo; it only loads on screens 48rem and wider, and never when the
-     visitor prefers reduced motion — the photo shows instead in both cases. */
+  /* The video sits over the photo on every screen size; the photo is the first frame and the
+     fallback, and is what visitors who prefer reduced motion see. */
   .hero-video {
     position: absolute;
     inset: 0;
@@ -251,10 +252,9 @@ const firstOption = membership.options[0];
     height: 100%;
     object-fit: cover;
     object-position: 50% 40%;
-    display: none;
   }
-  @media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
-    .hero-video { display: block; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video { display: none; }
   }
   .hero-shade {
     position: absolute;
