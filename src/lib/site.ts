@@ -28,8 +28,9 @@ export const formatShortDay = (d: Date) => shortDayFmt.format(d);
 export const formatMonthYear = (d: Date) => monthYearFmt.format(d);
 export const formatTime = (d: Date) => timeFmt.format(d).replace(' ', '').toLowerCase();
 
-/** "7:00pm – 11:30pm", or with the end date when the event runs past midnight into another day's listing. */
+/** "7:00pm – 11:30pm", or "7:00pm till late" when the end is set to 11:59pm, or with the end date when the event runs past midnight into another day's listing. */
 export function formatTimeRange(start: Date, end: Date): string {
+  if (formatTime(end) === '11:59pm') return `${formatTime(start)} till late`;
   const sameDay = formatShortDay(start) === formatShortDay(end);
   return sameDay
     ? `${formatTime(start)} – ${formatTime(end)}`

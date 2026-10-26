@@ -17,8 +17,10 @@ const own = event.data.image;
 const src = own ?? fallback;
 const illustrative = !own || event.data.image_illustrative;
 const alt = own ? event.data.image_alt ?? '' : "Illustrative image: the saltire-draped bar at the Society's May 2025 Ceilidh";
+// Posters and flyers are usually portrait: show them whole rather than cropping to 3:2.
+const portrait = !!own && own.height > own.width;
 ---
-<figure class:list={['event-image', className]}>
+<figure class:list={['event-image', className, { 'is-portrait': portrait }]}>
   <Image src={src} alt={alt} widths={widths} sizes={sizes} quality={72} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} />
   {illustrative && <figcaption>Illustrative image</figcaption>}
 </figure>
@@ -33,6 +35,10 @@ const alt = own ? event.data.image_alt ?? '' : "Illustrative image: the saltire-
     height: 100%;
     object-fit: cover;
     border-radius: var(--radius);
+  }
+  /* In a landscape slot, a portrait poster is cropped from its top so the heading art shows. */
+  .event-image.is-portrait img {
+    object-position: 50% 12%;
   }
   figcaption {
     position: absolute;

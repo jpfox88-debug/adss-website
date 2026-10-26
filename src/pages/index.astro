@@ -7,7 +7,7 @@ import Portrait from '../components/Portrait.astro';
 import PhotosComingSoon from '../components/PhotosComingSoon.astro';
 import AlbumCover from '../components/AlbumCover.astro';
 import logoStacked from '../assets/brand/logo-stacked-reversed.png';
-import bandPhoto from '../assets/uploads/headers/band-burns-saltire.jpg';
+import bandPhoto from '../assets/uploads/headers/band-ceilidh-hall.jpg';
 import { canBeNext, getAlbums, getCommittee, getEvents, getHome, getMembership, isGenuineAlbum, isPastAtBuild } from '../lib/content';
 import { formatDay, formatMonthYear, formatTimeRange, STATUS_LABEL } from '../lib/site';
 
@@ -164,19 +164,23 @@ const firstOption = membership.options[0];
       </div>
       <p class="committee-intro"><Ph text={home.committee_intro} /></p>
       {committee.length > 0 && (
-        <ul class="people">
-          {committee.slice(0, 4).map((c) => (
-            <li>
-              <a class="photo-card" href="/committee/">
-                <Portrait photo={c.data.photo} name={c.data.name} alt={c.data.photo_alt} sizes="(min-width: 60rem) 16rem, 45vw" />
-                <span class="caption-panel">
-                  <span class="caption-title"><Ph text={c.data.name} /></span>
-                  <span class="caption-sub"><Ph text={c.data.role} /></span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div class="people-slider" data-slider>
+          <button type="button" class="slider-btn slider-prev" data-slider-prev aria-label="Previous committee members">&#8249;</button>
+          <ul class="people" data-slider-track aria-label="Committee members">
+            {committee.map((c) => (
+              <li>
+                <a class="photo-card" href="/committee/">
+                  <Portrait photo={c.data.photo} name={c.data.name} alt={c.data.photo_alt} sizes="(min-width: 60rem) 14rem, 60vw" />
+                  <span class="caption-panel">
+                    <span class="caption-title"><Ph text={c.data.name} /></span>
+                    <span class="caption-sub"><Ph text={c.data.role} /></span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <button type="button" class="slider-btn slider-next" data-slider-next aria-label="Next committee members">&#8250;</button>
+        </div>
       )}
     </div>
   </section>
@@ -184,6 +188,24 @@ const firstOption = membership.options[0];
 
 <script>
   import '../scripts/event-visibility';
+
+  // Committee slider: scroll one viewport of cards per click; disable arrows at the ends.
+  for (const slider of document.querySelectorAll<HTMLElement>('[data-slider]')) {
+    const track = slider.querySelector<HTMLElement>('[data-slider-track]');
+    const prev = slider.querySelector<HTMLButtonElement>('[data-slider-prev]');
+    const next = slider.querySelector<HTMLButtonElement>('[data-slider-next]');
+    if (!track || !prev || !next) continue;
+    const update = () => {
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+    };
+    const step = () => Math.max(track.clientWidth * 0.8, 200);
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
 </script>
 
 <style>
@@ -263,9 +285,9 @@ const firstOption = membership.options[0];
   @media (min-width: 64rem) {
     .invite-band { padding-block: var(--space-6); }
     .invite-band .card { margin-inline: 0 auto; }
-    /* The saltire is right of centre in this photo, so the card sits left and the photo is
-       slightly oversized from the left edge to keep the flag in the clear right half. */
-    .band-img { width: 118%; left: 0; object-position: 0% 42%; }
+    /* The card sits left; the photo is slightly oversized from the left edge so the dancers
+       and the saltires on the far wall stay in the clear right half. */
+    .band-img { width: 118%; left: 0; object-position: 0% 30%; }
   }
   .band-img {
     position: absolute;
@@ -455,8 +477,48 @@ const firstOption = membership.options[0];
   .cards img {
     aspect-ratio: 4 / 3;
   }
+  /* The committee row scrolls sideways so every member is shown; arrows appear where there's a pointer. */
+  .people-slider {
+    position: relative;
+  }
   .people {
-    grid-template-columns: repeat(auto-fill, minmax(min(46%, 13rem), 1fr));
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0.25rem;
+    padding: 0.25rem 0.25rem var(--space-2);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .people::-webkit-scrollbar {
+    display: none;
+  }
+  .people li {
+    flex: 0 0 clamp(11rem, 60vw, 14rem);
+    scroll-snap-align: start;
+  }
+  .slider-btn {
+    position: absolute;
+    top: 42%;
+    z-index: 2;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: 1px solid rgba(20, 33, 61, 0.2);
+    background: var(--paper);
+    color: var(--navy);
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow-card);
+    display: none;
+  }
+  .slider-prev { left: -1.25rem; }
+  .slider-next { right: -1.25rem; }
+  .slider-btn[disabled] { opacity: 0.35; cursor: default; }
+  @media (hover: hover) and (min-width: 48rem) {
+    .slider-btn { display: grid; place-items: center; }
   }
   .cards li,
   .people li {
