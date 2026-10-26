@@ -10,10 +10,10 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 - [ ] **Membership WhatsApp number**, international format (e.g. +971 50 123 4567). Turns on the **Join via WhatsApp** button, which stays disabled until then. *Replaces* `[MEMBERSHIP WHATSAPP NUMBER]`.
 - [ ] **Membership email address.** *Replaces* `[MEMBERSHIP EMAIL ADDRESS]`.
-- [ ] **Membership options and prices in AED**: each option's name, price and one-line description, e.g. individual, family, student. Shown on Join and in the homepage "Why join" panel. *Replaces* `[MEMBERSHIP OPTIONS]`, `[PRICES IN AED]`, `[OPTION DESCRIPTION]`.
+- [x] **Membership price**: AED 100, Society membership (confirmed by JP, 26 Oct). Still needed: a one-line description of what the fee covers / individual or family. *Replaces* `[OPTION DESCRIPTION]`.
 - [ ] **Membership period and renewals**: calendar year or rolling, and how renewal works. Shown on Join and in its questions and answers. *Replaces* `[MEMBERSHIP PERIOD]`, `[RENEWAL ARRANGEMENTS]`.
 - [ ] **Eligibility**: who can join. Shown on Join and in its questions and answers. *Replaces* `[ELIGIBILITY RULES]`.
-- [ ] **Confirmed member benefits**: each benefit's title and a short description. Shown on Join and on the homepage. *Replaces* `[CONFIRMED BENEFITS]`, `[BENEFIT DESCRIPTION]`.
+- [x] **Member benefits**: four benefits written by JP (26 Oct) — a warm Scottish welcome, first access to events, keeping traditions thriving, member discounts.
 
 ### Committee (CMS: Committee, and Site pages & settings)
 

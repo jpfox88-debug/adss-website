@@ -129,8 +129,8 @@ const firstOption = membership.options[0];
               <span class="price-label"><Ph text={firstOption.name} /></span>
             </p>
           )}
-          <p class="join-note">Membership is arranged directly with the Society through WhatsApp.</p>
-          <a class="btn btn--primary" href="/join/">Join the Society</a>
+          <p class="join-note"><Ph text={membership.home_note ?? 'Membership is arranged directly with the Society.'} /></p>
+          <a class="btn btn--primary" href="/join/">{membership.home_button ?? 'Join the Society'}</a>
         </div>
       </div>
     </div>

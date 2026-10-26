@@ -91,6 +91,8 @@ collections:
           - { name: whatsapp_number, label: Membership WhatsApp number, widget: string, hint: "International format with country code, e.g. +971 50 123 4567. While this still contains [square brackets] the WhatsApp button stays disabled." }
           - { name: whatsapp_message, label: Prefilled WhatsApp message, widget: text }
           - { name: email, label: Membership email address, widget: string }
+          - { name: home_note, label: Homepage “Why join?” note, widget: text, required: false, hint: "Short sentence under the price on the homepage." }
+          - { name: home_button, label: Homepage “Why join?” button wording, widget: string, required: false, hint: "e.g. Click here to find out more" }
           - name: faq
             label: Questions & answers
             widget: list

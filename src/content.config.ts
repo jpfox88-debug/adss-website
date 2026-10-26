@@ -73,6 +73,9 @@ const membership = defineCollection({
     whatsapp_number: z.string(),
     whatsapp_message: z.string(),
     email: z.string(),
+    // Homepage "Why join?" panel
+    home_note: optionalText,
+    home_button: optionalText,
     faq: z.array(z.object({ question: z.string(), answer: z.string() })).default([]),
   }),
 });
