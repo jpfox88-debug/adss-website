@@ -106,9 +106,8 @@ collections:
           - { name: tagline, label: Tagline, widget: string, required: false }
           - { name: committee_term, label: Committee term, widget: string, hint: "Shown on the committee page, e.g. 2026–27" }
           - { name: contact_email, label: General contact email, widget: string }
-          - { name: general_whatsapp, label: General WhatsApp number, widget: string, hint: "International format, e.g. +971 50 123 4567" }
-          - { name: phone, label: Phone number, widget: string, required: false }
-          - { name: address, label: Postal address, widget: text, required: false }
+          - { name: whatsapp_group_url, label: WhatsApp group invite link, widget: string, required: false, hint: "The chat.whatsapp.com invite link for the Society's updates group. Leave blank to hide." }
+          - { name: whatsapp_group_label, label: WhatsApp group link wording, widget: string, required: false, hint: "e.g. Join our Updates WhatsApp group" }
           - name: socials
             label: Social media links
             widget: list

@@ -23,8 +23,8 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ### General contact (CMS: Site pages & settings → Contacts, social links & committee term)
 
-- [ ] **General contact email.** Shown in the footer of every page and on Privacy. *Replaces* `[GENERAL CONTACT EMAIL]`.
-- [ ] **General WhatsApp number.** Shown in the footer of every page and on Privacy. *Replaces* `[GENERAL WHATSAPP NUMBER]`.
+- [x] **General contact email**: committee@adscottishsociety.com (confirmed by JP, 26 Oct).
+- [x] **WhatsApp**: the footer links to the Society's Updates WhatsApp group instead of a number (confirmed by JP, 26 Oct).
 
 ### Constitution (CMS: Downloads)
 
@@ -58,7 +58,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
   - St Andrew's Gathering, November 2024: `https://adscottishsociety.com/Nov24Club/Videos/Nov24VideoClip-01.mp4`, `https://adscottishsociety.com/Nov24Club/Videos/WhatsApp%20Video%202024-11-25.mp4`
 - [ ] **Approved, redacted committee and AGM minutes.**
 - [ ] **Partner names, logos and offers**, only if current and approved.
-- [ ] **Optional contact details**: general phone number, postal address, Facebook and Instagram links. Each is left out of the launch build automatically until it is supplied, so nothing needs to be done if the Society doesn't use them. *Replaces* `[GENERAL PHONE NUMBER — optional]`, `[POSTAL ADDRESS — optional]`, `[FACEBOOK URL]`, `[INSTAGRAM URL]`.
+- [x] **Social links**: Facebook and Instagram set (26 Oct). Phone and postal address are not shown.
 - [x] **Homepage opening photo**: now a Society photo from the St Andrew's Ball 2025 dance floor (album photo 180), chosen by JP. Inner-page headers keep the Scottish landscapes.
 - [ ] **Vector logo** (SVG or PDF) for print and very large display. The supplied JPEGs are fine on screen.
 
