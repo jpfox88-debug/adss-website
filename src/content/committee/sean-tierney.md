@@ -1,6 +1,6 @@
 ---
 name: 'Seán Tierney'
-role: 'Treasurer'
+role: 'Honorary Treasurer'
 photo: /src/assets/uploads/committee/sean-tierney.jpg
 photo_alt: 'Portrait of Seán Tierney'
 contact_label: Email
