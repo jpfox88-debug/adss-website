@@ -36,7 +36,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ### Photo albums (repository: `src/content/albums/`)
 
-- [ ] **St Andrew's Ball 2025 date.** The old website gives no date for this album; the entry uses 29 November 2025 as a placeholder and carries a `[DATE TO CONFIRM]` note in its description, which the launch build rejects. Confirm the actual date, set `date` in `src/content/albums/2025-st-andrews-ball.md` and remove the bracketed note. *Replaces* `[DATE TO CONFIRM …]`.
+- [x] **St Andrew's Ball 2025 date**: 22 November 2025 (confirmed by JP, 27 Oct).
 
 ## B. Launch essentials — setup by the website owner
 
