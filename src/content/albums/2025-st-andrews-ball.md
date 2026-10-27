@@ -1,6 +1,6 @@
 ---
 title: 'St Andrew''s Ball 2025'
-date: 2025-11-29
+date: 2025-11-22
 cover: /albums/2025-st-andrews-ball/full/001.jpg
 cover_alt: 'St Andrew''s Ball 2025 — photo 1'
 photos:
@@ -1152,4 +1152,4 @@ photos:
 videos: []
 placeholder: false
 ---
-Photos from the Society's St Andrew's Ball 2025. [DATE TO CONFIRM — the old website gave no date for this album; 29 November 2025 is a placeholder.]
+Photos from the Society's St Andrew's Ball 2025.
