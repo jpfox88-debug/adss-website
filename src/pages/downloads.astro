@@ -16,13 +16,13 @@ const groups = (Object.keys(DOCUMENT_CATEGORIES) as (keyof typeof DOCUMENT_CATEG
   }))
   .filter((g) => g.docs.length > 0);
 
-// Committee minutes are shown as a carousel per year, oldest meeting first, newest year selected.
+// Committee minutes are shown as a carousel per year, newest meeting first, newest year selected.
 const minuteYears = [...new Set(docs.filter((d) => d.data.category === 'committee-minutes').map((d) => d.date.getFullYear()))].sort((a, b) => b - a);
 const minutesByYear = minuteYears.map((year) => ({
   year,
   docs: docs
     .filter((d) => d.data.category === 'committee-minutes' && d.date.getFullYear() === year)
-    .sort((a, b) => a.date.getTime() - b.date.getTime()),
+    .sort((a, b) => b.date.getTime() - a.date.getTime()),
 }));
 ---
 <Base
@@ -47,7 +47,7 @@ const minutesByYear = minuteYears.map((year) => ({
         {groups.map((g) => g.key === 'committee-minutes' ? (
           <section aria-labelledby={g.key} class="group minutes" data-minutes>
             <h2 id={g.key}>{g.label}</h2>
-            <p class="minutes-intro">Approved minutes of the committee's meetings. Choose a year, then scroll through the meetings in date order.</p>
+            <p class="minutes-intro">Approved minutes of the committee's meetings. Choose a year, then scroll through the meetings, most recent first.</p>
             <div class="year-tabs" role="tablist" aria-label="Minutes by year">
               {minuteYears.map((y, i) => (
                 <button type="button" role="tab" id={`tab-${y}`} aria-selected={i === 0} aria-controls={`minutes-${y}`} data-year-tab={y} class="year-tab">{y}</button>
@@ -56,7 +56,7 @@ const minutesByYear = minuteYears.map((year) => ({
             {minutesByYear.map(({ year, docs: yd }, i) => (
               <div class="year-panel" role="tabpanel" id={`minutes-${year}`} aria-labelledby={`tab-${year}`} data-year-panel={year} hidden={i !== 0}>
                 <div class="minutes-slider" data-slider>
-                  <button type="button" class="slider-btn slider-prev" data-slider-prev aria-label={`Earlier ${year} meetings`}>&#8249;</button>
+                  <button type="button" class="slider-btn slider-prev" data-slider-prev aria-label={`More recent ${year} meetings`}>&#8249;</button>
                   <ol class="minutes-track" data-slider-track aria-label={`Committee minutes ${year}`}>
                     {yd.map((d) => (
                       <li class="minute-card">
@@ -75,7 +75,7 @@ const minutesByYear = minuteYears.map((year) => ({
                       </li>
                     ))}
                   </ol>
-                  <button type="button" class="slider-btn slider-next" data-slider-next aria-label={`Later ${year} meetings`}>&#8250;</button>
+                  <button type="button" class="slider-btn slider-next" data-slider-next aria-label={`Earlier ${year} meetings`}>&#8250;</button>
                 </div>
               </div>
             ))}
