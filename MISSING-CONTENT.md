@@ -8,7 +8,7 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ### Membership (CMS: Site pages & settings → Membership & joining)
 
-- [ ] **Membership WhatsApp number**, international format (e.g. +971 50 123 4567). Turns on the **Join via WhatsApp** button, which stays disabled until then. *Replaces* `[MEMBERSHIP WHATSAPP NUMBER]`.
+- [x] **Membership WhatsApp number**: +971 50 837 6604 (29 Oct). The Join via WhatsApp button is live.
 - [x] **Membership email**: committee@adscottishsociety.com (26 Oct).
 - [x] **Membership price**: AED 100, Society membership — a single option (26 Oct).
 - [x] **Membership period and renewals**: calendar year January–December, renewals from 1 January (26 Oct).
