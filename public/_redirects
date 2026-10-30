@@ -11,20 +11,20 @@
 /Constitution/constitution.html    /downloads/          301
 /Constitution                      /downloads/          301
 
-# Old event photo pages ("sheets"). Point these at specific albums once they exist.
-/2025StABall01/*                   /photos/             301
-/2025StABall02/*                   /photos/             301
-/2025StABall03/*                   /photos/             301
-/2025StABall04/*                   /photos/             301
-/2025StABall05/*                   /photos/             301
-/2025-05Ceilidh01/*                /photos/             301
-/2025-05Ceilidh02/*                /photos/             301
-/2025-05Ceilidh03/*                /photos/             301
-/2025-05Ceilidh04/*                /photos/             301
-/2025-05Ceilidh05/*                /photos/             301
-/2025-05Ceilidh06/*                /photos/             301
-/2025-05Ceilidh07/*                /photos/             301
-/Burns25Club/*                     /photos/             301
-/Nov24Club/*                       /photos/             301
-/SixNations25-Italy/*              /photos/             301
+# Old event photo pages ("sheets") → the matching album. There is no album for pre-Christmas drinks 2024.
+/2025StABall01/*                   /photos/2025-st-andrews-ball/      301
+/2025StABall02/*                   /photos/2025-st-andrews-ball/      301
+/2025StABall03/*                   /photos/2025-st-andrews-ball/      301
+/2025StABall04/*                   /photos/2025-st-andrews-ball/      301
+/2025StABall05/*                   /photos/2025-st-andrews-ball/      301
+/2025-05Ceilidh01/*                /photos/2025-05-ceilidh/           301
+/2025-05Ceilidh02/*                /photos/2025-05-ceilidh/           301
+/2025-05Ceilidh03/*                /photos/2025-05-ceilidh/           301
+/2025-05Ceilidh04/*                /photos/2025-05-ceilidh/           301
+/2025-05Ceilidh05/*                /photos/2025-05-ceilidh/           301
+/2025-05Ceilidh06/*                /photos/2025-05-ceilidh/           301
+/2025-05Ceilidh07/*                /photos/2025-05-ceilidh/           301
+/Burns25Club/*                     /photos/2025-burns-supper/         301
+/Nov24Club/*                       /photos/2024-11-the-club/          301
+/SixNations25-Italy/*              /photos/2025-six-nations-italy/    301
 /XmasDrinks24/*                    /photos/             301
