@@ -115,6 +115,33 @@ The `albums` collection accepts each photo, and the cover, in one of two shapes:
 
 **Ordinary-editor test, final step (ADSS2026, Write access, not admin), 2026-10-23.** Signed into https://adss-website.pages.dev/admin as ADSS2026 through the Worker. Added "[EDITOR TEST — CLOUDFLARE]" to the homepage welcome text and saved: draft PR #14 (`cms/pages/home`, commit `2943e0a`, authored by ADSS2026). Cloudflare built the preview (https://cms-pages-home.adss-website.pages.dev, https://15f87f41.adss-website.pages.dev) and the editor's **View Preview** opened it; production was unchanged. Set to Ready and published: PR #14 merged by ADSS2026 as `e98c011`; Cloudflare production deployment `5845c992` (trigger: GitHub push) went live and the text appeared on https://adss-website.pages.dev. Removed by reverting it in `37f61c9`; production deployment `22c9c512` is clean. With the 22 October uploads (D16), the ordinary-editor test is **complete**.
 
+## D18 — Launch on adscottishsociety.com — 2026-10-30
+
+The new site went live on **https://adscottishsociety.com**, replacing the old site at the old host (148.113.24.31).
+
+**Settings**
+- **Build:** Cloudflare Pages production environment `SITE_LAUNCHED=true`, `EXCLUDE_PLACEHOLDERS=true`, `SITE_URL=https://adscottishsociety.com` and `NODE_VERSION=24`. Preview environment: `NODE_VERSION=24` only. Build command `npm run build:launch`. Since PR #32 this runs `scripts/build-launch.sh`: the full launch build and gate on `main`, the ordinary preview build on other branches, because Pages has one build command for both environments.
+- **Launch build:** production commit `0ef4c58` built successfully and passed the launch gate.
+- **Domain:** `adscottishsociety.com` and `www.adscottishsociety.com` are custom domains of the Pages project. The domain's nameservers moved from the old host (`in3`/`in4.cloudhostingforlinux.com`) to Cloudflare (`rex`/`zainab.ns.cloudflare.com`).
+- **Redirects:**
+  - www → apex: zone Single Redirect rule, 301, path and query string kept.
+  - `adss-website.pages.dev` → apex: account Bulk Redirect list and rule `adss_pagesdev_to_domain`, 301, subpath matching, path and query kept, subdomains not included, so `*.adss-website.pages.dev` draft previews still work.
+  - Both were created by the owner in the Cloudflare dashboard, because Wrangler's login has no permission to edit redirect rules.
+- **Editor:** `public/admin/config.yml` `site_url` and `display_url` are the domain. Editors sign in at https://adscottishsociety.com/admin. The `adss-cms-auth` Worker already allowed the domain, so it was not changed.
+
+**Verified on 30 October 2026**
+- **Apex:** https://adscottishsociety.com returns 200 from Cloudflare with the new site:
+  - no noindex meta tag or header;
+  - robots.txt allows everything but `/admin/` and names `https://adscottishsociety.com/sitemap-index.xml`;
+  - canonical links and sitemap entries use the domain;
+  - demonstration pages return 404, and no placeholder text is left.
+- **Old-site URLs:** return 301, for example `/MemberDiscounts.html` → `/join/` and `/Burns25Club/…` → `/photos/2025-burns-supper/`. Unknown URLs get the 404 page.
+- **www:** `https://www.adscottishsociety.com/join/?x=1` → 301 → `https://adscottishsociety.com/join/?x=1`.
+- **pages.dev:** `https://adss-website.pages.dev/join/?x=1` → 301 → `https://adscottishsociety.com/join/?x=1`, and `/admin/` → the apex editor.
+- **Previews and sign-in:** draft and hash previews (e.g. `cms-pages-home.adss-website.pages.dev`, `4150240f.adss-website.pages.dev`) still return 200. The sign-in Worker accepts the apex.
+
+**Still to do after launch** (LAUNCH-CHECKLIST.md): Society ownership of the Cloudflare account, GitHub repo and OAuth App; the OAuth App's homepage URL; the content sign-offs.
+
 ## CMS demonstration (BRIEF Section 0 / Section 16 step 2)
 
 **D7 — Proof run with the owner account (2026-10-22).** On the owner's instruction, the first end-to-end proof uses `jpfox88-debug`, the repo **owner/admin** account, because no ordinary editor account is available yet. This **does not satisfy** the brief's requirement for an ordinary (non-admin) editor account. **A repeat of the proof with a non-admin collaborator (write access only) is still required before launch.** It is tracked in MISSING-CONTENT.md as must resolve before launch.
