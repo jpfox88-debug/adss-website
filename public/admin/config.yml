@@ -19,8 +19,8 @@ backend:
 # Draft → In review → Ready → Publish. Each draft is a pull request with its own Cloudflare Pages preview.
 publish_mode: editorial_workflow
 
-site_url: https://adss-website.pages.dev
-display_url: https://adss-website.pages.dev
+site_url: https://adscottishsociety.com
+display_url: https://adscottishsociety.com
 
 # Photos go into the repo so Astro resizes them at build time.
 media_folder: /src/assets/uploads

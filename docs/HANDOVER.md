@@ -2,8 +2,8 @@
 
 A plain-English guide for committee members who update the website. You don't need to know any code.
 
-- **The website:** https://adss-website.pages.dev (moves to the society's own domain at launch)
-- **The editor:** add `/admin` to the end of the website address, for example https://adss-website.pages.dev/admin
+- **The website:** https://adscottishsociety.com (live since 30 October 2026)
+- **The editor:** add `/admin` to the end of the website address: https://adscottishsociety.com/admin
 - **Hosting:** Cloudflare Pages (free). Editors need only a free GitHub account; no Cloudflare or other accounts.
 
 ![The homepage: a Scottish landscape with the Society's logo, welcome and Join button](images/site-home.jpg)

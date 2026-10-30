@@ -1,6 +1,6 @@
 # Scottish Society Abu Dhabi website
 
-Astro (static) site, hosted on Cloudflare Pages (`adss-website.pages.dev`), edited through Sveltia CMS at `/admin`. CMS sign-in uses a GitHub OAuth proxy Worker in `cms-auth/`.
+Astro (static) site, hosted on Cloudflare Pages at https://adscottishsociety.com (project `adss-website`), edited through Sveltia CMS at `/admin`. CMS sign-in uses a GitHub OAuth proxy Worker in `cms-auth/`.
 
 - Brief: [BRIEF.md](BRIEF.md)
 - Placeholders and launch blockers: [MISSING-CONTENT.md](MISSING-CONTENT.md)

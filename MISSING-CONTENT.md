@@ -40,9 +40,6 @@ The launch build checks this automatically: `npm run build:launch` fails while a
 
 ## B. Launch essentials — setup by the website owner
 
-- [ ] **Launch date.** (`[INSERT DATE]` in the brief.)
-- [ ] **Domain**: the production domain, added to the Cloudflare Pages project as a custom domain (currently www.adscottishsociety.com, whose DNS is still served by the old host). Then set `site_url` and `display_url` in `public/admin/config.yml`.
-- [ ] **Cloudflare Pages launch settings**: in the production environment `SITE_LAUNCHED=true`, `EXCLUDE_PLACEHOLDERS=true`, `SITE_URL=<domain>`, and the build command `npm run build:launch`, all before the domain switch (docs/LAUNCH-CHECKLIST.md).
 - [ ] **Ownership and access**: a Society-owned GitHub account to own the repo and the CMS OAuth App (the repo is currently under `jpfox88-debug`), and at least two committee members with Cloudflare and GitHub access. The CMS sign-in OAuth App and the Cloudflare account are currently the owner's personal ones.
 - [ ] **Editors**: the GitHub usernames of everyone who will edit, to invite as collaborators.
 
